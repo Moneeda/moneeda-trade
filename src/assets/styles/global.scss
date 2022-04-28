@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300&display=swap');
+
+* {
+  outline: none;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  width: 100%;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: theme("colors.highlight");
+
+  &.button {
+    color: theme("colors.content");
+  }
+}
+
+a.link {
+  &::after {
+    content: "";
+    height: 12px;
+    width: 12px;
+    margin-left: 4px;
+    display: inline-block;
+    // background-image: url("~@/assets/img/link.svg");
+    background-size: contain;
+  }
+}
+
+section {
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  color: theme("colors.lightcontent");
+  font-size: 12px;
+}
+
+
+
+.modal-fixed {
+  overflow: hidden;
+  position: fixed;
+}
+.card-wrapper {
+  position: relative;
+  @apply bg-whitehover rounded py-2 px-4 ;
+}
+
+.card {
+  @apply border border-border rounded p-4 bg-white;
+
+  &--stateful {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: rgba(white, 0.7);
+    border: 0;
+
+    &:hover {
+      transform: scale(1.02);
+      @apply bg-white shadow;
+    }
+
+  }
+
+  &--alert {
+    @apply border-highlight;
+  }
+ 
+  &--mini {
+    @apply px-4 py-2;
+  }
+
+  &--active {
+    @apply  border-highlight;
+  }
+
+}
+
+.button {
+  border-radius: 6px;
+  height: 40px;
+  padding: 8px 12px;
+  background: theme('colors.highlight');
+  color: theme("colors.white");
+  font-weight: 700;
+  transition: all 0.2s linear;
+  min-width: 100px;
+
+  &:hover {
+    background-color: theme("colors.highlight") !important;
+    color: theme("colors.white") !important;
+  }
+
+  &--flat {
+    background: transparent;
+    color: theme("colors.content");
+    border: 1px solid theme("colors.content");
+    font-weight: 400;
+  }
+
+  &--small {
+    height: 25px;
+    padding: 4px 6px;
+    min-width: 80px;
+    font-size: 12px;
+    background-size: 15px;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+h1 {
+  font-size: 3rem;
+  font-family: "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.01em;
+
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-family: "IBM Plex Sans", sans-serif;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
+}
+
+p {
+  margin: 5px 0 15px 0;
+}
+
+.highlight {
+  color: theme("colors.highlight");
+}
+
+.tag {
+  border: 1px solid theme("colors.highlight");
+  padding: 0 4px;
+  font-size: 10px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+
+  &--success {
+    background-color: theme("colors.green");
+  }
+
+  &--warning {
+    background-color: theme('colors.alert');
+    border: none;
+  }
+
+  &--replied {
+    background-color: theme("colors.green");
+    border: 1px solid theme('colors.border')
+  }
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rounded-icon {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: theme("colors.white");
+  background-position: center;
+  background-size: 40% 40%;
+  background-repeat: no-repeat;
+
+  @media (max-width: 640px) {
+    width: 10.7vw;
+    height: 10.7vw;
+    max-width: 50px;
+    max-height: 50px;
+  }
+
+  &--active {
+    background-color: theme("colors.highlight");
+  }
+}
+
+.drift-frame-controller {
+  z-index: 100 !important;
+}
+
+
+.shine {
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  // background-size: 800px 104px;
+  display: block;
+  position: relative;
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+}
+
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}

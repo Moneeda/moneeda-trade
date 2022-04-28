@@ -1,0 +1,54 @@
+<script>
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+
+const RoutesMap = new Map([
+  ["1", "strategies"],
+  ["2", "playground"],
+]);
+
+export default defineComponent({
+  setup() {
+    const router = useRouter();
+    // const route = useRoute();
+    const activeEntry = ref("2");
+
+    // watchEffect(() => {
+    //   activeEntry.value = RoutesMap.values.find(r => (route.name);
+    // });
+
+    const handleOpen = (id) => {
+      if (!RoutesMap.has(id)) {
+        return;
+      }
+
+      router.push({ name: RoutesMap.get(id) });
+      return;
+    };
+
+    return {
+      activeEntry,
+      handleOpen,
+    };
+  },
+});
+</script>
+
+<template>
+  <el-menu
+    mode="horizontal"
+    :default-active="activeEntry"
+    class="el-menu--moneeda"
+    :ellipsis="false"
+    @select="handleOpen"
+  >
+    <el-menu-item index="1"> Strategies </el-menu-item>
+    <el-menu-item index="2"> Playground </el-menu-item>
+  </el-menu>
+</template>
+
+<style lang="scss">
+.el-menu--moneeda {
+  border-bottom: 0;
+}
+</style>

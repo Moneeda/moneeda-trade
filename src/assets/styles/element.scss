@@ -1,0 +1,22 @@
+// styles/element/index.scss
+/* just override what you need */
+@forward 'element-plus/theme-chalk/src/common/var.scss'with ($colors: ('primary': ('base': #FF6F61,
+    ),
+    'warning': ('base': #e6a23c,
+    ),
+    'danger': ('base': #f56c6c,
+    ),
+    'info': ('base': #909399,
+    ),
+  ));
+
+// TODO Import on demand https://element-plus.org/en-US/guide/theming.html#how-to-override-it  
+@use "element-plus/theme-chalk/src/index.scss"as *;
+
+
+
+/* these are necessary styles for vue flow */
+@use '@braks/vue-flow/dist/style.css'as *;
+
+/* this contains the default theme, these are optional styles */
+@use '@braks/vue-flow/dist/theme-default.css'as *;
