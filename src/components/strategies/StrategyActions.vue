@@ -53,19 +53,24 @@ const { simulations, changeSimulation, activeSimulation } = useSimulations();
       v-model="activeSimulation"
       placeholder="Pick a simulation"
       @change="changeSimulation"
+      fit-input-width
+      value-key="_id"
     >
-      <el-popover
-        placement="left"
-        trigger="hover"
-        v-for="simulation in simulations"
-        :key="simulation.id"
-      >
-        <h4 class="font-medium">{{ simulation.name }}</h4>
-        <p>{{ simulation.description }}</p>
-        <template #reference>
-          <el-option :label="simulation.name" :value="simulation.id" />
-        </template>
-      </el-popover>
+      <el-option-group label="Time based">
+        <el-popover
+          placement="left"
+          trigger="hover"
+          v-for="simulation in simulations"
+          :key="simulation._id"
+        >
+          <h4 class="font-medium">{{ simulation.name }}</h4>
+          <p>{{ simulation.description }}</p>
+          <template #reference>
+            <el-option :label="simulation.label" :value="simulation" />
+          </template>
+        </el-popover>
+      </el-option-group>
+      <el-option-group label="Trend based"> </el-option-group>
     </el-select>
 
     <el-button :icon="Select" class="w-full mt-8" plain> Save </el-button>

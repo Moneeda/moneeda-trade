@@ -1,9 +1,7 @@
 import axios from "axios";
-import IntegrationsApi from "./integrations";
-import InteractionsApi from "./interactions";
-import InternalApi from "./internal";
-import InternalAppsApi from "./internal-applications";
-import InternalInteractionsApi from "./internal-interactions";
+import SimulationsApi from "./simulations";
+import StrategiesApi from "./strategies";
+import ConditionsApi from "./conditions";
 
 class ApiClient {
   constructor() {
@@ -11,41 +9,26 @@ class ApiClient {
       baseURL: "",
     });
     this.internalClient = axios.create({
-      baseURL: `${import.meta.VITE_APP_API_URL}/api`,
+      baseURL: `${import.meta.env.VITE_APP_API_URL}/`,
     });
   }
 
-  internal() {
-    return new InternalApi(this.internalClient);
+  simulations() {
+    return new SimulationsApi(this.internalClient);
   }
 
-  internalApps() {
-    return new InternalAppsApi(this.internalClient);
+  strategies() {
+    return new StrategiesApi(this.internalClient);
   }
 
-  internalInteractions() {
-    return new InternalInteractionsApi(this.internalClient);
-  }
-
-  integrations() {
-    return new IntegrationsApi(this.internalClient);
-  }
-
-  interactions() {
-    return new InteractionsApi(this.internalClient);
+  conditions() {
+    return new ConditionsApi(this.internalClient);
   }
 
   setJwt(jwt) {
     this.internalClient.defaults.headers.common = {
       ...this.internalClient.defaults.headers.common,
       Authorization: `Bearer ${jwt}`,
-    };
-  }
-
-  setActiveApp(appId) {
-    this.internalClient.defaults.headers.common = {
-      ...this.internalClient.defaults.headers.common,
-      "moneeda-appid": appId,
     };
   }
 

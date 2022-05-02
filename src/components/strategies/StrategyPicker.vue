@@ -12,15 +12,16 @@ const { strategies, activeStrategy, changeStrategy } = useStrategies();
       <span class="text-content60">Strategy</span>
       <el-select
         class="ml-2"
-        :value="activeStrategy"
+        v-model="activeStrategy"
         placeholder="Pick a strategy"
+        value-key="_id"
         @change="changeStrategy"
       >
         <el-option
           v-for="strategy in strategies"
-          :key="strategy.id"
-          :label="strategy.name"
-          :value="strategy.id"
+          :key="strategy._id"
+          :label="strategy.label"
+          :value="strategy"
         />
       </el-select>
 

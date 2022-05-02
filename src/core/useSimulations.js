@@ -1,40 +1,26 @@
 import { inject, provide, ref } from "vue";
+import api from "~/api";
 
 // import api from "@/api";
 
 const key = Symbol.for("Simulations");
 
 const createSimulationsInstance = () => {
-  const simulations = ref([
-    {
-      id: "1",
-      name: "Simulation 1",
-      description: "Simulation 1 description",
-      strategy: "1",
-      createdAt: "2020-01-01",
-      updatedAt: "2020-01-01",
-    },
-    {
-      id: "2",
-      name: "Simulation 2",
-      description: "Simulation 2 description",
-      strategy: "1",
-      createdAt: "2020-01-01",
-      updatedAt: "2020-01-01",
-    },
-    {
-      id: "3",
-      name: "Simulation 3",
-      description: "Simulation 3 description",
-      strategy: "1",
-      createdAt: "2020-01-01",
-      updatedAt: "2020-01-01",
-    },
-  ]);
+  const simulations = ref([]);
   const activeSimulation = ref(null);
   const changeSimulation = (simulation) => {
     activeSimulation.value = simulation;
   };
+
+  const retrieveSimulations = async (defaultToFirst = true) => {
+    const sims = await api.simulations().all();
+    simulations.value = sims.map((sim) => ({ ...sim, label: sim.name }));
+    if (defaultToFirst && sims.length > 0) {
+      changeSimulation(sims[0]);
+    }
+  };
+
+  retrieveSimulations();
 
   return {
     simulations,
