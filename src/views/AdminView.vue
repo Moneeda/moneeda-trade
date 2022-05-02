@@ -15,7 +15,9 @@ provideStrategies();
       <navbar class="block" @menu="toggleMenu" />
     </header>
     <main class="bg-adminbg admin-content">
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </main>
   </div>
 </template>
