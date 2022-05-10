@@ -5,7 +5,7 @@ const { strategies, activeStrategy, changeStrategy } = useStrategies();
 </script>
 
 <template>
-  <div class="flex justify-between h-navbar bg-white py-4 px-8">
+  <div class="flex justify-between items-center h-navbar bg-white px-8">
     <h1 class="text-xl font-medium">Playground</h1>
 
     <div class="flex items-center">
