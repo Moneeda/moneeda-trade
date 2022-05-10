@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 module.exports = {
   content: [
+    "./index.html",
     "./src/components/**/*.{js,vue,ts}",
     "./src/layouts/**/*.vue",
     "./src/views/**/*.vue",
@@ -34,6 +35,9 @@ module.exports = {
       },
       minHeight: {
         section: "600px",
+      },
+      height: {
+        navbar: "60px",
       },
       spacing: {
         padding: "20px",
