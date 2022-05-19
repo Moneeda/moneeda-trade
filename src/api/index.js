@@ -2,6 +2,7 @@ import axios from "axios";
 import SimulationsApi from "./simulations";
 import StrategiesApi from "./strategies";
 import ConditionsApi from "./conditions";
+import ActionsApi from "./actions";
 
 class ApiClient {
   constructor() {
@@ -23,6 +24,10 @@ class ApiClient {
 
   conditions() {
     return new ConditionsApi(this.internalClient);
+  }
+
+  actions() {
+    return new ActionsApi(this.internalClient);
   }
 
   setJwt(jwt) {

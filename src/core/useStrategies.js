@@ -14,16 +14,22 @@ function generateIconId(str) {
 const createStrategiesInstance = () => {
   const strategies = ref([]);
   const conditions = ref([]);
+  const actions = ref([]);
 
   const activeStrategy = ref(null);
   const changeStrategy = (strategy) => {
     activeStrategy.value = strategy;
-    fetchConditions(strategy._id);
+    fetchConditionsAndActions(strategy._id);
   };
 
-  const fetchConditions = async (strategyId) => {
-    const conds = await api.conditions().forStrategy(strategyId);
+  const fetchConditionsAndActions = async (strategyId) => {
+    const [conds, acts] = await Promise.all([
+      api.conditions().forStrategy(strategyId),
+      api.actions().forStrategy(strategyId),
+    ]);
+    console.log(conds, acts);
     conditions.value = conds;
+    actions.value = acts;
   };
 
   const retrieveStrategies = async (defaultToFirst = true) => {
@@ -41,6 +47,8 @@ const createStrategiesInstance = () => {
   retrieveStrategies();
 
   return {
+    conditions,
+    actions,
     strategies,
     activeStrategy,
     changeStrategy,

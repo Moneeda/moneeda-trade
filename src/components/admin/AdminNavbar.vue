@@ -19,7 +19,7 @@ const help = () => {
 
 <template>
   <nav
-    class="flex justify-between items-center h-[60px] p-4 border-b border-border"
+    class="flex justify-between items-center h-navbar px-4 border border-b border-border"
   >
     <div class="flex items-center">
       <img src="@/assets/img/moneeda-icon.svg" width="40" class="mr-4" />
