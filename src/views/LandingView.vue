@@ -1,4 +1,5 @@
 <script>
+import createAuth0Client from "@auth0/auth0-spa-js";
 import { defineComponent, onMounted, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
 
@@ -20,14 +21,15 @@ export default defineComponent({
       window.drift?.api.openChat();
     };
 
-    const login = async () => {
+    const login= async () => {
       try {
-        const user = await auth0.loginWith("auth0");
+        const user = await auth0.login("auth0");
         auth0.setUser(user);
       } catch (e) {
         console.error(e);
       }
     };
+    console.log(typeof auth0.isAuthenticated.value)
 
     return {
       auth0,
@@ -48,11 +50,11 @@ export default defineComponent({
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div>
           <el-button
-            v-if="!auth0.isAuthenticated"
+            v-if="auth0.isAuthenticated"
             type="primary"
             @click="login"
           >
-            Login / Register
+            {{ auth0.isAuthenticated }}
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
             <el-button type="primary"> Dashboard </el-button>

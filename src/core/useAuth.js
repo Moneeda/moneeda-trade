@@ -2,9 +2,9 @@ import createAuth0Client from "@auth0/auth0-spa-js";
 import { inject, provide, ref } from "vue";
 import router from "../router";
 
-const domain = import.meta.VITE_APP_AUTH0_DOMAIN;
-const clientId = import.meta.VITE_APP_AUTH0_CLIENT_ID;
-const callbackUrl = import.meta.VITE_APP_AUTH0_CALLBACK_URL;
+const domain = import.meta.env.VITE_APP_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_APP_AUTH0_CLIENT_ID;
+const callbackUrl = import.meta.env.VITE_APP_AUTH0_CALLBACK_URL;
 
 const auth0Client = ref(null);
 export const isAuthenticated = ref(false);
@@ -28,7 +28,7 @@ const handleCallback = async () => {
   }
 
   isAuthenticated.value = await auth0Client.value.isAuthenticated();
-
+  console.log(typeof isAuthenticated.value)
   if (isAuthenticated.value) {
     user.value = (await auth0Client.value.getUser()) || null;
     isLoading.value = false;
@@ -87,9 +87,8 @@ export const login = async (options) => {
   if (!auth0Client.value) {
     return;
   }
-
   try {
-    await auth0Client.value.loginWithRedirect(options);
+    await auth0Client.value.loginWithPopup(options);
   } catch (err) {
     error.value = err;
   }
