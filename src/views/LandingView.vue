@@ -10,7 +10,6 @@ export default defineComponent({
     const link = ref("");
     const loading = ref(false);
     const auth0 = useAuth0();
-    const isAuthenticated = auth0.isAuthenticated;
 
     onMounted(() => {
     });
