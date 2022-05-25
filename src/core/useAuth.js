@@ -26,13 +26,12 @@ const handleCallback = async () => {
   if (!auth0Client.value) {
     return;
   }
-
+  console.log(isAuthenticated.value)
   isAuthenticated.value = await auth0Client.value.isAuthenticated();
-  console.log(typeof isAuthenticated.value)
   if (isAuthenticated.value) {
     user.value = (await auth0Client.value.getUser()) || null;
     isLoading.value = false;
-
+    
     window.history.replaceState({}, document.title, window.location.pathname);
 
     return;
@@ -88,7 +87,7 @@ export const login = async (options) => {
     return;
   }
   try {
-    await auth0Client.value.loginWithPopup(options);
+    await auth0Client.value.loginWithRedirect(options);
   } catch (err) {
     error.value = err;
   }

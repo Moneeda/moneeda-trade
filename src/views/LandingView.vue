@@ -1,7 +1,7 @@
 <script>
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { defineComponent, onMounted, ref } from "vue";
-import { useAuth0 } from "../core/useAuth";
+import { isAuthenticated, useAuth0 } from "../core/useAuth";
 
 export default defineComponent({
   components: {},
@@ -11,7 +11,9 @@ export default defineComponent({
     const loading = ref(false);
     const auth0 = useAuth0();
 
-    onMounted(() => {});
+    onMounted(() => {
+      console.log(auth0.isAuthenticated)
+    });
 
     const showCookieConsent = () => {
       window.cookiehub?.openSettings();
@@ -29,7 +31,6 @@ export default defineComponent({
         console.error(e);
       }
     };
-    console.log(typeof auth0.isAuthenticated.value)
 
     return {
       auth0,
@@ -50,11 +51,11 @@ export default defineComponent({
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div>
           <el-button
-            v-if="auth0.isAuthenticated"
+            v-if="!auth0.isAuthenticated.value"
             type="primary"
             @click="login"
           >
-            {{ auth0.isAuthenticated }}
+            Login/Register
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
             <el-button type="primary"> Dashboard </el-button>
