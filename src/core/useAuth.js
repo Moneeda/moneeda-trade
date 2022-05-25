@@ -26,7 +26,6 @@ const handleCallback = async () => {
   if (!auth0Client.value) {
     return;
   }
-  console.log(isAuthenticated.value)
   isAuthenticated.value = await auth0Client.value.isAuthenticated();
   if (isAuthenticated.value) {
     user.value = (await auth0Client.value.getUser()) || null;

@@ -10,9 +10,9 @@ export default defineComponent({
     const link = ref("");
     const loading = ref(false);
     const auth0 = useAuth0();
+    const authenticated = auth0.isAuthenticated;
 
     onMounted(() => {
-      console.log(auth0.isAuthenticated)
     });
 
     const showCookieConsent = () => {
@@ -39,6 +39,7 @@ export default defineComponent({
       showCookieConsent,
       liveChat,
       login,
+      authenticated
     };
   },
 });
@@ -51,7 +52,7 @@ export default defineComponent({
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div>
           <el-button
-            v-if="!auth0.isAuthenticated.value"
+            v-if="!authenticated"
             type="primary"
             @click="login"
           >
