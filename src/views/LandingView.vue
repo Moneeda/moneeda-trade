@@ -11,9 +11,6 @@ export default defineComponent({
     const loading = ref(false);
     const auth0 = useAuth0();
 
-    onMounted(() => {
-    });
-
     const showCookieConsent = () => {
       window.cookiehub?.openSettings();
     };
