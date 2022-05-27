@@ -7,7 +7,6 @@ onMounted(async () => {
     return;
   }
   await auth0.createClient();
-  await auth0.handleCallback();
 });
 </script>
 

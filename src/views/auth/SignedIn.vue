@@ -6,3 +6,18 @@
     </div>
   </div>
 </template>
+
+<script>
+import { defineComponent, onMounted } from "vue";
+import { useAuth0 } from "@/core/useAuth";
+
+export default defineComponent({
+  setup() {
+    const { handleCallback } = useAuth0();
+
+    onMounted(() => {
+      handleCallback();
+    });
+  },
+});
+</script>

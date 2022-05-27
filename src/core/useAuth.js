@@ -30,7 +30,7 @@ const handleCallback = async () => {
   if (isAuthenticated.value) {
     user.value = (await auth0Client.value.getUser()) || null;
     isLoading.value = false;
-    
+
     window.history.replaceState({}, document.title, window.location.pathname);
 
     return;
@@ -81,12 +81,12 @@ const handleCallback = async () => {
   isLoading.value = false;
 };
 
-export const login = async (options) => {
+export const login = async () => {
   if (!auth0Client.value) {
     return;
   }
   try {
-    await auth0Client.value.loginWithRedirect(options);
+    await auth0Client.value.loginWithRedirect();
   } catch (err) {
     error.value = err;
   }

@@ -1,7 +1,6 @@
 <script>
-import createAuth0Client from "@auth0/auth0-spa-js";
-import { defineComponent, onMounted, ref } from "vue";
-import { isAuthenticated, useAuth0 } from "../core/useAuth";
+import { defineComponent, ref } from "vue";
+import { useAuth0 } from "../core/useAuth";
 
 export default defineComponent({
   components: {},
@@ -9,7 +8,7 @@ export default defineComponent({
   setup() {
     const link = ref("");
     const loading = ref(false);
-    const auth0 = useAuth0();
+    const { isAuthenticated, login: authLogin } = useAuth0();
 
     const showCookieConsent = () => {
       window.cookiehub?.openSettings();
@@ -19,23 +18,21 @@ export default defineComponent({
       window.drift?.api.openChat();
     };
 
-    const login= async () => {
+    const login = async () => {
       try {
-        const user = await auth0.login("auth0");
-        auth0.setUser(user);
+        await authLogin();
       } catch (e) {
         console.error(e);
       }
     };
 
     return {
-      auth0,
       link,
       loading,
       showCookieConsent,
       liveChat,
       login,
-      isAuthenticated
+      isAuthenticated,
     };
   },
 });
@@ -47,11 +44,7 @@ export default defineComponent({
       <div class="flex justify-between items-center">
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div>
-          <el-button
-            v-if="!isAuthenticated"
-            type="primary"
-            @click="login"
-          >
+          <el-button v-if="!isAuthenticated" type="primary" @click="login">
             Login/Register
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
@@ -70,7 +63,7 @@ export default defineComponent({
             or via an API call.
           </p>
           <el-button
-            v-if="!auth0.isAuthenticated"
+            v-if="!isAuthenticated"
             plain
             icon="el-icon-right"
             type="primary"
@@ -114,25 +107,10 @@ export default defineComponent({
     </section>
 
     <footer
-      class="
-        p-8
-        flex flex-col
-        sm:flex-row
-        items-center
-        justify-between
-        text-xs
-        rounded-t
-        bg-highlight
-        text-white
-      "
+      class="p-8 flex flex-col sm:flex-row items-center justify-between text-xs rounded-t bg-highlight text-white"
     >
       <div
-        class="
-          flex flex-col
-          sm:items-center sm:flex-row
-          text-center
-          sm:text-left
-        "
+        class="flex flex-col sm:items-center sm:flex-row text-center sm:text-left"
       >
         <img
           src="@/assets/img/logo-white.svg"
