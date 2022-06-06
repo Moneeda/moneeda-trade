@@ -1,5 +1,6 @@
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { inject, provide, ref } from "vue";
+import api from "~/api";
 import router from "../router";
 
 const domain = import.meta.env.VITE_APP_AUTH0_DOMAIN;
@@ -55,7 +56,7 @@ const handleCallback = async () => {
     try {
       const result = await auth0Client.value.handleRedirectCallback();
 
-      let url = "/";
+      let url = "/app";
 
       if (result.appState && result.appState.targetUrl) {
         url = result.appState.targetUrl;
@@ -68,6 +69,9 @@ const handleCallback = async () => {
         error.value = null;
 
         isLoading.value = false;
+
+        const { jwt } = await api.users().validate(user.value);
+        api.setJwt(jwt);
 
         await router.push(url);
 

@@ -3,6 +3,7 @@ import SimulationsApi from "./simulations";
 import StrategiesApi from "./strategies";
 import ConditionsApi from "./conditions";
 import ActionsApi from "./actions";
+import UsersApi from "./users";
 
 class ApiClient {
   constructor() {
@@ -28,6 +29,10 @@ class ApiClient {
 
   actions() {
     return new ActionsApi(this.internalClient);
+  }
+
+  users() {
+    return new UsersApi(this.internalClient);
   }
 
   setJwt(jwt) {
