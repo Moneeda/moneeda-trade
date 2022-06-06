@@ -5,15 +5,14 @@ import StrategyCard from "~/components/strategies/StrategyCard.vue";
 import { useRouter } from "vue-router";
 import StrategyCardAdd from "~/components/strategies/StrategyCardAdd.vue";
 
-    const { strategies, changeStrategy } = useStrategies();
-    const router = useRouter();
-    const navigateToStrategy = (strategy) => {
-          changeStrategy(strategy);
-          router.push({
-          name: "playground",
-          });
-  };
-
+const { strategies, changeStrategy } = useStrategies();
+const router = useRouter();
+const navigateToStrategy = (strategy) => {
+  changeStrategy(strategy);
+  router.push({
+    name: "playground",
+  });
+};
 </script>
 
 <template>
@@ -41,7 +40,7 @@ import StrategyCardAdd from "~/components/strategies/StrategyCardAdd.vue";
         :strategy="strategy"
         @click="navigateToStrategy(strategy)"
       />
-      <component :is="StrategyCardAdd" />
+      <StrategyCardAdd />
     </div>
   </div>
 </template>
