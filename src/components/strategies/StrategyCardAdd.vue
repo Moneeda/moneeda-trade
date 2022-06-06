@@ -1,19 +1,28 @@
 <script setup>
 import { DocumentAdd } from "@element-plus/icons-vue";
+import StrategyModal from "./StrategyModal.vue";
+import { ref } from "vue";
+
+const isOpen = ref(false);
 </script>
 
 <template>
-  <div class="strategy-card">
-    <div class="flex flex-col items-center">
-      <el-icon :size="24">
-        <DocumentAdd />
-      </el-icon>
-    </div>
+  <div>
+    <div class="strategy-card">
+      <div class="flex flex-col items-center">
+        <el-button
+          :icon="DocumentAdd"
+          :size="24"
+          @click="isOpen = true"
+        ></el-button>
+      </div>
 
-    <div class="flex-1">
-      <h4 class="font-medium">Add a new strategy</h4>
+      <div class="flex-1">
+        <h4 class="font-medium">Add a new strategy</h4>
+      </div>
+      <div class="flex-[0 0 80px]"></div>
     </div>
-    <div class="flex-[0 0 80px]"></div>
+    <StrategyModal :open="isOpen" @close="isOpen = !isOpen" />
   </div>
 </template>
 

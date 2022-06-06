@@ -13,10 +13,6 @@ const navigateToStrategy = (strategy) => {
     name: "playground",
   });
 };
-
-const addStrategy = () => {
-  console.log("TODO: addStrategy");
-};
 </script>
 
 <template>
@@ -37,7 +33,6 @@ const addStrategy = () => {
     <span class="text-sm font-medium text-content60 uppercase block py-4"
       >Your strategies</span
     >
-
     <div class="h-full grid gap-4 grid-cols-2">
       <StrategyCard
         v-for="strategy in strategies"
@@ -45,7 +40,7 @@ const addStrategy = () => {
         :strategy="strategy"
         @click="navigateToStrategy(strategy)"
       />
-      <StrategyCardAdd @click="addStrategy" />
+      <StrategyCardAdd />
     </div>
   </div>
 </template>

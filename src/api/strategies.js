@@ -7,4 +7,9 @@ export default class StrategiesApi {
     const { data } = await this.client.get("strategies/list");
     return data;
   }
+
+  async addStrategy(){
+    const { data } = await this.client.post(`strategies`);
+    return data;
+  }
 }
