@@ -9,7 +9,6 @@ export default defineComponent({
     const link = ref("");
     const loading = ref(false);
     const { isAuthenticated, login: authLogin } = useAuth0();
-
     const showCookieConsent = () => {
       window.cookiehub?.openSettings();
     };
