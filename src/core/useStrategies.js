@@ -1,4 +1,4 @@
-import { inject, provide, ref } from "vue";
+import { inject, provide, ref, reactive } from "vue";
 import api from "~/api";
 const key = Symbol.for("strategies");
 
@@ -38,6 +38,10 @@ const createStrategiesInstance = () => {
   const strategies = ref([]);
   const conditions = ref([]);
   const actions = ref([]);
+  const loading = reactive({
+    create: false,
+    remove: false,
+  });
 
   const activeStrategy = ref(null);
   const changeStrategy = (strategy) => {
@@ -67,20 +71,34 @@ const createStrategiesInstance = () => {
   };
 
   const createStrategy = async (strategyData) => {
+    loading.create = true;
     const strategy = await api.strategies().add(strategyData);
     strategies.value.push(strategy);
+    loading.create = false;
     return strategy;
+  };
+
+  const removeStrategy = async (strategy) => {
+    loading.remove = true;
+    await api.strategies().remove(strategy);
+    const strategyIndex = strategies.value.findIndex(
+      (s) => s._id === strategy._id
+    );
+    strategies.value.splice(strategyIndex, 1);
+    loading.remove = false;
   };
 
   retrieveStrategies();
 
   return {
+    loading,
     conditions,
     actions,
     strategies,
     activeStrategy,
     changeStrategy,
     createStrategy,
+    removeStrategy,
   };
 };
 

@@ -7,7 +7,7 @@ import StrategyCardAdd from "~/components/strategies/StrategyCardAdd.vue";
 import StrategyModal from "~/components/strategies/StrategyModal.vue";
 import { ref } from "vue";
 
-const { strategies, changeStrategy } = useStrategies();
+const { strategies, changeStrategy, removeStrategy } = useStrategies();
 const router = useRouter();
 const navigateToStrategy = (strategy) => {
   changeStrategy(strategy);
@@ -42,6 +42,7 @@ const strategyModalOpen = ref(false);
         :key="strategy._id"
         :strategy="strategy"
         @click="navigateToStrategy(strategy)"
+        @remove="removeStrategy(strategy)"
       />
       <StrategyCardAdd @click="strategyModalOpen = true" />
     </div>

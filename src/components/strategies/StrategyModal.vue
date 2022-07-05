@@ -2,7 +2,7 @@
 import { reactive, ref } from "vue";
 import { productOptions, useStrategies } from "~/core/useStrategies";
 
-const { createStrategy } = useStrategies();
+const { createStrategy, loading } = useStrategies();
 
 const emit = defineEmits(["create", "close"]);
 
@@ -101,7 +101,10 @@ const rules = {
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="close">Cancel</el-button>
-        <el-button type="primary" @click="submitForm(strategyFormRef)"
+        <el-button
+          type="primary"
+          @click="submitForm(strategyFormRef)"
+          :loading="loading.create"
           >Confirm</el-button
         >
       </span>

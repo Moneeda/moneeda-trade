@@ -7,6 +7,7 @@ import {
   Apple,
   CoffeeCup,
   IceCream,
+  Delete,
 } from "@element-plus/icons-vue";
 import { computed } from "vue";
 import format from "date-fns/format";
@@ -47,6 +48,15 @@ const formattedDate = computed(() => {
         {{ strategy.baseCurrencyAmount }} - {{ strategy.quoteCurrencyAmount }}
       </div>
     </div>
+
+    <el-button
+      type="danger"
+      :icon="Delete"
+      circle
+      size="small"
+      class="strategy-card__remove"
+      @click.stop="$emit('remove')"
+    />
   </div>
 </template>
 
@@ -60,10 +70,25 @@ const formattedDate = computed(() => {
   width: 100%;
   gap: 12px;
   min-height: 90px;
+  position: relative;
 
   &:hover {
     @apply shadow-xl;
     background-color: white;
+
+    .strategy-card__remove {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__remove {
+    visibility: hidden;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    opacity: 0;
+    transition: all ease-in 0.1s;
   }
 }
 </style>
