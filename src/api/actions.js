@@ -8,6 +8,11 @@ export default class ActionsApi {
     return data;
   }
 
+  async resources() {
+    const { data } = await this.client.get(`resources/action-form`);
+    return data;
+  }
+
   async remove(id) {
     const { data } = await this.client.delete(`actions/${id}`);
     return data;

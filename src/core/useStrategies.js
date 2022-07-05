@@ -41,6 +41,10 @@ function generateIconId(str) {
 const createStrategiesInstance = () => {
   const strategies = ref([]);
   const conditions = ref([]);
+  const resources = ref({
+    input: {},
+    output: {},
+  });
   const actions = ref([]);
   const autosave = ref(true);
   const loading = reactive({
@@ -63,6 +67,15 @@ const createStrategiesInstance = () => {
     actions.value = acts;
   };
 
+  const fetchResources = async () => {
+    const [conds, acts] = await Promise.all([
+      api.conditions().resources(),
+      api.actions().resources(),
+    ]);
+    resources.value.input = conds;
+    resources.value.output = acts;
+  };
+
   const retrieveStrategies = async (defaultToFirst = true) => {
     const strats = await api.strategies().all();
     strategies.value = strats.map((strat) => ({
@@ -73,6 +86,7 @@ const createStrategiesInstance = () => {
     if (defaultToFirst && strats.length > 0) {
       changeStrategy(strats[0]);
     }
+    fetchResources();
   };
 
   const createStrategy = async (strategyData) => {
@@ -93,8 +107,6 @@ const createStrategiesInstance = () => {
     loading.remove = false;
   };
 
-  retrieveStrategies();
-
   const addNode = (type) => {
     const node = createRawNode();
     if (type === NodeType.CONDITION) {
@@ -109,12 +121,15 @@ const createStrategiesInstance = () => {
     // TODO map and ping endpoint
   };
 
+  retrieveStrategies();
+
   return {
     autosave,
     loading,
     conditions,
     actions,
     strategies,
+    resources,
     activeStrategy,
     changeStrategy,
     createStrategy,

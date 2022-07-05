@@ -8,6 +8,11 @@ export default class ConditionsApi {
     return data;
   }
 
+  async resources() {
+    const { data } = await this.client.get(`resources/condition-form`);
+    return data;
+  }
+
   async remove(id) {
     const { data } = await this.client.delete(`conditions/${id}`);
     return data;

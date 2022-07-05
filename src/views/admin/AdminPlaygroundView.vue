@@ -1,11 +1,11 @@
 <script setup>
-import { Expand } from "@element-plus/icons-vue";
 import StrategyFlow from "@/components/strategies/StrategyFlow.vue";
 import StrategyPicker from "~/components/strategies/StrategyPicker.vue";
 import StrategyActions from "../../components/strategies/StrategyActions.vue";
 import { useLayout } from "~/core/useLayout";
+import StrategyEdit from "~/components/strategies/StrategyEdit.vue";
 
-const { layoutMode, switchLayout } = useLayout();
+const { layoutMode } = useLayout();
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const { layoutMode, switchLayout } = useLayout();
       class="admin-playground"
       :class="{
         'admin-playground--two-cols': layoutMode === 'view',
-        'admin-playground--three-cols': layoutMode === 'edit',
+        'admin-playground--three-cols': layoutMode !== 'edit',
       }"
     >
       <StrategyFlow style="grid-area: flow" />
@@ -26,12 +26,9 @@ const { layoutMode, switchLayout } = useLayout();
       <div
         class="bg-white shadow-xl p-4"
         style="grid-area: details"
-        v-show="layoutMode === 'edit'"
+        v-show="layoutMode !== 'view'"
       >
-        <div class="flex justify-between">
-          <h2>Details</h2>
-          <el-button :icon="Expand" @click="switchLayout('view')"> </el-button>
-        </div>
+        <StrategyEdit />
       </div>
     </div>
   </div>

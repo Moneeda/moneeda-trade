@@ -11,10 +11,15 @@ import { useSimulations } from "~/core/useSimulations";
 import { useStrategies } from "~/core/useStrategies";
 import { NodeType } from "~/components/strategies/strategyFlowHelper";
 
-const { layoutMode } = useLayout();
+const { layoutMode, switchLayout } = useLayout();
 const { simulations, changeSimulation, activeSimulation } = useSimulations();
 const { autosave, addNode } = useStrategies();
 const nodeTypes = NodeType;
+
+const add = (type) => {
+  addNode(type);
+  switchLayout(type);
+};
 </script>
 
 <template>
@@ -31,7 +36,7 @@ const nodeTypes = NodeType;
           <Files />
         </el-icon>
       </el-radio-button>
-      <el-radio-button label="edit">
+      <el-radio-button label="details">
         <el-icon>
           <ScaleToOriginal />
         </el-icon>
@@ -47,7 +52,7 @@ const nodeTypes = NodeType;
         plain
         :icon="SetUp"
         class="w-full"
-        @click="addNode(nodeTypes.CONDITION)"
+        @click="add(nodeTypes.CONDITION)"
       >
         Add condition
       </el-button>
@@ -58,7 +63,7 @@ const nodeTypes = NodeType;
         class="w-full"
         plain
         color="#626aef"
-        @click="addNode(nodeTypes.ACTION)"
+        @click="add(nodeTypes.ACTION)"
       >
         Add result
       </el-button>
