@@ -12,7 +12,7 @@ const isOpen = ref(false);
       <div class="flex flex-col items-center">
         <el-button
           :icon="DocumentAdd"
-          :size="24"
+          size="small"
           @click="isOpen = true"
         ></el-button>
       </div>

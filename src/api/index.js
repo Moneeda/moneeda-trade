@@ -14,10 +14,9 @@ class ApiClient {
       baseURL: `${import.meta.env.VITE_APP_API_URL}/`,
     });
     // TODO: set jwt in axios from local storage
-    const token = localStorage.getItem('jwt');
-    this.internalClient.defaults.headers.head = axios.create({
-        Authorization: `Bearer ${token}`,
-    })
+
+    const token = localStorage.getItem("jwt");
+    this.setJwt(token);
   }
 
   simulations() {
@@ -46,11 +45,11 @@ class ApiClient {
       Authorization: `Bearer ${jwt}`,
     };
     // TODO: add jwt to local storage
-    window.localStorage.setItem('jwt', jwt);
+    window.localStorage.setItem("jwt", jwt);
   }
 
   logout() {
-    window.localStorage.removeItem('jwt');
+    window.localStorage.removeItem("jwt");
     this.internalClient.defaults.headers.common = {};
   }
 }
