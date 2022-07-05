@@ -4,6 +4,8 @@ import { Odometer } from "@element-plus/icons-vue";
 import StrategyCard from "~/components/strategies/StrategyCard.vue";
 import { useRouter } from "vue-router";
 import StrategyCardAdd from "~/components/strategies/StrategyCardAdd.vue";
+import StrategyModal from "~/components/strategies/StrategyModal.vue";
+import { ref } from "vue";
 
 const { strategies, changeStrategy } = useStrategies();
 const router = useRouter();
@@ -13,6 +15,7 @@ const navigateToStrategy = (strategy) => {
     name: "playground",
   });
 };
+const strategyModalOpen = ref(false);
 </script>
 
 <template>
@@ -40,8 +43,13 @@ const navigateToStrategy = (strategy) => {
         :strategy="strategy"
         @click="navigateToStrategy(strategy)"
       />
-      <StrategyCardAdd />
+      <StrategyCardAdd @click="strategyModalOpen = true" />
     </div>
+    <StrategyModal
+      v-if="strategyModalOpen"
+      @close="strategyModalOpen = false"
+      @create="navigateToStrategy($event)"
+    />
   </div>
 </template>
 

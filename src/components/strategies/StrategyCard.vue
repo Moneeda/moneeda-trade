@@ -59,7 +59,7 @@ const formattedDate = computed(() => {
   cursor: pointer;
   width: 100%;
   gap: 12px;
-  min-height: 60px;
+  min-height: 90px;
 
   &:hover {
     @apply shadow-xl;

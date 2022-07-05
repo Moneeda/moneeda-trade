@@ -1,28 +1,112 @@
 <script setup>
-import { Close } from "@element-plus/icons-vue";
+import { reactive, ref } from "vue";
+import { productOptions, useStrategies } from "~/core/useStrategies";
 
-const props = defineProps({
-  open: {
-    type: Boolean,
-    required: true,
-  },
-})
+const { createStrategy } = useStrategies();
 
+const emit = defineEmits(["create", "close"]);
+
+const close = () => {
+  emit("close");
+};
+
+const submitForm = async (formEl) => {
+  // TODO Save
+  if (!formEl) return;
+  await formEl.validate(async (valid, fields) => {
+    if (valid) {
+      const strategy = await createStrategy(form);
+      emit("create", strategy._id);
+      close();
+    } else {
+      console.log("error submit!", fields);
+    }
+  });
+};
+
+const options = [...productOptions];
+
+const form = reactive({
+  name: "",
+  description: "",
+  product: "",
+  baseCurrencyAmount: 1,
+  quoteCurrencyAmount: 1,
+});
+
+const strategyFormRef = ref();
+
+const rules = {
+  name: { required: true, message: "Please add a name" },
+  product: { required: true, message: "Please select a product" },
+  baseCurrencyAmount: { required: true, message: "Please select a product" },
+  quoteCurrencyAmount: { required: true, message: "Please select a product" },
+};
 </script>
 
 <template>
-  <div class="" v-if="open">
-  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-       It has survived not only five centuries, but also the leap into electronic typesetting, 
-       remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
-       sheets containing Lorem Ipsum passages, 
-      and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-   <el-button :icon="Close" @click="$emit('close')"></el-button>
-  </div>
+  <el-dialog
+    :model-value="true"
+    :show-close="false"
+    :before-close="close"
+    title="Add strategy"
+  >
+    <p>
+      Create a new strategy for a specific product with a base amount and a
+      quote amount. Conditions and actions will be defined in the next step.
+    </p>
+    <el-form
+      :model="form"
+      label-width="200px"
+      label-position="left"
+      ref="strategyFormRef"
+      :rules="rules"
+      status-icon
+    >
+      <el-form-item label="Strategy name" prop="name">
+        <el-input v-model="form.name" />
+      </el-form-item>
+      <el-form-item label="Strategy description" prop="description">
+        <el-input v-model="form.description" />
+      </el-form-item>
+      <el-form-item label="Product" prop="product">
+        <el-select
+          v-model="form.product"
+          placeholder="Please select a product"
+          class="w-full"
+        >
+          <el-option
+            v-for="option in options"
+            :key="option.value"
+            :label="option.label"
+            :value="option.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="Base amount" prop="baseCurrencyAmount">
+        <el-input-number
+          v-model="form.baseCurrencyAmount"
+          :precision="5"
+          :step="0.00001"
+        />
+      </el-form-item>
+      <el-form-item label="Quote amount" prop="quoteCurrencyAmount">
+        <el-input-number
+          v-model="form.quoteCurrencyAmount"
+          :precision="5"
+          :step="0.00001"
+        />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="close">Cancel</el-button>
+        <el-button type="primary" @click="submitForm(strategyFormRef)"
+          >Confirm</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

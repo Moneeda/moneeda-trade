@@ -2,6 +2,29 @@ import { inject, provide, ref } from "vue";
 import api from "~/api";
 const key = Symbol.for("strategies");
 
+export const productOptions = [
+  {
+    label: "BTC/USDT",
+    value: "BTC/USDT",
+  },
+  {
+    label: "ADA/USDT",
+    value: "ADA/USDT",
+  },
+  {
+    label: "ETH/USDT",
+    value: "ETH/USDT",
+  },
+  {
+    label: "SOL/USDT",
+    value: "SOL/USDT",
+  },
+  {
+    label: "LINK/USDT",
+    value: "LINK/USDT",
+  },
+];
+
 function generateIconId(str) {
   var sum = 0;
   var numbers = str.match(/\d+/g).map(Number);
@@ -27,7 +50,6 @@ const createStrategiesInstance = () => {
       api.conditions().forStrategy(strategyId),
       api.actions().forStrategy(strategyId),
     ]);
-    console.log(conds, acts);
     conditions.value = conds;
     actions.value = acts;
   };
@@ -44,6 +66,12 @@ const createStrategiesInstance = () => {
     }
   };
 
+  const createStrategy = async (strategyData) => {
+    const strategy = await api.strategies().add(strategyData);
+    strategies.value.push(strategy);
+    return strategy;
+  };
+
   retrieveStrategies();
 
   return {
@@ -52,6 +80,7 @@ const createStrategiesInstance = () => {
     strategies,
     activeStrategy,
     changeStrategy,
+    createStrategy,
   };
 };
 
