@@ -1,6 +1,6 @@
 <script>
 import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const RoutesMap = new Map([
   ["1", "strategies"],
@@ -10,12 +10,11 @@ const RoutesMap = new Map([
 export default defineComponent({
   setup() {
     const router = useRouter();
-    // const route = useRoute();
-    const activeEntry = ref("2");
-
-    // watchEffect(() => {
-    //   activeEntry.value = RoutesMap.values.find(r => (route.name);
-    // });
+    const route = useRoute();
+    const activeRoute = [...RoutesMap.entries()].find(
+      ([, val]) => val === route.name
+    );
+    const activeEntry = ref(activeRoute?.[0] || "1");
 
     const handleOpen = (id) => {
       if (!RoutesMap.has(id)) {
