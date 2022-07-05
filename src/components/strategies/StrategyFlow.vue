@@ -6,41 +6,32 @@ import {
   isNode,
   useVueFlow,
 } from "@braks/vue-flow";
-import { computed } from "vue";
+import { ref, watchEffect } from "vue";
 import { useStrategies } from "~/core/useStrategies";
-import { buildNodes } from "./strategyFlowHelper";
+import { buildNodes, updateNodePos } from "./strategyFlowHelper";
 
-const { conditions, actions } = useStrategies();
+const { conditions, actions, autosave, updateNode } = useStrategies();
 
-const elements = computed(() => {
-  return buildNodes(conditions.value, actions.value);
-});
+const elements = ref([]);
 
 const { onPaneReady, onNodeDragStop, onConnect, instance, addEdges } =
   useVueFlow();
+
+watchEffect(() => {
+  elements.value = buildNodes(conditions.value, actions.value);
+});
+
 onPaneReady(({ fitView }) => {
   fitView();
+  elements.value = buildNodes(conditions.value, actions.value);
 });
-onNodeDragStop((e) => console.log("drag stop", e));
+onNodeDragStop(({ event, node }) => {
+  updateNodePos(node, { x: event.x, y: event.y });
+  if (autosave.value) {
+    updateNode(node);
+  }
+});
 onConnect((params) => addEdges([params]));
-
-const updatePos = () =>
-  elements.value.forEach((el) => {
-    if (isNode(el)) {
-      el.position = {
-        x: Math.random() * 400,
-        y: Math.random() * 400,
-      };
-    }
-  });
-
-const logToObject = () => console.log(instance.value?.toObject());
-const resetTransform = () =>
-  instance.value?.setTransform({ x: 0, y: 0, zoom: 1 });
-const toggleclass = () =>
-  elements.value.forEach(
-    (el) => (el.class = el.class === "light" ? "dark" : "light")
-  );
 </script>
 <template>
   <VueFlow

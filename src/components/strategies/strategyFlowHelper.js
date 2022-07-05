@@ -1,7 +1,12 @@
+const generateId = () => {
+  const extraDigits = parseInt(Math.random() * 10000);
+  return parseInt(performance.now() * extraDigits);
+};
+
 const mapNode = (node, type) => {
   return {
     type,
-    id: node._id,
+    id: node._id || generateId(),
     label: node.method,
     position: {
       x: node.positionX,
@@ -10,7 +15,20 @@ const mapNode = (node, type) => {
     meta: {
       ...node,
     },
+    draggable: true,
   };
+};
+
+export const createRawNode = () => {
+  return {
+    method: "New",
+    positionX: 50,
+    positionY: 50,
+  };
+};
+
+export const updateNodePos = (node, pos) => {
+  node.position = pos;
 };
 
 const mapNodes = (nodes, type) => {
@@ -45,4 +63,9 @@ export const buildNodes = (conditions, actions) => {
   const { items: actItems, edges: actEdges } = mapNodes(actions, "output");
 
   return [...condItems, ...actItems, ...condEdges, ...actEdges];
+};
+
+export const NodeType = {
+  CONDITION: "input",
+  ACTION: "output",
 };

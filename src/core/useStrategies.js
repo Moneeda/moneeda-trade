@@ -1,5 +1,9 @@
 import { inject, provide, ref, reactive } from "vue";
 import api from "~/api";
+import {
+  createRawNode,
+  NodeType,
+} from "~/components/strategies/strategyFlowHelper";
 const key = Symbol.for("strategies");
 
 export const productOptions = [
@@ -38,6 +42,7 @@ const createStrategiesInstance = () => {
   const strategies = ref([]);
   const conditions = ref([]);
   const actions = ref([]);
+  const autosave = ref(true);
   const loading = reactive({
     create: false,
     remove: false,
@@ -90,7 +95,22 @@ const createStrategiesInstance = () => {
 
   retrieveStrategies();
 
+  const addNode = (type) => {
+    const node = createRawNode();
+    if (type === NodeType.CONDITION) {
+      conditions.value.push(node);
+    } else if (type === NodeType.ACTION) {
+      actions.value.push(node);
+    }
+  };
+
+  const updateNode = (node) => {
+    console.log(node);
+    // TODO map and ping endpoint
+  };
+
   return {
+    autosave,
     loading,
     conditions,
     actions,
@@ -99,6 +119,8 @@ const createStrategiesInstance = () => {
     changeStrategy,
     createStrategy,
     removeStrategy,
+    addNode,
+    updateNode,
   };
 };
 

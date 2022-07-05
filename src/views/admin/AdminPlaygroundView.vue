@@ -42,7 +42,7 @@ const { layoutMode, switchLayout } = useLayout();
   padding: 16px;
   display: grid;
   grid-gap: 16px;
-  height: 100%;
+  height: calc(100% - 60px); // strategy picker;
 
   &--two-cols {
     grid-template-columns: 1fr 200px;

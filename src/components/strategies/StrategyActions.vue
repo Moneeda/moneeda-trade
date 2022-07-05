@@ -8,9 +8,13 @@ import {
 } from "@element-plus/icons-vue";
 import { useLayout } from "~/core/useLayout";
 import { useSimulations } from "~/core/useSimulations";
+import { useStrategies } from "~/core/useStrategies";
+import { NodeType } from "~/components/strategies/strategyFlowHelper";
 
 const { layoutMode } = useLayout();
 const { simulations, changeSimulation, activeSimulation } = useSimulations();
+const { autosave, addNode } = useStrategies();
+const nodeTypes = NodeType;
 </script>
 
 <template>
@@ -38,12 +42,24 @@ const { simulations, changeSimulation, activeSimulation } = useSimulations();
 
     <!-- Wrapped because element adds a margin between two buttons -->
     <div class="mt-2 w-full">
-      <el-button color="#626aef" plain :icon="SetUp" class="w-full">
+      <el-button
+        color="#626aef"
+        plain
+        :icon="SetUp"
+        class="w-full"
+        @click="addNode(nodeTypes.CONDITION)"
+      >
         Add condition
       </el-button>
     </div>
     <div class="mt-2 w-full">
-      <el-button :icon="TrendCharts" class="w-full" plain color="#626aef">
+      <el-button
+        :icon="TrendCharts"
+        class="w-full"
+        plain
+        color="#626aef"
+        @click="addNode(nodeTypes.ACTION)"
+      >
         Add result
       </el-button>
     </div>
@@ -74,5 +90,10 @@ const { simulations, changeSimulation, activeSimulation } = useSimulations();
     </el-select>
 
     <el-button :icon="Select" class="w-full mt-8" plain> Save </el-button>
+    <el-checkbox
+      v-model="autosave"
+      label="Autosave changes"
+      size="small"
+    ></el-checkbox>
   </div>
 </template>
