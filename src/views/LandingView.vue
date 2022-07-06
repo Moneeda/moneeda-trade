@@ -1,7 +1,6 @@
 <script>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
-import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   components: {},
@@ -26,19 +25,6 @@ export default defineComponent({
       }
     };
 
-    const { locale, t } = useI18n({
-      inheritLocale: true
-    })
-
-    const setLocale = (locale) => {
-      this.$i18n.locale = locale;
-      console.log("haciendo click");
-    }
-
-    onMounted(() => {
-      // console.log(this.$t('welcome'))
-    });
-
     return {
       link,
       loading,
@@ -46,9 +32,6 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
-      setLocale,
-      locale,
-      t
     };
   },
 });
@@ -60,11 +43,9 @@ export default defineComponent({
       <div class="flex justify-between items-center">
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div class="flex space-x-4">
-          <div >
-            <!-- <a href="#" @click="setLocale('en')"><flag flag iso="us"></flag></a>
-            <a href="#" @click="setLocale('es')"><flag flag iso="es"></flag></a> -->
-            <el-button @click="setLocale('en')"> EN </el-button>
-            <el-button @click="setLocale('en')"> ES </el-button>
+          <div>
+            <el-button @click="$i18n.locale = 'en'"> EN </el-button>
+            <el-button @click="$i18n.locale = 'es'"> ES </el-button>
           </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
             Login/Register
@@ -78,8 +59,8 @@ export default defineComponent({
       <div class="m-header__content flex flex-col justify-around">
         <div class="text-center">
           <h1 class="text-3xl sm:text-5xl font-title leading-relaxed">
-            <!-- {{$t('welcome')}} -->
-             <br />We simplify them.
+            {{ $t("welcome") }}
+            <br />We simplify them.
           </h1>
           <p class="text-sm mt-8">
             Generate simple payment and subscription links without writing code
