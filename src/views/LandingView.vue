@@ -1,8 +1,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
-import { useLanguageStore } from "../stores/counter"
-import { computed } from 'vue';
+import { i18n } from "~/plugins/i18n";
 
 export default defineComponent({
   components: {},
@@ -27,14 +26,13 @@ export default defineComponent({
       }
     };
 
-    // store
-    const languageStore = useLanguageStore()
 
-    // getters
-    const lastLanguage = computed(() => languageStore.getLanguage);
+    const storeLocal = (lng) => {
+      window.localStorage.setItem("lng", lng);
+      console.log(localStorage.getItem("lng"));
+      i18n.global.locale._setter(lng);
+    };
 
-    // actions
-    const storeLanguage = () => languageStore.setLanguage()
 
     return {
       link,
@@ -43,7 +41,7 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
-      storeLanguage
+      storeLocal,
     };
   },
 });
@@ -56,8 +54,8 @@ export default defineComponent({
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div class="flex space-x-4">
           <div>
-            <el-button @click="$i18n.locale = 'en'"> EN </el-button>
-            <el-button @click="storeLanguage($i18n.locale = 'es')"> ES </el-button>
+            <el-button @click="storeLocal('en')"> EN </el-button>
+            <el-button @click="storeLocal('es')"> ES </el-button>
           </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
             {{ $t("login") }}
@@ -153,7 +151,9 @@ export default defineComponent({
         >
           Twitter
         </a>
-        <span class="cursor-pointer" @click="liveChat">{{ $t("liveChat") }}</span>
+        <span class="cursor-pointer" @click="liveChat">{{
+          $t("liveChat")
+        }}</span>
         <span class="hidden sm:inline mx-2"> · </span>
         <a href="mailto:hello@moneeda.com" target="_new" class="!text-white">
           hello@moneeda.com

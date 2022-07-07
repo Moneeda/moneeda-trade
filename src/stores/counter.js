@@ -10,7 +10,8 @@ export const useLanguageStore = defineStore({
   },
   actions: {
     setLanguage(lng) {
-    this.language = window.localStorage.setItem("lng", lng);
+    this.language = lng;
+    // $i18n.locale = lng
     }
   }
 })
