@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore({
-  id: 'counter',
+export const useLanguageStore = defineStore({
+  id: 'language',
   state: () => ({
-    counter: 0
+    language: undefined
   }),
   getters: {
-    doubleCount: (state) => state.counter * 2
+    getLanguage: (state) => state.language
   },
   actions: {
-    increment() {
-      this.counter++
+    setLanguage(lng) {
+    this.language = window.localStorage.setItem("lng", lng);
     }
   }
 })

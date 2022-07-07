@@ -9,11 +9,11 @@ import { DocumentAdd } from "@element-plus/icons-vue";
         <el-icon :size="24">
           <component :is="DocumentAdd" />
         </el-icon>
-        <el-tag type="success" class="mt-2">New</el-tag>
+        <el-tag type="success" class="mt-2">{{ $t("strategyCardIcon") }}</el-tag>
       </div>
 
       <div class="flex-1 items-center">
-        <h4 class="font-medium">Add a new strategy</h4>
+        <h4 class="font-medium">{{ $t("strategyCardTittle") }}</h4>
       </div>
       <div class="flex-[0 0 80px]"></div>
     </div>

@@ -27,6 +27,8 @@ const help = () => {
     </div>
 
     <div class="flex">
+      <el-button @click="$i18n.locale = 'en'"> EN </el-button>
+      <el-button @click="$i18n.locale = 'es'"> ES </el-button>
       <el-button :icon="ChatDotSquare" @click="help"></el-button>
       <el-button :icon="SwitchButton" @click="logout"></el-button>
     </div>

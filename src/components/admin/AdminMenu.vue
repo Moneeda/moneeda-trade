@@ -41,8 +41,8 @@ export default defineComponent({
     :ellipsis="false"
     @select="handleOpen"
   >
-    <el-menu-item index="1"> Strategies </el-menu-item>
-    <el-menu-item index="2"> Playground </el-menu-item>
+    <el-menu-item index="1"> {{ $t("navbarStrategies") }} </el-menu-item>
+    <el-menu-item index="2"> {{ $t("navbarPlayground") }} </el-menu-item>
   </el-menu>
 </template>
 
