@@ -60,7 +60,7 @@ export default defineComponent({
             {{ $t("login") }}
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
-            <el-button type="primary"> {{ $t('landing.welcome') }} </el-button>
+            <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>
           </router-link>
         </div>
       </div>
@@ -68,11 +68,11 @@ export default defineComponent({
       <div class="m-header__content flex flex-col justify-around">
         <div class="text-center">
           <h1 class="text-3xl sm:text-5xl font-title leading-relaxed">
-            {{ $t("welcome") }}
-            <br />{{ $t("welcomePhrase") }}
+            {{ $t("landing.welcome") }}
+            <br />{{ $t("landing.welcomePhrase") }}
           </h1>
           <p class="text-sm mt-8">
-            {{ $t("welcomeSubtittle") }}
+            {{ $t("landing.welcomeSubtittle") }}
           </p>
           <el-button
             v-if="!isAuthenticated"
@@ -81,11 +81,11 @@ export default defineComponent({
             type="primary"
             @click="login"
           >
-            {{ $t("startButton") }}
+            {{ $t("landing.startButton") }}
           </el-button>
 
           <nuxt-link v-else :to="{ name: 'admin-overview' }">
-            <el-button type="primary"> {{ $t("dashboard") }} </el-button>
+            <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>
           </nuxt-link>
         </div>
         <div class="flex items-center justify-center flex-wrap mt-5">
@@ -135,11 +135,11 @@ export default defineComponent({
           target="_new"
           class="!text-white"
         >
-          {{ $t("termsOfService") }}
+          {{ $t("landing.termsOfService") }}
         </a>
         <span class="hidden sm:inline mx-2"> · </span>
 
-        <button @click="showCookieConsent">{{ $t("cookiesSettings") }}</button>
+        <button @click="showCookieConsent">{{ $t("landing.cookiesSettings") }}</button>
       </div>
 
       <div>
@@ -151,7 +151,7 @@ export default defineComponent({
           Twitter
         </a>
         <span class="cursor-pointer" @click="liveChat">{{
-          $t("liveChat")
+          $t("landing.liveChat")
         }}</span>
         <span class="hidden sm:inline mx-2"> · </span>
         <a href="mailto:hello@moneeda.com" target="_new" class="!text-white">

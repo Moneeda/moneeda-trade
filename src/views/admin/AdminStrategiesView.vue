@@ -21,17 +21,17 @@ const strategyModalOpen = ref(false);
 <template>
   <div class="py-4 px-8 max-w-[70%]">
     <h1 class="items-center">
-      <el-icon :size="32"><Odometer /></el-icon> {{ $t("strategies") }}
+      <el-icon :size="32"><Odometer /></el-icon> {{ $t("strategiesView.strategies") }}
     </h1>
     <p class="text-content">
-      {{ $t("strategiesDescription") }}
+      {{ $t("strategiesView.description") }}
     </p>
     <el-alert type="warning" :closable="false">
-      {{ $t("strategiesWarning") }}
+      {{ $t("strategiesView.warning") }}
     </el-alert>
 
     <span class="text-sm font-medium text-content60 uppercase block py-4"
-      >{{ $t("yourStrategies") }}</span
+      >{{ $t("strategiesView.yourStrategies") }}</span
     >
     <div class="h-full grid gap-4 grid-cols-2">
       <StrategyCard
