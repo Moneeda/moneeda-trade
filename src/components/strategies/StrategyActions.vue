@@ -24,7 +24,7 @@ const add = (type) => {
 
 <template>
   <div class="bg-white box-shadow p-4 flex flex-col items-start justify-start">
-    <h3>Mode</h3>
+    <h3>{{ $t("playgroundView.mode") }}</h3>
 
     <el-radio-group
       v-model="layoutMode"
@@ -43,7 +43,7 @@ const add = (type) => {
       </el-radio-button>
     </el-radio-group>
 
-    <h3 class="mt-4">Actions</h3>
+    <h3 class="mt-4">{{ $t("playgroundView.actions") }}</h3>
 
     <!-- Wrapped because element adds a margin between two buttons -->
     <div class="mt-2 w-full">
@@ -54,7 +54,7 @@ const add = (type) => {
         class="w-full"
         @click="add(nodeTypes.CONDITION)"
       >
-        Add condition
+        {{ $t("playgroundView.condition") }}
       </el-button>
     </div>
     <div class="mt-2 w-full">
@@ -65,11 +65,11 @@ const add = (type) => {
         color="#626aef"
         @click="add(nodeTypes.ACTION)"
       >
-        Add result
+        {{ $t("playgroundView.result") }}
       </el-button>
     </div>
 
-    <h3 class="mt-4">Simulation</h3>
+    <h3 class="mt-4">{{ $t("playgroundView.simulation") }}</h3>
     <el-select
       v-model="activeSimulation"
       placeholder="Pick a simulation"
@@ -94,7 +94,7 @@ const add = (type) => {
       <el-option-group label="Trend based"> </el-option-group>
     </el-select>
 
-    <el-button :icon="Select" class="w-full mt-8" plain> Save </el-button>
+    <el-button :icon="Select" class="w-full mt-8" plain>{{ $t("playgroundView.save") }}</el-button>
     <el-checkbox
       v-model="autosave"
       label="Autosave changes"
