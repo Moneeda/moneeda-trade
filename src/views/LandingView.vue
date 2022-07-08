@@ -27,7 +27,7 @@ export default defineComponent({
     };
 
 
-    const storeLanguageInLocalStorage = (lng) => {
+    const setLanguage = (lng) => {
       window.localStorage.setItem("lng", lng);
       i18n.global.locale._setter(lng);
     };
@@ -40,7 +40,7 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
-      storeLanguageInLocalStorage
+      setLanguage
     };
   },
 });
@@ -53,11 +53,11 @@ export default defineComponent({
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div class="flex space-x-4">
           <div>
-            <el-button @click="storeLanguageInLocalStorage('en')"> EN </el-button>
-            <el-button @click="storeLanguageInLocalStorage('es')"> ES </el-button>
+            <el-button @click="setLanguage('en')"> EN </el-button>
+            <el-button @click="setLanguage('es')"> ES </el-button>
           </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
-            {{ $t("login") }}
+            {{ $t("landing.login") }}
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
             <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>

@@ -17,7 +17,7 @@ const help = () => {
   window.drift?.api.openChat();
 };
 
-const storeLanguageInLocalStorage = (lng) => {
+const setLanguage = (lng) => {
       window.localStorage.setItem("lng", lng);
       i18n.global.locale._setter(lng);
     };
@@ -34,8 +34,8 @@ const storeLanguageInLocalStorage = (lng) => {
     </div>
 
     <div class="flex">
-      <el-button @click="storeLanguageInLocalStorage('en')"> EN </el-button>
-      <el-button @click="storeLanguageInLocalStorage('es')"> ES </el-button>
+      <el-button @click="setLanguage('en')"> EN </el-button>
+      <el-button @click="setLanguage('es')"> ES </el-button>
       <el-button :icon="ChatDotSquare" @click="help"></el-button>
       <el-button :icon="SwitchButton" @click="logout"></el-button>
     </div>

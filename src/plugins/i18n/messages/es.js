@@ -1,10 +1,10 @@
 export default {
   landing: {
-    welcome: "Aplicar estrategias de trading es complicado",
+    welcome: "Aplicar estrategias de trading es complicado.",
     login: "Iniciar Sesion/Registrarse",
     dashboard: "Interfaz",
     welcomePhrase: "Nosotros las simplificamos.",
-    welcomeSubtittle: "Genera enlaces de pago y subscripcion sin escribir codigo o usando nuestra API",
+    welcomeSubtittle: "Genera enlaces de pago y subscripcion sin escribir codigo o usando nuestra API.",
     startButton: "Empieza con Moneeda",
     termsOfService: "Terminos de Servicio",
     cookiesSettings: "Ajustes de las Cookies",
