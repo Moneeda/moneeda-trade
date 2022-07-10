@@ -18,7 +18,7 @@ export default class ActionsApi {
     return data;
   }
 
-  async create(condition) {
+  async add(condition) {
     const { data } = await this.client.post(`actions`, condition);
     return data;
   }

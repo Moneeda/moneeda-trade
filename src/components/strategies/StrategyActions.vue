@@ -94,7 +94,9 @@ const add = (type) => {
       <el-option-group label="Trend based"> </el-option-group>
     </el-select>
 
-    <el-button :icon="Select" class="w-full mt-8" plain>{{ $t("playgroundView.save") }}</el-button>
+    <el-button :icon="Select" class="w-full mt-8" plain>{{
+      $t("playgroundView.save")
+    }}</el-button>
     <el-checkbox
       v-model="autosave"
       label="Autosave changes"
