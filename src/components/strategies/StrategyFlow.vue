@@ -1,21 +1,21 @@
 <script setup>
-import {
-  VueFlow,
-  Controls,
-  Background,
-  isNode,
-  useVueFlow,
-} from "@braks/vue-flow";
-import { ref, watchEffect } from "vue";
+import { VueFlow, Controls, Background, useVueFlow } from "@braks/vue-flow";
+import { markRaw, ref, watchEffect } from "vue";
 import { useStrategies } from "~/core/useStrategies";
 import { buildNodes, updateNodePos } from "./strategyFlowHelper";
+import ConditionNode from "./nodes/ConditionNode.vue";
+import ActionNode from "./nodes/ActionNode.vue";
 
 const { conditions, actions, autosave, updateNode } = useStrategies();
 
+const nodeTypes = {
+  condition: markRaw(ConditionNode),
+  action: markRaw(ActionNode),
+};
+
 const elements = ref([]);
 
-const { onPaneReady, onNodeDragStop, onConnect, instance, addEdges } =
-  useVueFlow();
+const { onPaneReady, onNodeDragStop, onConnect, addEdges } = useVueFlow();
 
 watchEffect(() => {
   elements.value = buildNodes(conditions.value, actions.value);
@@ -37,6 +37,7 @@ onConnect((params) => addEdges([params]));
   <VueFlow
     v-model="elements"
     class="vue-flow-basic-example"
+    :node-types="nodeTypes"
     :default-zoom="1.5"
     :min-zoom="0.2"
     :max-zoom="4"

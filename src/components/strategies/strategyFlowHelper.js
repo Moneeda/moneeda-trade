@@ -12,6 +12,11 @@ const mapNode = (node, type) => {
       x: node.positionX,
       y: node.positionY,
     },
+    data: {
+      action: node,
+      condition: node,
+      strategyId: node.strategyId,
+    },
     meta: {
       ...node,
     },
@@ -59,8 +64,11 @@ const mapNodes = (nodes, type) => {
 };
 
 export const buildNodes = (conditions, actions) => {
-  const { items: condItems, edges: condEdges } = mapNodes(conditions, "input");
-  const { items: actItems, edges: actEdges } = mapNodes(actions, "output");
+  const { items: condItems, edges: condEdges } = mapNodes(
+    conditions,
+    "condition"
+  );
+  const { items: actItems, edges: actEdges } = mapNodes(actions, "action");
 
   return [...condItems, ...actItems, ...condEdges, ...actEdges];
 };

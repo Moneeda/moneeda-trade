@@ -1,4 +1,4 @@
-import { inject, provide, ref, reactive } from "vue";
+import { inject, provide, ref, reactive, toRaw } from "vue";
 import api from "~/api";
 import {
   createRawNode,
@@ -132,8 +132,27 @@ const createStrategiesInstance = () => {
     }
   };
 
-  const updateNode = (node) => {
-    console.log(node);
+  const updateNode = async (proxyNode) => {
+    const node = toRaw(proxyNode);
+
+    switch (node.type) {
+      case "action": {
+        const action = toRaw(node.meta);
+        console.log(action);
+        await api.actions().update({
+          ...action,
+          positionX: node.position.x,
+          positionY: node.position.y,
+        });
+        break;
+      }
+      case "condition":
+        break;
+
+      default:
+        break;
+    }
+    console.log(toRaw(node));
     // TODO map and ping endpoint
   };
 
