@@ -91,8 +91,9 @@ export const login = async () => {
   }
   try {
 const currentLanguage = window.localStorage.getItem("lng");
+const navigatorLanguage = navigator.language;
     await auth0Client.value.loginWithRedirect({
-      ui_locales: currentLanguage || 'en'
+      ui_locales:  currentLanguage || navigatorLanguage
     }
     );
   } catch (err) {
