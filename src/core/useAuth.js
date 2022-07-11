@@ -90,7 +90,11 @@ export const login = async () => {
     return;
   }
   try {
-    await auth0Client.value.loginWithRedirect();
+const currentLanguage = window.localStorage.getItem("lng");
+    await auth0Client.value.loginWithRedirect({
+      ui_locales: currentLanguage || 'en'
+    }
+    );
   } catch (err) {
     error.value = err;
   }
@@ -121,7 +125,6 @@ export const provideAuth0 = () => {
     isAuthenticated,
     isLoading,
     user,
-
     createClient,
     handleCallback,
     login,
