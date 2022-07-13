@@ -90,25 +90,11 @@ export const login = async () => {
     return;
   }
   try {
-const languageSelected = window.localStorage.getItem("lng");
-const lang = navigator.language.split("-")[0]
-const isLangSupported = ["en", "es"].includes(lang)
-const currentLang = isLangSupported ? lang : "en"
-
-if(languageSelected === null){
-  await auth0Client.value.loginWithRedirect({
-    ui_locales: currentLang
-  }
-  );
-}
-
-else {
-  await auth0Client.value.loginWithRedirect({
-    ui_locales:  languageSelected
-  }
-  ); 
-}
-
+const currentLanguage = window.localStorage.getItem("lng");
+    await auth0Client.value.loginWithRedirect({
+      ui_locales: currentLanguage || 'en'
+    }
+    );
   } catch (err) {
     error.value = err;
   }
