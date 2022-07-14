@@ -97,6 +97,22 @@ const createStrategiesInstance = () => {
     return strategy;
   };
 
+  const createAction = async (actionData) => {
+    loading.create = true;
+    const action = await api.actions().add(actionData);
+    actions.value.push(action);
+    loading.create = false;
+    return action;
+  };
+
+  const createCondition = async (conditionData) => {
+    loading.create = true;
+    const condition = await api.conditions().add(conditionData);
+    strategies.value.push(condition);
+    loading.create = false;
+    return condition;
+  };
+
   const removeStrategy = async (strategy) => {
     loading.remove = true;
     await api.strategies().remove(strategy);
@@ -134,6 +150,8 @@ const createStrategiesInstance = () => {
     changeStrategy,
     createStrategy,
     removeStrategy,
+    createAction,
+    createCondition,
     addNode,
     updateNode,
   };
