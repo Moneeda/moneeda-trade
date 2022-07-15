@@ -2,11 +2,20 @@
 import { VueFlow, Controls, Background, useVueFlow } from "@braks/vue-flow";
 import { markRaw, ref, watchEffect } from "vue";
 import { useStrategies } from "~/core/useStrategies";
-import { buildNodes, updateNodePos } from "./strategyFlowHelper";
+import { buildNodes } from "./strategyFlowHelper";
 import ConditionNode from "./nodes/ConditionNode.vue";
 import ActionNode from "./nodes/ActionNode.vue";
 
-const { conditions, actions, autosave, updateNode } = useStrategies();
+const {
+  conditions,
+  actions,
+  autosave,
+  updateNode,
+  getConditionById,
+  getActionById,
+  updateActionRelations,
+  updateConditionRelations,
+} = useStrategies();
 
 const nodeTypes = {
   condition: markRaw(ConditionNode),
@@ -25,13 +34,28 @@ onPaneReady(({ fitView }) => {
   fitView();
   elements.value = buildNodes(conditions.value, actions.value);
 });
-onNodeDragStop(({ event, node }) => {
-  updateNodePos(node, { x: event.x, y: event.y });
+onNodeDragStop(({ node }) => {
   if (autosave.value) {
     updateNode(node);
   }
 });
-onConnect((params) => addEdges([params]));
+onConnect((params) => {
+  console.log(params);
+  addEdges([params]);
+  const sourceCondition = getConditionById(params.source);
+  const targetCondition = getConditionById(params.target);
+  const targetAction = getActionById(params.target);
+
+  if (!sourceCondition) throw new Error("Source Condition does not exist");
+  if (!targetCondition && !targetAction)
+    throw new Error("Target does not exist");
+
+  if (targetAction) {
+    updateActionRelations(sourceCondition, targetAction._id);
+  } else if (targetCondition) {
+    updateConditionRelations(sourceCondition, targetCondition._id);
+  }
+});
 </script>
 <template>
   <VueFlow

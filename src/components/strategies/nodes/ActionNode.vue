@@ -14,15 +14,12 @@ defineProps({
     <Handle
       :id="data.action._id"
       type="target"
-      :position="Position.Right"
+      :position="Position.Left"
       :style="{
-        position: 'absolute',
         background: '#555',
-        left: '48px',
         zIndex: '1',
       }"
     />
     <ActionCard :action="data.action" />
-    <template />
   </div>
 </template>

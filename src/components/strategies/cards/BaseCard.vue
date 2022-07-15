@@ -13,10 +13,6 @@ defineProps({
     type: String,
     default: CardColor.blue,
   },
-  scale: {
-    type: String,
-    default: Scale.normal,
-  },
 });
 </script>
 
@@ -26,7 +22,6 @@ defineProps({
     :style="{
       border: `solid ${color}`,
       width: cardsize,
-      transform: `scale${scale}`,
     }"
   >
     <div class="type-method" :style="{ backgroundColor: color }">

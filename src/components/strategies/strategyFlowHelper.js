@@ -26,14 +26,11 @@ const mapNode = (node, type) => {
 
 export const createRawNode = () => {
   return {
+    type: "New",
     method: "New",
     positionX: 50,
     positionY: 50,
   };
-};
-
-export const updateNodePos = (node, pos) => {
-  node.position = pos;
 };
 
 const mapNodes = (nodes, type) => {
@@ -74,6 +71,6 @@ export const buildNodes = (conditions, actions) => {
 };
 
 export const NodeType = {
-  CONDITION: "input",
-  ACTION: "output",
+  CONDITION: "condition",
+  ACTION: "action",
 };

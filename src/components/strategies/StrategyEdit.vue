@@ -84,10 +84,9 @@ const onSave = async () => {
       <el-button :icon="Expand" @click="switchLayout('view')" disabled>
       </el-button>
     </div>
-    {{ data }}
     <json-forms
       v-if="jsonResource"
-      :data="data"
+      :data="rawData"
       :renderers="renderers"
       :schema="jsonResource.schema"
       :uischema="jsonResource.uischema"

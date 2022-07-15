@@ -42,8 +42,8 @@ const createStrategiesInstance = () => {
   const strategies = ref([]);
   const conditions = ref([]);
   const resources = ref({
-    input: {},
-    output: {},
+    condition: {},
+    action: {},
   });
   const actions = ref([]);
   const autosave = ref(true);
@@ -72,8 +72,8 @@ const createStrategiesInstance = () => {
       api.conditions().resources(),
       api.actions().resources(),
     ]);
-    resources.value.input = conds;
-    resources.value.output = acts;
+    resources.value.condition = conds;
+    resources.value.action = acts;
   };
 
   const retrieveStrategies = async (defaultToFirst = true) => {
@@ -108,9 +108,43 @@ const createStrategiesInstance = () => {
   const createCondition = async (conditionData) => {
     loading.create = true;
     const condition = await api.conditions().add(conditionData);
-    strategies.value.push(condition);
+    conditions.value.push(condition);
     loading.create = false;
     return condition;
+  };
+
+  const getActionById = (actionId) => {
+    return actions.value.find((action) => action._id === actionId);
+  };
+
+  const getConditionById = (conditionId) => {
+    return conditions.value.find((condition) => condition._id === conditionId);
+  };
+
+  const updateCondition = async (condition) => {
+    try {
+      await api.conditions().update({
+        ...condition,
+        params: condition.params || {},
+      });
+    } catch (error) {
+      console.error(`AddStrategy -> add() ERROR: \n${error}`);
+    }
+  };
+
+  const updateActionRelations = async (source, actionId) => {
+    const condition = { ...source };
+    condition.successActionIds = [...source.successConditionIds, actionId];
+    updateCondition(condition);
+  };
+
+  const updateConditionRelations = async (source, conditionId) => {
+    const condition = { ...source };
+    condition.successConditionIds = [
+      ...source.successConditionIds,
+      conditionId,
+    ];
+    updateCondition(condition);
   };
 
   const removeStrategy = async (strategy) => {
@@ -137,23 +171,25 @@ const createStrategiesInstance = () => {
 
     switch (node.type) {
       case "action": {
-        const action = toRaw(node.meta);
-        console.log(action);
         await api.actions().update({
-          ...action,
+          ...node.data.action,
           positionX: node.position.x,
           positionY: node.position.y,
         });
         break;
       }
       case "condition":
+        await api.conditions().update({
+          ...node.data.condition,
+          params: node.data.condition.params || {},
+          positionX: node.position.x,
+          positionY: node.position.y,
+        });
         break;
 
       default:
         break;
     }
-    console.log(toRaw(node));
-    // TODO map and ping endpoint
   };
 
   retrieveStrategies();
@@ -173,6 +209,10 @@ const createStrategiesInstance = () => {
     createCondition,
     addNode,
     updateNode,
+    getConditionById,
+    getActionById,
+    updateActionRelations,
+    updateConditionRelations,
   };
 };
 
