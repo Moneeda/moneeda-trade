@@ -121,6 +121,26 @@ const createStrategiesInstance = () => {
     return conditions.value.find((condition) => condition._id === conditionId);
   };
 
+  const deleteAction = async (action) => {
+    try {
+      await api.actions().remove(action.strategyId, action._id);
+      actions.value = actions.value.filter((a) => a._id !== action._id);
+    } catch (error) {
+      console.error(`remove action -> remove() ERROR: \n${error}`);
+    }
+  };
+
+  const deleteCondition = async (condition) => {
+    try {
+      await api.conditions().remove(condition.strategyId, condition._id);
+      conditions.value = conditions.value.filter(
+        (c) => c._id !== condition._id
+      );
+    } catch (error) {
+      console.error(`remove action > remove() ERROR: \n${error}`);
+    }
+  };
+
   const updateCondition = async (condition) => {
     try {
       await api.conditions().update({
@@ -128,7 +148,7 @@ const createStrategiesInstance = () => {
         params: condition.params || {},
       });
     } catch (error) {
-      console.error(`AddStrategy -> add() ERROR: \n${error}`);
+      console.error(`update condition -> update() ERROR: \n${error}`);
     }
   };
 
@@ -213,6 +233,8 @@ const createStrategiesInstance = () => {
     getActionById,
     updateActionRelations,
     updateConditionRelations,
+    deleteAction,
+    deleteCondition,
   };
 };
 

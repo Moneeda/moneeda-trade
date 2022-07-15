@@ -1,5 +1,6 @@
 <script setup>
 import { EditPen, DeleteFilled } from "@element-plus/icons-vue";
+import { useStrategies } from "~/core/useStrategies";
 import CardActionList from "../cards/CardActionList.vue";
 import CardAction from "../cards/CardAction.vue";
 import BaseCard from "../cards/BaseCard.vue";
@@ -13,6 +14,7 @@ defineProps({
     required: true,
   },
 });
+const { deleteCondition } = useStrategies();
 </script>
 
 <template>
@@ -43,6 +45,7 @@ defineProps({
             size="small"
             type="danger"
             :icon="DeleteFilled"
+            @click="deleteCondition(condition)"
           ></el-button>
         </CardAction>
       </CardActionList>

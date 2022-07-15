@@ -1,6 +1,7 @@
 <script setup>
 import { EditPen, DeleteFilled } from "@element-plus/icons-vue";
 import BaseCard from "../cards/BaseCard.vue";
+import { useStrategies } from "~/core/useStrategies";
 import CardActionList from "../cards/CardActionList.vue";
 import CardAction from "../cards/CardAction.vue";
 import CardText from "../cards/CardText.vue";
@@ -13,6 +14,7 @@ defineProps({
     required: true,
   },
 });
+const { deleteAction } = useStrategies();
 </script>
 
 <template>
@@ -43,6 +45,7 @@ defineProps({
             size="small"
             type="danger"
             :icon="DeleteFilled"
+            @click="deleteAction(action)"
           ></el-button>
         </CardAction>
       </CardActionList>

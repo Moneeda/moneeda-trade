@@ -13,8 +13,8 @@ export default class ConditionsApi {
     return data;
   }
 
-  async remove(id) {
-    const { data } = await this.client.delete(`conditions/${id}`);
+  async remove(strategyId, id) {
+    const { data } = await this.client.delete(`conditions/${strategyId}/${id}`);
     return data;
   }
 
