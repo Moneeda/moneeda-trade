@@ -1,4 +1,7 @@
 <script setup>
+import { EditPen, DeleteFilled } from "@element-plus/icons-vue";
+import CardActionList from "../cards/CardActionList.vue";
+import CardAction from "../cards/CardAction.vue";
 import BaseCard from "../cards/BaseCard.vue";
 import CardText from "../cards/CardText.vue";
 import CardPropertyList from "../cards/CardPropertyList.vue";
@@ -25,7 +28,24 @@ defineProps({
         <CardProperty :value="condition.period" label="Period" />
         <CardProperty :value="condition.product" label="Product" />
       </CardPropertyList>
-      <slot />
+      <CardActionList>
+        <CardAction>
+          <el-button
+            size="small"
+            circle
+            type="warning"
+            :icon="EditPen"
+          ></el-button>
+        </CardAction>
+        <CardAction>
+          <el-button
+            circle
+            size="small"
+            type="danger"
+            :icon="DeleteFilled"
+          ></el-button>
+        </CardAction>
+      </CardActionList>
     </BaseCard>
   </div>
 </template>

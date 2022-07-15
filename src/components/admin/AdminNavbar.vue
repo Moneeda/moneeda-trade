@@ -5,7 +5,6 @@ import { useAuth0 } from "../../core/useAuth";
 import api from "../../api";
 import { i18n } from "../../plugins/i18n/index";
 
-
 const auth0 = useAuth0();
 
 const logout = () => {
@@ -18,10 +17,9 @@ const help = () => {
 };
 
 const setLanguage = (lng) => {
-      window.localStorage.setItem("lng", lng);
-      i18n.global.locale._setter(lng);
-    };
-
+  window.localStorage.setItem("lng", lng);
+  i18n.global.locale._setter(lng);
+};
 </script>
 
 <template>
