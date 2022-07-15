@@ -23,24 +23,31 @@ const nodeTypes = {
 };
 
 const elements = ref([]);
+let fitFlowView;
 
-const { onPaneReady, onNodeDragStop, onConnect, addEdges } = useVueFlow();
+const { onPaneReady, onNodeDragStop, onConnect, addEdges, onNodesChange } =
+  useVueFlow();
 
 watchEffect(() => {
   elements.value = buildNodes(conditions.value, actions.value);
 });
 
 onPaneReady(({ fitView }) => {
-  fitView();
   elements.value = buildNodes(conditions.value, actions.value);
+  fitFlowView = fitView;
+  fitFlowView();
 });
+
+onNodesChange(() => {
+  fitFlowView();
+});
+
 onNodeDragStop(({ node }) => {
   if (autosave.value) {
     updateNode(node);
   }
 });
 onConnect((params) => {
-  console.log(params);
   addEdges([params]);
   const sourceCondition = getConditionById(params.source);
   const targetCondition = getConditionById(params.target);

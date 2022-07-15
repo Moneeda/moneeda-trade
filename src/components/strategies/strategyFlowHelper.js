@@ -52,6 +52,10 @@ const mapNodes = (nodes, type) => {
           source: node._id,
           target: resultId,
           type: "smoothstep",
+          style: {
+            stroke: "#5ccebc",
+            strokeWidth: 4,
+          },
         });
       });
     }
