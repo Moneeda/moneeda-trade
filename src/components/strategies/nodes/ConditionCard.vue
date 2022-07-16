@@ -1,6 +1,7 @@
 <script setup>
 import { EditPen, DeleteFilled } from "@element-plus/icons-vue";
 import { useStrategies } from "~/core/useStrategies";
+import { useLayout } from "~/core/useLayout";
 import CardActionList from "../cards/CardActionList.vue";
 import CardAction from "../cards/CardAction.vue";
 import BaseCard from "../cards/BaseCard.vue";
@@ -8,13 +9,20 @@ import CardText from "../cards/CardText.vue";
 import CardPropertyList from "../cards/CardPropertyList.vue";
 import CardProperty from "../cards/CardProperty.vue";
 import { CardColor, CardSize, Scale } from "../cards/types";
+import { NodeType } from "../strategyFlowHelper";
 defineProps({
   condition: {
     type: Object,
     required: true,
   },
 });
-const { deleteCondition } = useStrategies();
+const { deleteCondition, setConditionToUpdate } = useStrategies();
+const { switchLayout } = useLayout();
+
+const updateCondition = (condition) => {
+  setConditionToUpdate(condition);
+  switchLayout(NodeType.CONDITION);
+};
 </script>
 
 <template>
@@ -37,6 +45,7 @@ const { deleteCondition } = useStrategies();
             circle
             type="warning"
             :icon="EditPen"
+            @click="updateCondition(condition)"
           ></el-button>
         </CardAction>
         <CardAction>

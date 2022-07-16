@@ -53,6 +53,8 @@ const createStrategiesInstance = () => {
   });
 
   const activeStrategy = ref(null);
+  const conditionToUpdate = ref(null);
+  const actionToUpdate = ref(null);
   const changeStrategy = (strategy) => {
     activeStrategy.value = strategy;
     fetchConditionsAndActions(strategy._id);
@@ -121,6 +123,14 @@ const createStrategiesInstance = () => {
     return conditions.value.find((condition) => condition._id === conditionId);
   };
 
+  const setActionToUpdate = (action) => {
+    actionToUpdate.value = action;
+  };
+
+  const setConditionToUpdate = (condition) => {
+    conditionToUpdate.value = condition;
+  };
+
   const deleteAction = async (action) => {
     try {
       await api.actions().remove(action.strategyId, action._id);
@@ -147,6 +157,26 @@ const createStrategiesInstance = () => {
         ...condition,
         params: condition.params || {},
       });
+
+      const filterConditions = conditions.value.filter(
+        (c) => c._id !== condition._id
+      );
+
+      conditions.value = [...filterConditions, condition];
+    } catch (error) {
+      console.error(`update condition -> update() ERROR: \n${error}`);
+    }
+  };
+
+  const updateAction = async (action) => {
+    try {
+      await api.actions().update({
+        ...action,
+      });
+
+      const filterActions = actions.value.filter((a) => a._id !== action._id);
+
+      actions.value = [...filterActions, action];
     } catch (error) {
       console.error(`update condition -> update() ERROR: \n${error}`);
     }
@@ -222,6 +252,10 @@ const createStrategiesInstance = () => {
     strategies,
     resources,
     activeStrategy,
+    actionToUpdate,
+    conditionToUpdate,
+    setActionToUpdate,
+    setConditionToUpdate,
     changeStrategy,
     createStrategy,
     removeStrategy,
@@ -235,6 +269,8 @@ const createStrategiesInstance = () => {
     updateConditionRelations,
     deleteAction,
     deleteCondition,
+    updateCondition,
+    updateAction,
   };
 };
 

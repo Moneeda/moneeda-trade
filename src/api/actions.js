@@ -18,13 +18,13 @@ export default class ActionsApi {
     return data;
   }
 
-  async add(condition) {
-    const { data } = await this.client.post(`actions`, condition);
+  async add(action) {
+    const { data } = await this.client.post(`actions`, action);
     return data;
   }
 
-  async update(condition) {
-    const { data } = await this.client.put(`actions`, condition);
+  async update(action) {
+    const { data } = await this.client.put(`actions`, action);
     return data;
   }
 }

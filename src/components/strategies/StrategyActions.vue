@@ -13,10 +13,12 @@ import { NodeType } from "~/components/strategies/strategyFlowHelper";
 
 const { layoutMode, switchLayout } = useLayout();
 const { simulations, changeSimulation, activeSimulation } = useSimulations();
-const { autosave } = useStrategies();
+const { autosave, setActionToUpdate, setConditionToUpdate } = useStrategies();
 const nodeTypes = NodeType;
 
 const add = (type) => {
+  setActionToUpdate(undefined);
+  setConditionToUpdate(undefined);
   switchLayout(type);
 };
 </script>
