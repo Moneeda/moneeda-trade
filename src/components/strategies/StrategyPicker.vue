@@ -1,7 +1,8 @@
 <script setup>
 import { Setting } from "@element-plus/icons-vue";
 import { useStrategies } from "~/core/useStrategies";
-const { strategies, activeStrategy, changeStrategy } = useStrategies();
+const { strategies, activeStrategy, changeStrategy, simulate } =
+  useStrategies();
 </script>
 
 <template>
@@ -25,7 +26,7 @@ const { strategies, activeStrategy, changeStrategy } = useStrategies();
         />
       </el-select>
 
-      <el-button type="primary" class="ml-6" :icon="Setting">
+      <el-button type="primary" class="ml-6" :icon="Setting" @click="simulate">
         {{ $t("playgroundView.runSimulation") }}
       </el-button>
     </div>

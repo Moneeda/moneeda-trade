@@ -188,6 +188,15 @@ const createStrategiesInstance = () => {
     updateCondition(condition);
   };
 
+  const simulate = async () => {
+    const response = await api.simulations().simulate({
+      sections: [{ from: Date.now() - 604800000, to: Date.now() }],
+      strategyId: activeStrategy.value._id,
+    });
+
+    return response;
+  };
+
   const updateConditionRelations = async (source, conditionId) => {
     const condition = { ...source };
     condition.successConditionIds = [
@@ -271,6 +280,7 @@ const createStrategiesInstance = () => {
     deleteCondition,
     updateCondition,
     updateAction,
+    simulate,
   };
 };
 
