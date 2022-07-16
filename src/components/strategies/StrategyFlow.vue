@@ -39,7 +39,7 @@ onPaneReady(({ fitView }) => {
 });
 
 onNodesChange(() => {
-  fitFlowView();
+  if (fitFlowView) fitFlowView();
 });
 
 onNodeDragStop(({ node }) => {

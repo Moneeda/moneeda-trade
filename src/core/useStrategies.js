@@ -184,7 +184,7 @@ const createStrategiesInstance = () => {
 
   const updateActionRelations = async (source, actionId) => {
     const condition = { ...source };
-    condition.successActionIds = [...source.successConditionIds, actionId];
+    condition.successActionIds = [...source.successActionIds, actionId];
     updateCondition(condition);
   };
 
