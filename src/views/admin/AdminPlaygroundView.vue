@@ -16,7 +16,7 @@ const { layoutMode } = useLayout();
       class="admin-playground"
       :class="{
         'admin-playground--two-cols': layoutMode === 'view',
-        'admin-playground--three-cols': layoutMode !== 'edit',
+        'admin-playground--three-cols': layoutMode !== 'view',
       }"
     >
       <StrategyFlow style="grid-area: flow" />
