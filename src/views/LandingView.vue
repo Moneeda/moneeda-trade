@@ -2,6 +2,8 @@
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
 import { i18n } from "~/plugins/i18n";
+import { onMounted } from 'vue';
+import { detectLanguage } from '../plugins/i18n/index';
 
 export default defineComponent({
   components: {},
@@ -31,6 +33,13 @@ export default defineComponent({
       window.localStorage.setItem("lng", lng);
       i18n.global.locale._setter(lng);
     };
+
+    onMounted(() => {
+      const firstMounted = window.localStorage.getItem('mount');
+      if(firstMounted === null){
+      detectLanguage();
+      }
+    })
 
 
     return {
