@@ -4,7 +4,12 @@ import { useStrategies } from "~/core/useStrategies";
 import { Expand } from "@element-plus/icons-vue";
 import { computed, reactive } from "vue";
 import { JsonForms } from "@jsonforms/vue";
-import { vanillaRenderers } from "@jsonforms/vue-vanilla";
+import {
+  vanillaRenderers,
+  mergeStyles,
+  defaultStyles,
+} from "@jsonforms/vue-vanilla";
+import { entry as BooleanRenderer } from "../jsonforms/BooleanControlRenderer.vue";
 
 const { layoutMode, switchLayout } = useLayout();
 const { resources } = useStrategies();
@@ -15,10 +20,20 @@ const jsonResource = computed(() => {
 });
 const data = reactive({});
 
-const renderers = Object.freeze([
-  ...vanillaRenderers,
-  // here you can add custom renderers
-]);
+const renderers = Object.freeze([...vanillaRenderers, BooleanRenderer]);
+</script>
+
+<script>
+// mergeStyles combines all classes from both styles definitions into one
+const myStyles = mergeStyles(defaultStyles, {
+  control: { label: "mylabel", select: "el-select", input: "el" },
+});
+
+export default {
+  provide: {
+    styles: myStyles,
+  },
+};
 </script>
 
 <template>
