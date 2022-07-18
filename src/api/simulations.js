@@ -7,4 +7,9 @@ export default class SimulationsApi {
     const { data } = await this.client.get("simulation-tests/list");
     return data;
   }
+
+  async simulate(simulate) {
+    const { data } = await this.client.post("simulation", simulate);
+    return data;
+  }
 }

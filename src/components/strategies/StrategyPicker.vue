@@ -1,15 +1,16 @@
 <script setup>
 import { Setting } from "@element-plus/icons-vue";
 import { useStrategies } from "~/core/useStrategies";
-const { strategies, activeStrategy, changeStrategy } = useStrategies();
+const { strategies, activeStrategy, changeStrategy, simulate } =
+  useStrategies();
 </script>
 
 <template>
   <div class="flex justify-between items-center h-navbar bg-white px-8">
-    <h1 class="text-xl font-medium">Playground</h1>
+    <h1 class="text-xl font-medium">{{ $t("playgroundView.tittle") }}</h1>
 
     <div class="flex items-center">
-      <span class="text-content60">Strategy</span>
+      <span class="text-content60">{{ $t("playgroundView.picker") }}</span>
       <el-select
         class="ml-2"
         v-model="activeStrategy"
@@ -25,8 +26,8 @@ const { strategies, activeStrategy, changeStrategy } = useStrategies();
         />
       </el-select>
 
-      <el-button type="primary" class="ml-6" :icon="Setting">
-        Run simulation
+      <el-button type="primary" class="ml-6" :icon="Setting" @click="simulate">
+        {{ $t("playgroundView.runSimulation") }}
       </el-button>
     </div>
   </div>

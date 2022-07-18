@@ -12,6 +12,11 @@ const mapNode = (node, type) => {
       x: node.positionX,
       y: node.positionY,
     },
+    data: {
+      action: node,
+      condition: node,
+      strategyId: node.strategyId,
+    },
     meta: {
       ...node,
     },
@@ -21,14 +26,11 @@ const mapNode = (node, type) => {
 
 export const createRawNode = () => {
   return {
+    type: "New",
     method: "New",
     positionX: 50,
     positionY: 50,
   };
-};
-
-export const updateNodePos = (node, pos) => {
-  node.position = pos;
 };
 
 const mapNodes = (nodes, type) => {
@@ -50,6 +52,10 @@ const mapNodes = (nodes, type) => {
           source: node._id,
           target: resultId,
           type: "smoothstep",
+          style: {
+            stroke: "#5ccebc",
+            strokeWidth: 4,
+          },
         });
       });
     }
@@ -59,13 +65,16 @@ const mapNodes = (nodes, type) => {
 };
 
 export const buildNodes = (conditions, actions) => {
-  const { items: condItems, edges: condEdges } = mapNodes(conditions, "input");
-  const { items: actItems, edges: actEdges } = mapNodes(actions, "output");
+  const { items: condItems, edges: condEdges } = mapNodes(
+    conditions,
+    "condition"
+  );
+  const { items: actItems, edges: actEdges } = mapNodes(actions, "action");
 
   return [...condItems, ...actItems, ...condEdges, ...actEdges];
 };
 
 export const NodeType = {
-  CONDITION: "input",
-  ACTION: "output",
+  CONDITION: "condition",
+  ACTION: "action",
 };

@@ -1,4 +1,4 @@
-import { inject, provide, ref, reactive } from "vue";
+import { inject, provide, ref, reactive, toRaw } from "vue";
 import api from "~/api";
 import {
   createRawNode,
@@ -42,8 +42,8 @@ const createStrategiesInstance = () => {
   const strategies = ref([]);
   const conditions = ref([]);
   const resources = ref({
-    input: {},
-    output: {},
+    condition: {},
+    action: {},
   });
   const actions = ref([]);
   const autosave = ref(true);
@@ -53,6 +53,8 @@ const createStrategiesInstance = () => {
   });
 
   const activeStrategy = ref(null);
+  const conditionToUpdate = ref(null);
+  const actionToUpdate = ref(null);
   const changeStrategy = (strategy) => {
     activeStrategy.value = strategy;
     fetchConditionsAndActions(strategy._id);
@@ -72,8 +74,8 @@ const createStrategiesInstance = () => {
       api.conditions().resources(),
       api.actions().resources(),
     ]);
-    resources.value.input = conds;
-    resources.value.output = acts;
+    resources.value.condition = conds;
+    resources.value.action = acts;
   };
 
   const retrieveStrategies = async (defaultToFirst = true) => {
@@ -97,6 +99,113 @@ const createStrategiesInstance = () => {
     return strategy;
   };
 
+  const createAction = async (actionData) => {
+    loading.create = true;
+    const action = await api.actions().add(actionData);
+    actions.value.push(action);
+    loading.create = false;
+    return action;
+  };
+
+  const createCondition = async (conditionData) => {
+    loading.create = true;
+    const condition = await api.conditions().add(conditionData);
+    conditions.value.push(condition);
+    loading.create = false;
+    return condition;
+  };
+
+  const getActionById = (actionId) => {
+    return actions.value.find((action) => action._id === actionId);
+  };
+
+  const getConditionById = (conditionId) => {
+    return conditions.value.find((condition) => condition._id === conditionId);
+  };
+
+  const setActionToUpdate = (action) => {
+    actionToUpdate.value = action;
+  };
+
+  const setConditionToUpdate = (condition) => {
+    conditionToUpdate.value = condition;
+  };
+
+  const deleteAction = async (action) => {
+    try {
+      await api.actions().remove(action.strategyId, action._id);
+      actions.value = actions.value.filter((a) => a._id !== action._id);
+    } catch (error) {
+      console.error(`remove action -> remove() ERROR: \n${error}`);
+    }
+  };
+
+  const deleteCondition = async (condition) => {
+    try {
+      await api.conditions().remove(condition.strategyId, condition._id);
+      conditions.value = conditions.value.filter(
+        (c) => c._id !== condition._id
+      );
+    } catch (error) {
+      console.error(`remove action > remove() ERROR: \n${error}`);
+    }
+  };
+
+  const updateCondition = async (condition) => {
+    try {
+      await api.conditions().update({
+        ...condition,
+        params: condition.params || {},
+      });
+
+      const filterConditions = conditions.value.filter(
+        (c) => c._id !== condition._id
+      );
+
+      conditions.value = [...filterConditions, condition];
+    } catch (error) {
+      console.error(`update condition -> update() ERROR: \n${error}`);
+    }
+  };
+
+  const updateAction = async (action) => {
+    try {
+      await api.actions().update({
+        ...action,
+      });
+
+      const filterActions = actions.value.filter((a) => a._id !== action._id);
+
+      actions.value = [...filterActions, action];
+    } catch (error) {
+      console.error(`update condition -> update() ERROR: \n${error}`);
+    }
+  };
+
+  const updateActionRelations = async (source, actionId) => {
+    const condition = { ...source };
+    condition.successActionIds = [...source.successActionIds, actionId];
+    updateCondition(condition);
+  };
+
+  const simulate = async () => {
+    const response = await api.simulations().simulate({
+      sections: [{ from: Date.now() - 604800000, to: Date.now() }],
+      strategyId: activeStrategy.value._id,
+    });
+
+    return response;
+  };
+
+  const updateConditionRelations = async (source, conditionId) => {
+    const condition = { ...source };
+    condition.successConditionIds = [
+      ...source.successConditionIds,
+      conditionId,
+    ];
+    updateCondition(condition);
+  };
+
   const removeStrategy = async (strategy) => {
     loading.remove = true;
     await api.strategies().remove(strategy);
@@ -116,9 +225,30 @@ const createStrategiesInstance = () => {
     }
   };
 
-  const updateNode = (node) => {
-    console.log(node);
-    // TODO map and ping endpoint
+  const updateNode = async (proxyNode) => {
+    const node = toRaw(proxyNode);
+
+    switch (node.type) {
+      case "action": {
+        await api.actions().update({
+          ...node.data.action,
+          positionX: node.position.x,
+          positionY: node.position.y,
+        });
+        break;
+      }
+      case "condition":
+        await api.conditions().update({
+          ...node.data.condition,
+          params: node.data.condition.params || {},
+          positionX: node.position.x,
+          positionY: node.position.y,
+        });
+        break;
+
+      default:
+        break;
+    }
   };
 
   retrieveStrategies();
@@ -131,11 +261,26 @@ const createStrategiesInstance = () => {
     strategies,
     resources,
     activeStrategy,
+    actionToUpdate,
+    conditionToUpdate,
+    setActionToUpdate,
+    setConditionToUpdate,
     changeStrategy,
     createStrategy,
     removeStrategy,
+    createAction,
+    createCondition,
     addNode,
     updateNode,
+    getConditionById,
+    getActionById,
+    updateActionRelations,
+    updateConditionRelations,
+    deleteAction,
+    deleteCondition,
+    updateCondition,
+    updateAction,
+    simulate,
   };
 };
 

@@ -1,20 +1,31 @@
 <script setup>
-import {
-  VueFlow,
-  Controls,
-  Background,
-  isNode,
-  useVueFlow,
-} from "@braks/vue-flow";
-import { ref, watchEffect } from "vue";
+import { VueFlow, Controls, Background, useVueFlow } from "@braks/vue-flow";
+import { markRaw, ref, watchEffect } from "vue";
 import { useStrategies } from "~/core/useStrategies";
-import { buildNodes, updateNodePos } from "./strategyFlowHelper";
+import { buildNodes } from "./strategyFlowHelper";
+import ConditionNode from "./nodes/ConditionNode.vue";
+import ActionNode from "./nodes/ActionNode.vue";
 
-const { conditions, actions, autosave, updateNode } = useStrategies();
+const {
+  conditions,
+  actions,
+  autosave,
+  updateNode,
+  getConditionById,
+  getActionById,
+  updateActionRelations,
+  updateConditionRelations,
+} = useStrategies();
+
+const nodeTypes = {
+  condition: markRaw(ConditionNode),
+  action: markRaw(ActionNode),
+};
 
 const elements = ref([]);
+let fitFlowView;
 
-const { onPaneReady, onNodeDragStop, onConnect, instance, addEdges } =
+const { onPaneReady, onNodeDragStop, onConnect, addEdges, onNodesChange } =
   useVueFlow();
 
 watchEffect(() => {
@@ -22,21 +33,42 @@ watchEffect(() => {
 });
 
 onPaneReady(({ fitView }) => {
-  fitView();
   elements.value = buildNodes(conditions.value, actions.value);
+  fitFlowView = fitView;
+  fitFlowView();
 });
-onNodeDragStop(({ event, node }) => {
-  updateNodePos(node, { x: event.x, y: event.y });
+
+onNodesChange(() => {
+  if (fitFlowView) fitFlowView();
+});
+
+onNodeDragStop(({ node }) => {
   if (autosave.value) {
     updateNode(node);
   }
 });
-onConnect((params) => addEdges([params]));
+onConnect((params) => {
+  addEdges([params]);
+  const sourceCondition = getConditionById(params.source);
+  const targetCondition = getConditionById(params.target);
+  const targetAction = getActionById(params.target);
+
+  if (!sourceCondition) throw new Error("Source Condition does not exist");
+  if (!targetCondition && !targetAction)
+    throw new Error("Target does not exist");
+
+  if (targetAction) {
+    updateActionRelations(sourceCondition, targetAction._id);
+  } else if (targetCondition) {
+    updateConditionRelations(sourceCondition, targetCondition._id);
+  }
+});
 </script>
 <template>
   <VueFlow
     v-model="elements"
     class="vue-flow-basic-example"
+    :node-types="nodeTypes"
     :default-zoom="1.5"
     :min-zoom="0.2"
     :max-zoom="4"

@@ -13,18 +13,18 @@ export default class ActionsApi {
     return data;
   }
 
-  async remove(id) {
-    const { data } = await this.client.delete(`actions/${id}`);
+  async remove(strategyId, id) {
+    const { data } = await this.client.delete(`actions/${strategyId}/${id}`);
     return data;
   }
 
-  async create(condition) {
-    const { data } = await this.client.post(`actions`, condition);
+  async add(action) {
+    const { data } = await this.client.post(`actions`, action);
     return data;
   }
 
-  async update(condition) {
-    const { data } = await this.client.put(`actions`, condition);
+  async update(action) {
+    const { data } = await this.client.put(`actions`, action);
     return data;
   }
 }

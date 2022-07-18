@@ -1,6 +1,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
+import { i18n } from "~/plugins/i18n";
 
 export default defineComponent({
   components: {},
@@ -25,6 +26,13 @@ export default defineComponent({
       }
     };
 
+
+    const setLanguage = (lng) => {
+      window.localStorage.setItem("lng", lng);
+      i18n.global.locale._setter(lng);
+    };
+
+
     return {
       link,
       loading,
@@ -32,6 +40,7 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
+      setLanguage
     };
   },
 });
@@ -42,12 +51,16 @@ export default defineComponent({
     <section class="m-header relative bg-lighthighlight w-full rounded p-4">
       <div class="flex justify-between items-center">
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
-        <div>
+        <div class="flex space-x-4">
+          <div>
+            <el-button @click="setLanguage('en')"> EN </el-button>
+            <el-button @click="setLanguage('es')"> ES </el-button>
+          </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
-            Login/Register
+            {{ $t("landing.login") }}
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
-            <el-button type="primary"> Dashboard </el-button>
+            <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>
           </router-link>
         </div>
       </div>
@@ -55,11 +68,11 @@ export default defineComponent({
       <div class="m-header__content flex flex-col justify-around">
         <div class="text-center">
           <h1 class="text-3xl sm:text-5xl font-title leading-relaxed">
-            Trading strategiesare complicated. <br />We simplify them.
+            {{ $t("landing.welcome") }}
+            <br />{{ $t("landing.welcomePhrase") }}
           </h1>
           <p class="text-sm mt-8">
-            Generate simple payment and subscription links without writing code
-            or via an API call.
+            {{ $t("landing.welcomeSubtittle") }}
           </p>
           <el-button
             v-if="!isAuthenticated"
@@ -68,11 +81,11 @@ export default defineComponent({
             type="primary"
             @click="login"
           >
-            Get started with moneeda
+            {{ $t("landing.startButton") }}
           </el-button>
 
           <nuxt-link v-else :to="{ name: 'admin-overview' }">
-            <el-button type="primary"> Dashboard </el-button>
+            <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>
           </nuxt-link>
         </div>
         <div class="flex items-center justify-center flex-wrap mt-5">
@@ -122,11 +135,11 @@ export default defineComponent({
           target="_new"
           class="!text-white"
         >
-          Terms of Service
+          {{ $t("landing.termsOfService") }}
         </a>
         <span class="hidden sm:inline mx-2"> · </span>
 
-        <button @click="showCookieConsent">Change cookie settings</button>
+        <button @click="showCookieConsent">{{ $t("landing.cookiesSettings") }}</button>
       </div>
 
       <div>
@@ -137,7 +150,9 @@ export default defineComponent({
         >
           Twitter
         </a>
-        <span class="cursor-pointer" @click="liveChat"> Live chat</span>
+        <span class="cursor-pointer" @click="liveChat">{{
+          $t("landing.liveChat")
+        }}</span>
         <span class="hidden sm:inline mx-2"> · </span>
         <a href="mailto:hello@moneeda.com" target="_new" class="!text-white">
           hello@moneeda.com

@@ -21,20 +21,17 @@ const strategyModalOpen = ref(false);
 <template>
   <div class="py-4 px-8 max-w-[70%]">
     <h1 class="items-center">
-      <el-icon :size="32"><Odometer /></el-icon> Strategies
+      <el-icon :size="32"><Odometer /></el-icon> {{ $t("strategiesView.strategies") }}
     </h1>
     <p class="text-content">
-      Strategies are a set of conditions that are going to define how your bot
-      behaves. Each strategy is linked to a specific pair (ex: BTC-USD) and a
-      specific simulation data (ex: Last week data).
+      {{ $t("strategiesView.description") }}
     </p>
     <el-alert type="warning" :closable="false">
-      If a strategy is live, your token consumption will be affected
-      accordingly. Simulate the results first to see the impact.
+      {{ $t("strategiesView.warning") }}
     </el-alert>
 
     <span class="text-sm font-medium text-content60 uppercase block py-4"
-      >Your strategies</span
+      >{{ $t("strategiesView.yourStrategies") }}</span
     >
     <div class="h-full grid gap-4 grid-cols-2">
       <StrategyCard

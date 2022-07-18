@@ -1,9 +1,9 @@
 <script setup>
 import AdminMenu from "./AdminMenu.vue";
 import { ChatDotSquare, SwitchButton } from "@element-plus/icons-vue";
-
 import { useAuth0 } from "../../core/useAuth";
 import api from "../../api";
+import { i18n } from "../../plugins/i18n/index";
 
 const auth0 = useAuth0();
 
@@ -14,6 +14,11 @@ const logout = () => {
 
 const help = () => {
   window.drift?.api.openChat();
+};
+
+const setLanguage = (lng) => {
+  window.localStorage.setItem("lng", lng);
+  i18n.global.locale._setter(lng);
 };
 </script>
 
@@ -27,6 +32,8 @@ const help = () => {
     </div>
 
     <div class="flex">
+      <el-button @click="setLanguage('en')"> EN </el-button>
+      <el-button @click="setLanguage('es')"> ES </el-button>
       <el-button :icon="ChatDotSquare" @click="help"></el-button>
       <el-button :icon="SwitchButton" @click="logout"></el-button>
     </div>
