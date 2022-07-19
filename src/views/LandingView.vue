@@ -3,6 +3,7 @@ import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
 import { i18n } from "~/plugins/i18n";
 
+
 export default defineComponent({
   components: {},
   layout: "landing",
@@ -40,7 +41,7 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
-      setLanguage
+      setLanguage,
     };
   },
 });
