@@ -2,7 +2,6 @@
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
 import { i18n } from "~/plugins/i18n";
-import { mountedLanguage } from '../plugins/i18n/index';
 
 
 export default defineComponent({
@@ -34,7 +33,6 @@ export default defineComponent({
       i18n.global.locale._setter(lng);
     };
 
-    mountedLanguage();
 
     return {
       link,

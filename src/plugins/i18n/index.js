@@ -1,17 +1,7 @@
 import { createI18n } from "vue-i18n";
 import messages from "./messages";
 
-
-const getLanguageLocalStorage = window.localStorage.getItem('lng')
-
-export const i18n = createI18n({
-  legacy: false,
-  locale: getLanguageLocalStorage || 'en',
-  fallbackLocale: "en",
-  globalInjection: true,
-  messages,
-});
-
+const getLanguageLocalStorage = window.localStorage.getItem("lng");
 
 export const detectLanguage = () => {
   const browserLanguage = navigator.language.split("-")[0];
@@ -19,13 +9,13 @@ export const detectLanguage = () => {
   const currentLang = languageSupported ? browserLanguage : "en";
 
   window.localStorage.setItem("lng", currentLang);
-  i18n.global.locale._setter(currentLang);
-  window.localStorage.setItem("mount", 'on');
-}
+  return currentLang;
+};
 
-export const mountedLanguage = (() => {
-  const firstMounted = window.localStorage.getItem('mount');
-  if(firstMounted === null){
-  detectLanguage();
-  }
-})
+export const i18n = createI18n({
+  legacy: false,
+  locale: getLanguageLocalStorage || detectLanguage(),
+  fallbackLocale: "en",
+  globalInjection: true,
+  messages,
+});
