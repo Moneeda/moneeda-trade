@@ -22,17 +22,18 @@ const updateAction = (action) => {
   setActionToUpdate(action);
   switchLayout(NodeType.ACTION);
 };
+
 </script>
 
 <template>
   <div>
     <BaseCard
       :title="action.type"
-      :color="CardColor.SUCCESS"
+      :color="action.type === 'virtual-sell' ? CardColor.SELL : CardColor.SUCCESS"
       :size="CardSize.LITTLE"
       :scale="Scale.LITTLE"
     >
-      <CardText :text="action.type" />
+      <CardText :text="action.type"  />
       <CardPropertyList v-if="action && action.params && action.params[0]">
         <CardProperty :value="action.params[0].percentage" label="Percentage" />
         <CardProperty :value="action.params[0].fee" label="Fee" />
