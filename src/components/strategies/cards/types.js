@@ -7,6 +7,7 @@ export const CardSize = {
 export const CardColor = {
   SUCCESS: "#5ccebc",
   INFO: "#6992e8",
+  SELL: "#572364"
 };
 
 export const Scale = {
