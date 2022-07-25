@@ -1,5 +1,5 @@
 <script setup>
-import { CardSize, CardColor, Scale } from "./types";
+import { CardSize, CardColor } from "./types";
 defineProps({
   title: {
     type: String,
@@ -50,7 +50,7 @@ defineProps({
 .type-method {
   text-transform: uppercase;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   font-size: 1rem;
   border-radius: 0.8rem 0.8rem 0 0;

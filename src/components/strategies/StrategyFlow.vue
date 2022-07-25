@@ -35,11 +35,11 @@ watchEffect(() => {
 onPaneReady(({ fitView }) => {
   elements.value = buildNodes(conditions.value, actions.value);
   fitFlowView = fitView;
-  fitFlowView();
+  setTimeout(fitFlowView, 1000);
 });
 
 onNodesChange(() => {
-  if (fitFlowView) fitFlowView();
+  if (fitFlowView && elements.value.length > 1) fitFlowView();
 });
 
 onNodeDragStop(({ node }) => {
@@ -71,7 +71,7 @@ onConnect((params) => {
     :node-types="nodeTypes"
     :default-zoom="1.5"
     :min-zoom="0.2"
-    :max-zoom="4"
+    :max-zoom="1"
   >
     <Background pattern-color="#aaa" gap="8" />
     <Controls />
