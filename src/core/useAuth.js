@@ -1,6 +1,7 @@
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { inject, provide, ref } from "vue";
 import api from "~/api";
+import storage from "~/services/storage";
 import router from "../router";
 
 const domain = import.meta.env.VITE_APP_AUTH0_DOMAIN;
@@ -90,7 +91,7 @@ export const login = async () => {
     return;
   }
   try {
-    const currentLanguage = window.localStorage.getItem("lng");
+    const currentLanguage = storage.get("lng");
     await auth0Client.value.loginWithRedirect({
       ui_locales: currentLanguage || "en",
     });

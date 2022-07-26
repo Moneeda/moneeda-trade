@@ -4,6 +4,7 @@ import { ChatDotSquare, SwitchButton } from "@element-plus/icons-vue";
 import { useAuth0 } from "../../core/useAuth";
 import api from "../../api";
 import { i18n } from "../../plugins/i18n/index";
+import storage from "~/services/storage";
 
 const auth0 = useAuth0();
 
@@ -17,7 +18,7 @@ const help = () => {
 };
 
 const setLanguage = (lng) => {
-  window.localStorage.setItem("lng", lng);
+  storage.set("lng", lng);
   i18n.global.locale._setter(lng);
 };
 </script>

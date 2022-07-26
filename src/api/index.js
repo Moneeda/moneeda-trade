@@ -4,6 +4,7 @@ import StrategiesApi from "./strategies";
 import ConditionsApi from "./conditions";
 import ActionsApi from "./actions";
 import UsersApi from "./users";
+import storage from "~/services/storage";
 
 class ApiClient {
   constructor() {
@@ -42,11 +43,11 @@ class ApiClient {
       ...this.internalClient.defaults.headers.common,
       Authorization: `Bearer ${jwt}`,
     };
-    window.localStorage.setItem("jwt", jwt);
+    storage.set("jwt", jwt);
   }
 
   logout() {
-    window.localStorage.removeItem("jwt");
+    storage.remove("jwt");
     this.internalClient.defaults.headers.common = {};
   }
 }

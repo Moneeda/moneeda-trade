@@ -2,7 +2,7 @@
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
 import { i18n } from "~/plugins/i18n";
-
+import storage from "~/services/storage";
 
 export default defineComponent({
   components: {},
@@ -27,12 +27,10 @@ export default defineComponent({
       }
     };
 
-
     const setLanguage = (lng) => {
-      window.localStorage.setItem("lng", lng);
+      storage.set("lng", lng);
       i18n.global.locale._setter(lng);
     };
-
 
     return {
       link,
@@ -61,7 +59,9 @@ export default defineComponent({
             {{ $t("landing.login") }}
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
-            <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>
+            <el-button type="primary">
+              {{ $t("landing.dashboard") }}
+            </el-button>
           </router-link>
         </div>
       </div>
@@ -86,7 +86,9 @@ export default defineComponent({
           </el-button>
 
           <nuxt-link v-else :to="{ name: 'admin-overview' }">
-            <el-button type="primary"> {{ $t("landing.dashboard") }} </el-button>
+            <el-button type="primary">
+              {{ $t("landing.dashboard") }}
+            </el-button>
           </nuxt-link>
         </div>
         <div class="flex items-center justify-center flex-wrap mt-5">
@@ -140,7 +142,9 @@ export default defineComponent({
         </a>
         <span class="hidden sm:inline mx-2"> · </span>
 
-        <button @click="showCookieConsent">{{ $t("landing.cookiesSettings") }}</button>
+        <button @click="showCookieConsent">
+          {{ $t("landing.cookiesSettings") }}
+        </button>
       </div>
 
       <div>
