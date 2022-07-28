@@ -1,8 +1,8 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
-import { i18n } from "~/plugins/i18n";
 import storage from "~/services/storage";
+import translations from "~/services/translations";
 
 export default defineComponent({
   components: {},
@@ -29,7 +29,7 @@ export default defineComponent({
 
     const setLanguage = (lng) => {
       storage.set("lng", lng);
-      i18n.global.locale._setter(lng);
+      translations.setLanguage(lng);
     };
 
     return {
