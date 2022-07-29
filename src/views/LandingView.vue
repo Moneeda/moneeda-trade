@@ -1,11 +1,10 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
-import storage from "~/services/storage";
-import translations from "~/services/translations";
+import TranslationButtons from "../components/buttons/TranslationButtons.vue";
 
 export default defineComponent({
-  components: {},
+  components: { TranslationButtons },
   layout: "landing",
   setup() {
     const link = ref("");
@@ -27,11 +26,6 @@ export default defineComponent({
       }
     };
 
-    const setLanguage = (lng) => {
-      storage.set("lng", lng);
-      translations.setLanguage(lng);
-    };
-
     return {
       link,
       loading,
@@ -39,7 +33,6 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
-      setLanguage,
     };
   },
 });
@@ -52,8 +45,7 @@ export default defineComponent({
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div class="flex space-x-4">
           <div>
-            <el-button @click="setLanguage('en')"> EN </el-button>
-            <el-button @click="setLanguage('es')"> ES </el-button>
+            <TranslationButtons />
           </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
             {{ $t("landing.login") }}
