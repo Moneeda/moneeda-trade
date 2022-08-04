@@ -3,7 +3,6 @@ import AdminMenu from "./AdminMenu.vue";
 import { ChatDotSquare, SwitchButton } from "@element-plus/icons-vue";
 import { useAuth0 } from "../../core/useAuth";
 import api from "../../api";
-import { i18n } from "../../plugins/i18n/index";
 import storage from "~/services/storage";
 
 const auth0 = useAuth0();
@@ -19,7 +18,6 @@ const help = () => {
 
 const setLanguage = (lng) => {
   storage.set("lng", lng);
-  i18n.global.locale._setter(lng);
 };
 </script>
 
@@ -33,8 +31,15 @@ const setLanguage = (lng) => {
     </div>
 
     <div class="flex">
-      <el-button @click="setLanguage('en')"> EN </el-button>
-      <el-button @click="setLanguage('es')"> ES </el-button>
+      <el-radio-group
+        v-model="$i18n.locale"
+        @change="setLanguage($event)"
+        size="small"
+        class="mr-4"
+      >
+        <el-radio-button label="en">English</el-radio-button>
+        <el-radio-button label="es">Español</el-radio-button>
+      </el-radio-group>
       <el-button :icon="ChatDotSquare" @click="help"></el-button>
       <el-button :icon="SwitchButton" @click="logout"></el-button>
     </div>
