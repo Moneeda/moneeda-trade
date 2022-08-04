@@ -134,11 +134,6 @@ export default defineComponent({
         >
           {{ $t("landing.termsOfService") }}
         </a>
-        <span class="hidden sm:inline mx-2"> · </span>
-
-        <button @click="showCookieConsent">
-          {{ $t("landing.cookiesSettings") }}
-        </button>
       </div>
 
       <el-radio-group
