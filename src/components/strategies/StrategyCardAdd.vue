@@ -9,7 +9,9 @@ import { DocumentAdd } from "@element-plus/icons-vue";
         <el-icon :size="24">
           <component :is="DocumentAdd" />
         </el-icon>
-        <el-tag type="success" class="mt-2">{{ $t("strategiesView.cardIcon") }}</el-tag>
+        <el-tag type="success" class="mt-2">{{
+          $t("strategiesView.cardIcon")
+        }}</el-tag>
       </div>
 
       <div class="flex-1 items-center">
@@ -30,7 +32,7 @@ import { DocumentAdd } from "@element-plus/icons-vue";
   width: 100%;
   gap: 12px;
   min-height: 90px;
-  color: theme("colors.content60");
+  color: var(--color-content-60);
   border: 1px dashed rgba(grey, 0.5);
   opacity: 0.7;
 
