@@ -1,7 +1,6 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useAuth0 } from "../core/useAuth";
-import { i18n } from "~/plugins/i18n";
 import storage from "~/services/storage";
 
 export default defineComponent({
@@ -29,7 +28,6 @@ export default defineComponent({
 
     const setLanguage = (lng) => {
       storage.set("lng", lng);
-      i18n.global.locale._setter(lng);
     };
 
     return {
@@ -51,10 +49,6 @@ export default defineComponent({
       <div class="flex justify-between items-center">
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div class="flex space-x-4">
-          <div>
-            <el-button @click="setLanguage('en')"> EN </el-button>
-            <el-button @click="setLanguage('es')"> ES </el-button>
-          </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
             {{ $t("landing.login") }}
           </el-button>
@@ -146,6 +140,15 @@ export default defineComponent({
           {{ $t("landing.cookiesSettings") }}
         </button>
       </div>
+
+      <el-radio-group
+        v-model="$i18n.locale"
+        @change="setLanguage($event)"
+        size="small"
+      >
+        <el-radio-button label="en">English</el-radio-button>
+        <el-radio-button label="es">Español</el-radio-button>
+      </el-radio-group>
 
       <div>
         <a
