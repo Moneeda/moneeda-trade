@@ -1,6 +1,6 @@
 <script>
 import { defineComponent, ref } from "vue";
-import { useAuth0 } from "../core/useAuth";
+import { useAuth0 } from "@/core/useAuth";
 import storage from "~/services/storage";
 
 export default defineComponent({
