@@ -40,6 +40,7 @@ const strategyModalOpen = ref(false);
         :strategy="strategy"
         @click="navigateToStrategy(strategy)"
         @remove="removeStrategy(strategy)"
+        @update="strategyModalOpen = true"
       />
       <StrategyCardAdd @click="strategyModalOpen = true" />
     </div>

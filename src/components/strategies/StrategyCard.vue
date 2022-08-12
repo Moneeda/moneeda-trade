@@ -8,6 +8,7 @@ import {
   CoffeeCup,
   IceCream,
   Delete,
+  EditPen,
 } from "@element-plus/icons-vue";
 import { computed } from "vue";
 import format from "date-fns/format";
@@ -48,7 +49,14 @@ const formattedDate = computed(() => {
         {{ strategy.baseCurrencyAmount }} - {{ strategy.quoteCurrencyAmount }}
       </div>
     </div>
-
+    <el-button
+      type="warning"
+      :icon="EditPen"
+      circle
+      size="small"
+      class="strategy-card__edit"
+      @click.stop="$emit('update')"
+    />
     <el-button
       type="danger"
       :icon="Delete"
@@ -76,10 +84,24 @@ const formattedDate = computed(() => {
     @apply shadow-xl;
     background-color: white;
 
+    .strategy-card__edit {
+      visibility: visible;
+      opacity: 1;
+    }
+
     .strategy-card__remove {
       visibility: visible;
       opacity: 1;
     }
+  }
+
+   &__edit {
+    visibility: hidden;
+    position: absolute;
+    top: -8px;
+    right: 24px;
+    opacity: 0;
+    transition: all ease-in 0.1s;
   }
 
   &__remove {

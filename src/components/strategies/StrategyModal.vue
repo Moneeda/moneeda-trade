@@ -27,11 +27,11 @@ const submitForm = async (formEl) => {
 const options = [...productOptions];
 
 const form = reactive({
-  name: "",
-  description: "",
-  product: "",
-  baseCurrencyAmount: 1,
-  quoteCurrencyAmount: 1,
+  name: strategy.name || "",
+  description: strategy.description || "",
+  product: strategy.product || "",
+  baseCurrencyAmount: strategy.baseCurrencyAmount || 1,
+  quoteCurrencyAmount: strategy.quoteCurrencyAmount || 1,
 });
 
 const strategyFormRef = ref();
@@ -42,6 +42,14 @@ const rules = {
   baseCurrencyAmount: { required: true, message: "Please select a product" },
   quoteCurrencyAmount: { required: true, message: "Please select a product" },
 };
+
+const props = defineProps({
+  strategy: {
+    type: Object,
+    required: true,
+  },
+});
+
 </script>
 
 <template>
