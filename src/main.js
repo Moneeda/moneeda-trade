@@ -6,9 +6,9 @@ import router from "./router";
 import ElementPlus from "element-plus";
 import translations from '../src/services/translations';
 
+import "./assets/styles/global.scss";
 import "./assets/styles/tailwind.css";
 import "./assets/styles/element.scss";
-import "./assets/styles/global.scss";
 
 const app = createApp(App);
 app.use(ElementPlus);

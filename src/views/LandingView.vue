@@ -44,9 +44,6 @@ export default defineComponent({
       <div class="flex justify-between items-center">
         <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
         <div class="flex space-x-4">
-          <div>
-            <TranslationButtons />
-          </div>
           <el-button v-if="!isAuthenticated" type="primary" @click="login">
             {{ $t("landing.login") }}
           </el-button>
@@ -77,11 +74,11 @@ export default defineComponent({
             {{ $t("landing.startButton") }}
           </el-button>
 
-          <nuxt-link v-else :to="{ name: 'admin-overview' }">
+          <router-link v-else :to="{ name: 'admin-overview' }">
             <el-button type="primary">
               {{ $t("landing.dashboard") }}
             </el-button>
-          </nuxt-link>
+          </router-link>
         </div>
         <div class="flex items-center justify-center flex-wrap mt-5">
           <img
@@ -132,12 +129,9 @@ export default defineComponent({
         >
           {{ $t("landing.termsOfService") }}
         </a>
-        <span class="hidden sm:inline mx-2"> · </span>
-
-        <button @click="showCookieConsent">
-          {{ $t("landing.cookiesSettings") }}
-        </button>
       </div>
+
+      <TranslationButtons />
 
       <div>
         <a
@@ -161,11 +155,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .m-header {
-  height: calc(100vh - theme("spacing.4") - theme("spacing.4"));
+  height: calc(100vh - 1rem - 1rem);
 
   &__content {
     margin-top: 80px;
-    height: calc(100% - theme("spacing.4") - theme("spacing.4") - 80px);
+    height: calc(100% - 1rem - 1rem - 80px);
   }
 }
 </style>
