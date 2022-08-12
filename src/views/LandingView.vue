@@ -1,10 +1,10 @@
 <script>
 import { defineComponent, ref } from "vue";
-import { useAuth0 } from "@/core/useAuth";
-import storage from "~/services/storage";
+import { useAuth0 } from "../core/useAuth";
+import TranslationButtons from "../components/buttons/TranslationButtons.vue";
 
 export default defineComponent({
-  components: {},
+  components: { TranslationButtons },
   layout: "landing",
   setup() {
     const link = ref("");
@@ -26,10 +26,6 @@ export default defineComponent({
       }
     };
 
-    const setLanguage = (lng) => {
-      storage.set("lng", lng);
-    };
-
     return {
       link,
       loading,
@@ -37,7 +33,6 @@ export default defineComponent({
       liveChat,
       login,
       isAuthenticated,
-      setLanguage,
     };
   },
 });
@@ -136,14 +131,7 @@ export default defineComponent({
         </a>
       </div>
 
-      <el-radio-group
-        v-model="$i18n.locale"
-        @change="setLanguage($event)"
-        size="small"
-      >
-        <el-radio-button label="en">English</el-radio-button>
-        <el-radio-button label="es">Español</el-radio-button>
-      </el-radio-group>
+      <TranslationButtons />
 
       <div>
         <a

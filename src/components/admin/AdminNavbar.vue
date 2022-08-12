@@ -3,7 +3,7 @@ import AdminMenu from "./AdminMenu.vue";
 import { ChatDotSquare, SwitchButton } from "@element-plus/icons-vue";
 import { useAuth0 } from "../../core/useAuth";
 import api from "../../api";
-import storage from "~/services/storage";
+import TranslationButtons from "../buttons/TranslationButtons.vue";
 
 const auth0 = useAuth0();
 
@@ -16,9 +16,6 @@ const help = () => {
   window.drift?.api.openChat();
 };
 
-const setLanguage = (lng) => {
-  storage.set("lng", lng);
-};
 </script>
 
 <template>
@@ -31,15 +28,7 @@ const setLanguage = (lng) => {
     </div>
 
     <div class="flex">
-      <el-radio-group
-        v-model="$i18n.locale"
-        @change="setLanguage($event)"
-        size="small"
-        class="mr-4"
-      >
-        <el-radio-button label="en">English</el-radio-button>
-        <el-radio-button label="es">Español</el-radio-button>
-      </el-radio-group>
+      <TranslationButtons />
       <el-button :icon="ChatDotSquare" @click="help"></el-button>
       <el-button :icon="SwitchButton" @click="logout"></el-button>
     </div>
