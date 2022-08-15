@@ -14,12 +14,15 @@ class ApiClient {
     this.internalClient = axios.create({
       baseURL: `${import.meta.env.VITE_APP_API_URL}/`,
     });
+    this.internalLabClient = axios.create({
+      baseURL: `${import.meta.env.VITE_APP_LAB_API_URL}/`,
+    });
     const token = localStorage.getItem("jwt");
     this.setJwt(token);
   }
 
   simulations() {
-    return new SimulationsApi(this.internalClient);
+    return new SimulationsApi(this.internalClient, this.internalLabClient);
   }
 
   strategies() {
@@ -43,12 +46,17 @@ class ApiClient {
       ...this.internalClient.defaults.headers.common,
       Authorization: `Bearer ${jwt}`,
     };
+    this.internalLabClient.defaults.headers.common = {
+      ...this.internalLabClient.defaults.headers.common,
+      Authorization: `Bearer ${jwt}`,
+    };
     storage.set("jwt", jwt);
   }
 
   logout() {
     storage.remove("jwt");
     this.internalClient.defaults.headers.common = {};
+    this.internalLabClient.defaults.headers.common = {};
   }
 }
 

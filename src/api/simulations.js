@@ -1,6 +1,7 @@
 export default class SimulationsApi {
-  constructor(client) {
+  constructor(client, labClient) {
     this.client = client;
+    this.labClient = labClient;
   }
 
   async all() {
@@ -9,7 +10,7 @@ export default class SimulationsApi {
   }
 
   async simulate(simulate) {
-    const { data } = await this.client.post("simulation", simulate);
+    const { data } = await this.labClient.post("simulation", simulate);
     return data;
   }
 }
