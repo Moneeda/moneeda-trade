@@ -3,8 +3,8 @@ module.exports = {
   content: [
     "./index.html",
     "./src/components/**/*.{js,vue,ts}",
-    "./src/layouts/**/*.vue",
     "./src/views/**/*.vue",
+    "./src/App.vue",
   ],
   darkMode: "media",
   theme: {

@@ -5,6 +5,16 @@
   outline: none;
 }
 
+:root {
+  --color-highlight: theme("colors.highlight");
+  --color-content-60: theme("colors.content60");
+  --color-content: theme("colors.content");
+  --color-white: theme("colors.white");
+  --color-green: theme("colors.green");
+  --color-alert: theme("colors.alert");
+  --color-border: theme("colors.border");
+}
+
 html {
   font-size: 14px;
 }
@@ -20,10 +30,10 @@ body {
 a,
 a:visited {
   text-decoration: none;
-  color: theme("colors.highlight");
+  color: var(--color-highlight);
 
   &.button {
-    color: theme("colors.content");
+    color: var(--color-content);
   }
 }
 
@@ -55,9 +65,10 @@ label {
   overflow: hidden;
   position: fixed;
 }
+
 .card-wrapper {
   position: relative;
-  @apply bg-whitehover rounded py-2 px-4 ;
+  @apply bg-whitehover rounded py-2 px-4;
 }
 
 .card {
@@ -79,13 +90,13 @@ label {
   &--alert {
     @apply border-highlight;
   }
- 
+
   &--mini {
     @apply px-4 py-2;
   }
 
   &--active {
-    @apply  border-highlight;
+    @apply border-highlight;
   }
 
 }
@@ -94,21 +105,21 @@ label {
   border-radius: 6px;
   height: 40px;
   padding: 8px 12px;
-  background: theme('colors.highlight');
-  color: theme("colors.white");
+  background: var(--color-highlight);
+  color: var(--color-white);
   font-weight: 700;
   transition: all 0.2s linear;
   min-width: 100px;
 
   &:hover {
-    background-color: theme("colors.highlight") !important;
-    color: theme("colors.white") !important;
+    background-color: var(--color-highlight) !important;
+    color: var(--color-white) !important;
   }
 
   &--flat {
     background: transparent;
-    color: theme("colors.content");
-    border: 1px solid theme("colors.content");
+    color: var(--color-content);
+    border: 1px solid var(--color-content);
     font-weight: 400;
   }
 
@@ -150,28 +161,28 @@ p {
 }
 
 .highlight {
-  color: theme("colors.highlight");
+  color: var(--color-highlight);
 }
 
 .tag {
-  border: 1px solid theme("colors.highlight");
+  border: 1px solid var(--color-highlight);
   padding: 0 4px;
   font-size: 10px;
   border-radius: 4px;
   margin-bottom: 2px;
 
   &--success {
-    background-color: theme("colors.green");
+    background-color: var(--color-green);
   }
 
   &--warning {
-    background-color: theme('colors.alert');
+    background-color: var(--color-alert);
     border: none;
   }
 
   &--replied {
-    background-color: theme("colors.green");
-    border: 1px solid theme('colors.border')
+    background-color: var(--color-green);
+    border: 1px solid var(--color-border);
   }
 }
 
@@ -184,7 +195,7 @@ p {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background-color: theme("colors.white");
+  background-color: var(--color-white);
   background-position: center;
   background-size: 40% 40%;
   background-repeat: no-repeat;
@@ -197,7 +208,7 @@ p {
   }
 
   &--active {
-    background-color: theme("colors.highlight");
+    background-color: var(--color-highlight);
   }
 }
 
@@ -208,13 +219,11 @@ p {
 
 .shine {
   background: #f6f7f8;
-  background-image: linear-gradient(
-    to right,
-    #f6f7f8 0%,
-    #edeef1 20%,
-    #f6f7f8 40%,
-    #f6f7f8 100%
-  );
+  background-image: linear-gradient(to right,
+      #f6f7f8 0%,
+      #edeef1 20%,
+      #f6f7f8 40%,
+      #f6f7f8 100%);
   background-repeat: no-repeat;
   // background-size: 800px 104px;
   display: block;
@@ -241,7 +250,8 @@ p {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 16px;  /* Preferred icon size */
+  font-size: 16px;
+  /* Preferred icon size */
   display: inline-block;
   line-height: 1;
   text-transform: none;
