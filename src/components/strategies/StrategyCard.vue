@@ -20,9 +20,6 @@ const props = defineProps({
   },
 });
 
-
-const internalStrategy = Object.assign({}, props.strategy);
-
 const icons = [Bicycle, Cherry, Bowl, Chicken, Apple, CoffeeCup, IceCream];
 const icon = icons[props.strategy.numId % icons.length];
 const formattedDate = computed(() => {
@@ -58,7 +55,7 @@ const formattedDate = computed(() => {
       circle
       size="small"
       class="strategy-card__edit"
-      @click.stop="[$emit('update', internalStrategy)]"
+      @click.stop="[$emit('update', strategy)]"
     />
     <el-button
       type="danger"
@@ -98,7 +95,7 @@ const formattedDate = computed(() => {
     }
   }
 
-   &__edit {
+  &__edit {
     visibility: hidden;
     position: absolute;
     top: -8px;

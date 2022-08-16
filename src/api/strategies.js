@@ -19,7 +19,7 @@ export default class StrategiesApi {
   }
 
   async update(body) {
-    const { data } = await this.client.post(`strategies/${body._id}`, body);
+    const { data } = await this.client.put(`strategies/${body._id}`, body);
     return data;
   }
 }

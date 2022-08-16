@@ -99,6 +99,19 @@ const createStrategiesInstance = () => {
     return strategy;
   };
 
+  const updateStrategy = async (strategyData) => {
+    loading.update = true;
+    const strategy = await api.strategies().update(strategyData);
+    strategies.value = strategies.value.map((strategy) => {
+      if (strategy._id === strategyData._id) {
+        return strategyData;
+      }
+      return strategy;
+    });
+    loading.create = false;
+    return strategy;
+  };
+
   const createAction = async (actionData) => {
     loading.create = true;
     const action = await api.actions().add(actionData);
@@ -267,6 +280,7 @@ const createStrategiesInstance = () => {
     setConditionToUpdate,
     changeStrategy,
     createStrategy,
+    updateStrategy,
     removeStrategy,
     createAction,
     createCondition,
