@@ -2,7 +2,7 @@
 import { reactive, ref } from "vue";
 import { productOptions, useStrategies } from "~/core/useStrategies";
 
-const { createStrategy, loading } = useStrategies();
+const { createStrategy, loading, strategies } = useStrategies();
 
 const emit = defineEmits(["create", "close"]);
 
@@ -26,12 +26,15 @@ const submitForm = async (formEl) => {
 
 const options = [...productOptions];
 
+const internalStrategy = Object.assign({}, props.internalStrategy);
+
+
 const form = reactive({
-  name: strategy.name || "",
-  description: strategy.description || "",
-  product: strategy.product || "",
-  baseCurrencyAmount: strategy.baseCurrencyAmount || 1,
-  quoteCurrencyAmount: strategy.quoteCurrencyAmount || 1,
+  name: internalStrategy.name || "",
+  description: internalStrategy.description || "",
+  product: internalStrategy.product || "",
+  baseCurrencyAmount: internalStrategy.baseCurrencyAmount || 1,
+  quoteCurrencyAmount: internalStrategy.quoteCurrencyAmount || 1,
 });
 
 const strategyFormRef = ref();
@@ -44,11 +47,12 @@ const rules = {
 };
 
 const props = defineProps({
-  strategy: {
+    internalStrategy: {
     type: Object,
-    required: true,
   },
 });
+
+console.log(internalStrategy)
 
 </script>
 
