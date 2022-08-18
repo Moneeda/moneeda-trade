@@ -55,7 +55,7 @@ const formattedDate = computed(() => {
       circle
       size="small"
       class="strategy-card__edit"
-      @click.stop="[$emit('update', strategy)]"
+      @click.stop="$emit('update', strategy)"
     />
     <el-button
       type="danger"
