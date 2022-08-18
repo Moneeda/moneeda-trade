@@ -20,13 +20,14 @@ const strategyModalOpen = ref(false);
 const selectedStrategy = ref(undefined);
 
 
-// se queda en login in....
-// sigues aqui?
-// estamos haciendo la migración a micro servicios
-// const getInternalStrategy = (value) =>  stateInternalStrategy = value;
 const updateStrategy = (value) => {
   selectedStrategy.value = value
   strategyModalOpen.value = true;
+};
+
+const onCloseModal = () => {
+  selectedStrategy.value = undefined
+  strategyModalOpen.value = false
 };
 
 </script>
@@ -60,8 +61,9 @@ const updateStrategy = (value) => {
     </div>
     <StrategyModal
       v-if="strategyModalOpen"
-      @close="strategyModalOpen = false"
-      @create="navigateToStrategy($event)"
+      @close="onCloseModal"
+      @create="onCloseModal"
+      @update="onCloseModal"
       :internalStrategy="selectedStrategy"
     />
   </div>

@@ -2,7 +2,7 @@
 import { reactive, ref, computed } from "vue";
 import { productOptions, useStrategies } from "~/core/useStrategies";
 
-const { createStrategy, updateStrategy, loading, strategies } = useStrategies();
+const { createStrategy, updateStrategy, loading } = useStrategies();
 const props = defineProps({
   internalStrategy: {
     type: Object,
@@ -17,6 +17,7 @@ const close = () => {
 const isUpdate = computed(() => {
   return props.internalStrategy !== undefined;
 });
+
 
 const submitForm = async (formEl) => {
   // TODO Save
@@ -40,12 +41,18 @@ const submitForm = async (formEl) => {
 
 const options = [...productOptions];
 
-const form = reactive({
-  name: props.internalStrategy.name || "",
-  description: props.internalStrategy.description || "",
-  product: props.internalStrategy.product || "",
-  baseCurrencyAmount: props.internalStrategy.baseCurrencyAmount || 1,
-  quoteCurrencyAmount: props.internalStrategy.quoteCurrencyAmount || 1,
+const form = reactive(isUpdate.value ? {
+  name: props.internalStrategy.name,
+  description: props.internalStrategy.description,
+  product: props.internalStrategy.product,
+  baseCurrencyAmount: props.internalStrategy.baseCurrencyAmount,
+  quoteCurrencyAmount: props.internalStrategy.quoteCurrencyAmount,
+} : {
+  name: "",
+  description: "",
+  product: "",
+  baseCurrencyAmount: 1,
+  quoteCurrencyAmount: 1,
 });
 
 const strategyFormRef = ref();

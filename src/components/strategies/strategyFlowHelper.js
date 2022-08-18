@@ -40,13 +40,13 @@ const mapNodes = (nodes, type) => {
   nodes.forEach((node) => {
     items.push(mapNode(node, type));
 
-    const results = [
+    const totalConnections = [
       ...(node.successConditionIds || []),
       ...(node.successActionIds || []),
     ];
 
-    if (results.length > 0) {
-      results.forEach((resultId) => {
+    if (totalConnections.length > 0) {
+      totalConnections.forEach((resultId) => {
         edges.push({
           id: `e${node._id}-${resultId}`,
           source: node._id,
