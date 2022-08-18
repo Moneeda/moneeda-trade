@@ -15,7 +15,7 @@ const close = () => {
 };
 
 const isUpdate = computed(() => {
-  return props.internalStrategy !== undefined;
+  return !!props.internalStrategy;
 });
 
 
