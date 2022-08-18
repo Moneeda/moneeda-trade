@@ -1,22 +1,37 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed } from "vue";
 import { productOptions, useStrategies } from "~/core/useStrategies";
 
-const { createStrategy, loading } = useStrategies();
-
-const emit = defineEmits(["create", "close"]);
+const { createStrategy, updateStrategy, loading } = useStrategies();
+const props = defineProps({
+  internalStrategy: {
+    type: Object,
+  },
+});
+const emit = defineEmits(["update", "create", "close"]);
 
 const close = () => {
   emit("close");
 };
+
+const isUpdate = computed(() => {
+  return props.internalStrategy !== undefined;
+});
+
 
 const submitForm = async (formEl) => {
   // TODO Save
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      const strategy = await createStrategy(form);
-      emit("create", strategy._id);
+      if (isUpdate.value) {
+        const payload = { ...props.internalStrategy, ...form };
+        const strategy = await updateStrategy(payload);
+        emit("update", strategy._id);
+      } else {
+        const strategy = await createStrategy(form);
+        emit("create", strategy._id);
+      }
       close();
     } else {
       console.log("error submit!", fields);
@@ -26,7 +41,13 @@ const submitForm = async (formEl) => {
 
 const options = [...productOptions];
 
-const form = reactive({
+const form = reactive(isUpdate.value ? {
+  name: props.internalStrategy.name,
+  description: props.internalStrategy.description,
+  product: props.internalStrategy.product,
+  baseCurrencyAmount: props.internalStrategy.baseCurrencyAmount,
+  quoteCurrencyAmount: props.internalStrategy.quoteCurrencyAmount,
+} : {
   name: "",
   description: "",
   product: "",

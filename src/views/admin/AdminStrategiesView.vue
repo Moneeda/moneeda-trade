@@ -15,13 +15,28 @@ const navigateToStrategy = (strategy) => {
     name: "playground",
   });
 };
+
 const strategyModalOpen = ref(false);
+const selectedStrategy = ref(undefined);
+
+
+const updateStrategy = (value) => {
+  selectedStrategy.value = value
+  strategyModalOpen.value = true;
+};
+
+const onCloseModal = () => {
+  selectedStrategy.value = undefined
+  strategyModalOpen.value = false
+};
+
 </script>
 
 <template>
   <div class="py-4 px-8 max-w-[70%]">
     <h1 class="items-center">
-      <el-icon :size="32"><Odometer /></el-icon> {{ $t("strategiesView.strategies") }}
+      <el-icon :size="32"><Odometer /></el-icon>
+      {{ $t("strategiesView.strategies") }}
     </h1>
     <p class="text-content">
       {{ $t("strategiesView.description") }}
@@ -30,9 +45,9 @@ const strategyModalOpen = ref(false);
       {{ $t("strategiesView.warning") }}
     </el-alert>
 
-    <span class="text-sm font-medium text-content60 uppercase block py-4"
-      >{{ $t("strategiesView.yourStrategies") }}</span
-    >
+    <span class="text-sm font-medium text-content60 uppercase block py-4">{{
+      $t("strategiesView.yourStrategies")
+    }}</span>
     <div class="h-full grid gap-4 grid-cols-2">
       <StrategyCard
         v-for="strategy in strategies"
@@ -40,13 +55,16 @@ const strategyModalOpen = ref(false);
         :strategy="strategy"
         @click="navigateToStrategy(strategy)"
         @remove="removeStrategy(strategy)"
+        @update="updateStrategy"
       />
       <StrategyCardAdd @click="strategyModalOpen = true" />
     </div>
     <StrategyModal
       v-if="strategyModalOpen"
-      @close="strategyModalOpen = false"
-      @create="navigateToStrategy($event)"
+      @close="onCloseModal"
+      @create="onCloseModal"
+      @update="onCloseModal"
+      :internalStrategy="selectedStrategy"
     />
   </div>
 </template>
