@@ -1,3 +1,6 @@
+import { CardColor } from './cards/types'
+import { MarkerType } from '@braks/vue-flow'
+
 const generateId = () => {
   const extraDigits = parseInt(Math.random() * 10000);
   return parseInt(performance.now() * extraDigits);
@@ -40,22 +43,38 @@ const mapNodes = (nodes, type) => {
   nodes.forEach((node) => {
     items.push(mapNode(node, type));
 
-    const totalConnections = [
-      ...(node.successConditionIds || []),
-      ...(node.successActionIds || []),
-    ];
+    const conditions = node.successConditionIds || []
+    const actions = node.successActionIds || []
 
-    if (totalConnections.length > 0) {
-      totalConnections.forEach((resultId) => {
+    if (conditions.length > 0) {
+      conditions.forEach((resultId) => {
         edges.push({
           id: `e${node._id}-${resultId}`,
           source: node._id,
           target: resultId,
-          type: "smoothstep",
+          type: "custom",
+          animated: true,
           style: {
-            stroke: "#5ccebc",
-            strokeWidth: 4,
+            stroke: CardColor.INFO,
+            strokeWidth: 3,
           },
+          // markerEnd: MarkerType.Arrowclosed,
+        });
+      });
+    }
+    if (actions.length > 0) {
+      actions.forEach((resultId) => {
+        edges.push({
+          id: `e${node._id}-${resultId}`,
+          source: node._id,
+          target: resultId,
+          type: "custom",
+          animated: true,
+          style: {
+            stroke: CardColor.SUCCESS,
+            strokeWidth: 3,
+          },
+          // markerEnd: MarkerType.Arrow,
         });
       });
     }

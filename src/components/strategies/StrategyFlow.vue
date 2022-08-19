@@ -5,6 +5,7 @@ import { useStrategies } from "~/core/useStrategies";
 import { buildNodes } from "./strategyFlowHelper";
 import ConditionNode from "./nodes/ConditionNode.vue";
 import ActionNode from "./nodes/ActionNode.vue";
+import CustomEdge from "./nodes/CustomEdge.vue"
 
 const {
   conditions,
@@ -48,6 +49,11 @@ onNodeDragStop(({ node }) => {
   }
 });
 onConnect((params) => {
+  const style = {
+    stroke: "#5ccebc",
+    strokeWidth: 4,
+  };
+  params = { ...params, style };
   addEdges([params]);
   const sourceCondition = getConditionById(params.source);
   const targetCondition = getConditionById(params.target);
@@ -73,6 +79,9 @@ onConnect((params) => {
     :min-zoom="0.2"
     :max-zoom="1"
   >
+    <template #edge-custom="props">
+      <!-- <CustomEdge v-bind="props" /> -->
+    </template>
     <Background pattern-color="#aaa" gap="8" />
     <Controls />
   </VueFlow>
