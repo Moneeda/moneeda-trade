@@ -1,30 +1,30 @@
 import { inject, provide, ref } from "vue";
-import api from "~/api";
+import simulationTests from "../assets/data/simulationTests";
 
 // import api from "@/api";
 
 const key = Symbol.for("Simulations");
 
 const createSimulationsInstance = () => {
-  const simulations = ref([]);
+  const simulations = ref(simulationTests);
   const activeSimulation = ref(null);
+
   const changeSimulation = (simulation) => {
     activeSimulation.value = simulation;
   };
 
-  const retrieveSimulations = async (defaultToFirst = true) => {
-    const sims = await api.simulations().all();
-    simulations.value = sims.map((sim) => ({ ...sim, label: sim.name }));
-    if (defaultToFirst && sims.length > 0) {
-      changeSimulation(sims[0]);
-    }
+  const getValidSimulations = (product, period) => {
+    return simulations.value.filter(
+      (simulation) =>
+        simulation.products.includes(product) &&
+        simulation.periods.includes(period)
+    );
   };
-
-  retrieveSimulations();
 
   return {
     simulations,
     activeSimulation,
+    getValidSimulations,
     changeSimulation,
   };
 };

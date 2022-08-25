@@ -29,6 +29,8 @@ export const productOptions = [
   },
 ];
 
+const periodsOrderedBySize = ["1m", "5m", "15m", "30m", "1h", "4h", "1d"];
+
 function generateIconId(str) {
   var sum = 0;
   var numbers = str.match(/\d+/g).map(Number);
@@ -76,6 +78,17 @@ const createStrategiesInstance = () => {
     ]);
     resources.value.condition = conds;
     resources.value.action = acts;
+  };
+
+  const getMinPeriodFromConditions = async () => {
+    const index = conditions.value.reduce((acc, condition) => {
+      const index = periodsOrderedBySize.indexOf(condition.period);
+      if (index < acc && index >= 0) {
+        acc = index;
+      }
+      return acc;
+    }, 1000);
+    return periodsOrderedBySize[index];
   };
 
   const retrieveStrategies = async (defaultToFirst = true) => {
@@ -295,6 +308,7 @@ const createStrategiesInstance = () => {
     updateCondition,
     updateAction,
     simulate,
+    getMinPeriodFromConditions,
   };
 };
 
