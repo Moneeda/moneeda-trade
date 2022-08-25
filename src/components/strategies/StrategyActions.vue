@@ -12,8 +12,14 @@ import { useStrategies } from "~/core/useStrategies";
 import { NodeType } from "~/components/strategies/strategyFlowHelper";
 
 const { layoutMode, switchLayout } = useLayout();
-const { simulations, changeSimulation, activeSimulation } = useSimulations();
-const { autosave, setActionToUpdate, setConditionToUpdate } = useStrategies();
+const { simulations, changeSimulation, activeSimulation, getValidSimulations } =
+  useSimulations();
+const {
+  autosave,
+  setActionToUpdate,
+  setConditionToUpdate,
+  getMinPeriodFromConditions,
+} = useStrategies();
 const nodeTypes = NodeType;
 
 const add = (type) => {
@@ -21,6 +27,18 @@ const add = (type) => {
   setConditionToUpdate(undefined);
   switchLayout(type);
 };
+
+data: () => ({
+  actualSimulation: activeSimulation,
+  minPeriod: getMinPeriodFromConditions
+}),
+computed: {
+  getAvailablesimulations(){
+    return getValidSimulations(actualSimulation.value.product, minPeriod)
+  }
+
+
+}
 </script>
 
 <template>
