@@ -78,9 +78,6 @@ onConnect((params) => {
     :min-zoom="0.2"
     :max-zoom="1"
   >
-    <template #edge-custom="props">
-      <!-- <CustomEdge v-bind="props" /> -->
-    </template>
     <Background pattern-color="#aaa" gap="8" />
     <Controls />
   </VueFlow>

@@ -1,5 +1,5 @@
-import { CardColor } from './cards/types'
-import { MarkerType } from '@braks/vue-flow'
+import { CardColor } from "./cards/types";
+import { MarkerType } from "@braks/vue-flow";
 
 const generateId = () => {
   const extraDigits = parseInt(Math.random() * 10000);
@@ -43,8 +43,8 @@ const mapNodes = (nodes, type) => {
   nodes.forEach((node) => {
     items.push(mapNode(node, type));
 
-    const conditions = node.successConditionIds || []
-    const actions = node.successActionIds || []
+    const conditions = node.successConditionIds || [];
+    const actions = node.successActionIds || [];
 
     if (conditions.length > 0) {
       conditions.forEach((resultId) => {
@@ -52,7 +52,6 @@ const mapNodes = (nodes, type) => {
           id: `e${node._id}-${resultId}`,
           source: node._id,
           target: resultId,
-          type: "custom",
           animated: true,
           style: {
             stroke: CardColor.INFO,
@@ -68,7 +67,6 @@ const mapNodes = (nodes, type) => {
           id: `e${node._id}-${resultId}`,
           source: node._id,
           target: resultId,
-          type: "custom",
           animated: true,
           style: {
             stroke: CardColor.SUCCESS,
