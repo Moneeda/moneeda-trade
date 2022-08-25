@@ -5,7 +5,7 @@ import { useStrategies } from "~/core/useStrategies";
 import { buildNodes } from "./strategyFlowHelper";
 import ConditionNode from "./nodes/ConditionNode.vue";
 import ActionNode from "./nodes/ActionNode.vue";
-// import CustomEdge from "./nodes/CustomEdge.vue"
+import CustomEdge from "./nodes/CustomEdge.vue";
 
 const {
   conditions,
