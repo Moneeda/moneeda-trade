@@ -10,10 +10,18 @@ import { useLayout } from "~/core/useLayout";
 import { useSimulations } from "~/core/useSimulations";
 import { useStrategies } from "~/core/useStrategies";
 import { NodeType } from "~/components/strategies/strategyFlowHelper";
+import { computed } from "@vue/reactivity";
 
 const { layoutMode, switchLayout } = useLayout();
-const { simulations, changeSimulation, activeSimulation } = useSimulations();
-const { autosave, setActionToUpdate, setConditionToUpdate } = useStrategies();
+const { simulations, changeSimulation, activeSimulation, getValidSimulations } =
+  useSimulations();
+const {
+  autosave,
+  setActionToUpdate,
+  setConditionToUpdate,
+  getMinPeriodFromConditions,
+  activeStrategy,
+} = useStrategies();
 const nodeTypes = NodeType;
 
 const add = (type) => {
@@ -21,6 +29,23 @@ const add = (type) => {
   setConditionToUpdate(undefined);
   switchLayout(type);
 };
+
+const minPeriod = computed({
+  get() {
+    return getMinPeriodFromConditions();
+  },
+});
+const productToTest = computed({
+  get() {
+    return activeStrategy.value.product;
+  },
+});
+
+const availableSimulationTest = computed({
+  get() {
+    return getValidSimulations(productToTest.value, minPeriod.value);
+  },
+});
 </script>
 
 <template>
@@ -82,13 +107,13 @@ const add = (type) => {
         <el-popover
           placement="left"
           trigger="hover"
-          v-for="simulation in simulations"
-          :key="simulation._id"
+          v-for="simulation in availableSimulationTest"
+          :key="simulation.id"
         >
           <h4 class="font-medium">{{ simulation.name }}</h4>
           <p>{{ simulation.description }}</p>
           <template #reference>
-            <el-option :label="simulation.label" :value="simulation" />
+            <el-option :label="simulation.label" :value="simulation.name" />
           </template>
         </el-popover>
       </el-option-group>
