@@ -10,6 +10,7 @@ import { useLayout } from "~/core/useLayout";
 import { useSimulations } from "~/core/useSimulations";
 import { useStrategies } from "~/core/useStrategies";
 import { NodeType } from "~/components/strategies/strategyFlowHelper";
+import { computed } from "@vue/reactivity";
 
 const { layoutMode, switchLayout } = useLayout();
 const { simulations, changeSimulation, activeSimulation, getValidSimulations } =
@@ -19,6 +20,7 @@ const {
   setActionToUpdate,
   setConditionToUpdate,
   getMinPeriodFromConditions,
+  activeStrategy,
 } = useStrategies();
 const nodeTypes = NodeType;
 
@@ -28,17 +30,31 @@ const add = (type) => {
   switchLayout(type);
 };
 
-data: () => ({
-  actualSimulation: activeSimulation,
-  minPeriod: getMinPeriodFromConditions
-}),
-computed: {
-  getAvailablesimulations(){
-    return getValidSimulations(actualSimulation.value.product, minPeriod)
-  }
+const minPeriod = computed({
+  get() {
+    return getMinPeriodFromConditions();
+  },
+  set(value) {
+    minPeriod.value = value;
+  },
+});
+const productToTest = computed({
+  get() {
+    return activeStrategy.value.product;
+  },
+  set(value) {
+    availableSimulationTest.value = value;
+  },
+});
 
-
-}
+const availableSimulationTest = computed({
+  get() {
+    return getValidSimulations(productToTest.value, minPeriod.value);
+  },
+  set(value) {
+    minPeriod.value = value;
+  },
+});
 </script>
 
 <template>
@@ -100,13 +116,13 @@ computed: {
         <el-popover
           placement="left"
           trigger="hover"
-          v-for="simulation in simulations"
-          :key="simulation._id"
+          v-for="simulation in availableSimulationTest"
+          :key="simulation.id"
         >
           <h4 class="font-medium">{{ simulation.name }}</h4>
           <p>{{ simulation.description }}</p>
           <template #reference>
-            <el-option :label="simulation.label" :value="simulation" />
+            <el-option :label="simulation.label" :value="simulation.name" />
           </template>
         </el-popover>
       </el-option-group>

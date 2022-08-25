@@ -80,7 +80,7 @@ const createStrategiesInstance = () => {
     resources.value.action = acts;
   };
 
-  const getMinPeriodFromConditions = async () => {
+  const getMinPeriodFromConditions = () => {
     const index = conditions.value.reduce((acc, condition) => {
       const index = periodsOrderedBySize.indexOf(condition.period);
       if (index < acc && index >= 0) {
