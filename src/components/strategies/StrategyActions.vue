@@ -34,25 +34,16 @@ const minPeriod = computed({
   get() {
     return getMinPeriodFromConditions();
   },
-  set(value) {
-    minPeriod.value = value;
-  },
 });
 const productToTest = computed({
   get() {
     return activeStrategy.value.product;
-  },
-  set(value) {
-    availableSimulationTest.value = value;
   },
 });
 
 const availableSimulationTest = computed({
   get() {
     return getValidSimulations(productToTest.value, minPeriod.value);
-  },
-  set(value) {
-    minPeriod.value = value;
   },
 });
 </script>
