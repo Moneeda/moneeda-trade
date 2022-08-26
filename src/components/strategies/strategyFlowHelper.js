@@ -57,7 +57,6 @@ const mapNodes = (nodes, type) => {
             stroke: CardColor.INFO,
             strokeWidth: 3,
           },
-          // markerEnd: MarkerType.Arrowclosed,
         });
       });
     }
@@ -72,7 +71,6 @@ const mapNodes = (nodes, type) => {
             stroke: CardColor.SUCCESS,
             strokeWidth: 3,
           },
-          // markerEnd: MarkerType.Arrow,
         });
       });
     }
