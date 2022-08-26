@@ -214,6 +214,14 @@ const createStrategiesInstance = () => {
     updateCondition(condition);
   };
 
+  const removeActionRelations = async (source, actionId) => {
+    const condition = { ...source };
+    condition.successActionIds = condition.successActionIds.filter(
+      (id) => id !== actionId
+    );
+    updateCondition(condition);
+  };
+
   const simulate = async (simulationTest) => {
     const response = await api.simulations().simulate({
       sections: [{ from: simulationTest.from, to: simulationTest.to }],
@@ -229,6 +237,14 @@ const createStrategiesInstance = () => {
       ...source.successConditionIds,
       conditionId,
     ];
+    updateCondition(condition);
+  };
+
+  const removeConditionRelations = async (source, conditionId) => {
+    const condition = { ...source };
+    condition.successConditionIds = condition.successConditionIds.filter(
+      (id) => id !== conditionId
+    );
     updateCondition(condition);
   };
 
@@ -303,6 +319,8 @@ const createStrategiesInstance = () => {
     getActionById,
     updateActionRelations,
     updateConditionRelations,
+    removeActionRelations,
+    removeConditionRelations,
     deleteAction,
     deleteCondition,
     updateCondition,
