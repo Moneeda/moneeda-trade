@@ -37,7 +37,7 @@ const minPeriod = computed({
 });
 const productToTest = computed({
   get() {
-    return activeStrategy.value.product;
+    return activeStrategy.value ? activeStrategy.value.product : "[]";
   },
 });
 
