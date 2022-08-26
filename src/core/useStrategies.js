@@ -214,9 +214,9 @@ const createStrategiesInstance = () => {
     updateCondition(condition);
   };
 
-  const simulate = async () => {
+  const simulate = async (simulationTest) => {
     const response = await api.simulations().simulate({
-      sections: [{ from: Date.now() - 604800000, to: Date.now() }],
+      sections: [{ from: simulationTest.from, to: simulationTest.to }],
       strategyId: activeStrategy.value._id,
     });
 
