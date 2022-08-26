@@ -60,6 +60,7 @@ const mapNodes = (nodes, type) => {
         });
       });
     }
+
     if (actions.length > 0) {
       actions.forEach((resultId) => {
         edges.push({
