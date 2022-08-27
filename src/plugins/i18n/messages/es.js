@@ -35,6 +35,7 @@ export default {
     result: "Añadir Resultado",
     simulation: "Simulaciones",
     save: "Guardar",
+    periodic: "Periodico",
   },
   strategyEdit: {
     submit: "Guardar",
