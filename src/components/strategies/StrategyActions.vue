@@ -13,7 +13,7 @@ import { NodeType } from "~/components/strategies/strategyFlowHelper";
 import { computed } from "@vue/reactivity";
 
 const { layoutMode, switchLayout } = useLayout();
-const { simulations, changeSimulation, activeSimulation, getValidSimulations } =
+const { changeSimulation, activeSimulation, getValidSimulations } =
   useSimulations();
 const {
   autosave,
@@ -37,7 +37,7 @@ const minPeriod = computed({
 });
 const productToTest = computed({
   get() {
-    return activeStrategy.value ? activeStrategy.value.product : "[]";
+    return activeStrategy.value ? activeStrategy.value.product : [];
   },
 });
 

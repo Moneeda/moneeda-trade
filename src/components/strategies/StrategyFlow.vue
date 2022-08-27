@@ -5,6 +5,7 @@ import { useStrategies } from "~/core/useStrategies";
 import { buildNodes } from "./strategyFlowHelper";
 import ConditionNode from "./nodes/ConditionNode.vue";
 import ActionNode from "./nodes/ActionNode.vue";
+import CustomEdge from "./cards/CustomEdge.vue";
 
 const {
   conditions,
@@ -15,6 +16,8 @@ const {
   getActionById,
   updateActionRelations,
   updateConditionRelations,
+  removeActionRelations,
+  removeConditionRelations,
 } = useStrategies();
 
 const nodeTypes = {
@@ -68,6 +71,23 @@ onConnect((params) => {
     updateConditionRelations(sourceCondition, targetCondition._id);
   }
 });
+
+const onEdgeRemove = (event, id) => {
+  const [source, target] = id.split("-");
+  const sourceCondition = getConditionById(source);
+  const targetCondition = getConditionById(target);
+  const targetAction = getActionById(target);
+
+  if (!sourceCondition) throw new Error("Source Condition does not exist");
+  if (!targetCondition && !targetAction)
+    throw new Error("Target does not exist");
+
+  if (targetAction) {
+    removeActionRelations(sourceCondition, targetAction._id);
+  } else if (targetCondition) {
+    removeConditionRelations(sourceCondition, targetCondition._id);
+  }
+};
 </script>
 <template>
   <VueFlow
@@ -78,6 +98,9 @@ onConnect((params) => {
     :min-zoom="0.2"
     :max-zoom="1"
   >
+    <template #edge-custom="props">
+      <CustomEdge @onRemove="onEdgeRemove" v-bind="props" />
+    </template>
     <Background pattern-color="#aaa" gap="8" />
     <Controls />
   </VueFlow>
