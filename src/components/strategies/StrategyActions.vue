@@ -41,6 +41,13 @@ const productToTest = computed({
   },
 });
 
+const selectedModel = computed({
+  get() {
+    return activeSimulation.value ? activeSimulation.value.name : undefined;
+  },
+  set() {},
+});
+
 const availableSimulationTest = computed({
   get() {
     return getValidSimulations(productToTest.value, minPeriod.value);
@@ -97,13 +104,12 @@ const availableSimulationTest = computed({
 
     <h3 class="mt-4">{{ $t("playgroundView.simulation") }}</h3>
     <el-select
-      v-model="activeSimulation"
       placeholder="Pick a simulation"
+      v-model="selectedModel"
       @change="changeSimulation"
       fit-input-width
-      value-key="_id"
     >
-      <el-option-group label="Time based">
+      <el-option-group label="Trend based">
         <el-popover
           placement="left"
           trigger="hover"
@@ -113,11 +119,10 @@ const availableSimulationTest = computed({
           <h4 class="font-medium">{{ simulation.name }}</h4>
           <p>{{ simulation.description }}</p>
           <template #reference>
-            <el-option :label="simulation.label" :value="simulation.name" />
+            <el-option :label="simulation.name" :value="simulation" />
           </template>
         </el-popover>
       </el-option-group>
-      <el-option-group label="Trend based"> </el-option-group>
     </el-select>
 
     <el-button :icon="Select" class="w-full mt-8" plain>{{

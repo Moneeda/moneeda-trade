@@ -4,6 +4,7 @@ import StrategyPicker from "~/components/strategies/StrategyPicker.vue";
 import StrategyActions from "../../components/strategies/StrategyActions.vue";
 import { useLayout } from "~/core/useLayout";
 import StrategyEdit from "~/components/strategies/StrategyEdit.vue";
+import ShowResult from "~/components/strategies/ShowResult.vue";
 
 const { layoutMode } = useLayout();
 </script>
@@ -26,9 +27,16 @@ const { layoutMode } = useLayout();
       <div
         class="bg-white shadow-xl p-4"
         style="grid-area: details"
-        v-show="layoutMode !== 'view'"
+        v-show="layoutMode === 'action' || layoutMode === 'condition'"
       >
         <StrategyEdit />
+      </div>
+      <div
+        class="bg-white shadow-xl p-4"
+        style="grid-area: details"
+        v-show="layoutMode === 'result'"
+      >
+        <ShowResult />
       </div>
     </div>
   </div>

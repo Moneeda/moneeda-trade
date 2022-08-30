@@ -1,12 +1,20 @@
 <script setup>
 import { Setting } from "@element-plus/icons-vue";
+import { useLayout } from "~/core/useLayout";
 import { useStrategies } from "~/core/useStrategies";
 import { useSimulations } from "~/core/useSimulations";
+
+const { switchLayout } = useLayout();
+const { activeSimulation } = useSimulations();
 const { strategies, activeStrategy, changeStrategy, simulate, updateStrategy } =
   useStrategies();
-const { activeSimulation } = useSimulations();
+
 const onChange = () => {
   updateStrategy(activeStrategy.value);
+};
+const onSimulate = async () => {
+  await simulate(activeSimulation.value);
+  switchLayout("result");
 };
 </script>
 
@@ -44,7 +52,7 @@ const onChange = () => {
         type="primary"
         class="ml-6"
         :icon="Setting"
-        @click="simulate(activeSimulation)"
+        @click="onSimulate"
       >
         {{ $t("playgroundView.runSimulation") }}
       </el-button>

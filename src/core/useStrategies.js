@@ -54,6 +54,8 @@ const createStrategiesInstance = () => {
     remove: false,
   });
 
+  const simulationResult = ref(null);
+
   const activeStrategy = ref(null);
   const conditionToUpdate = ref(null);
   const actionToUpdate = ref(null);
@@ -222,13 +224,13 @@ const createStrategiesInstance = () => {
     updateCondition(condition);
   };
 
-  const simulate = async (simulationTest) => {
+  const simulate = async () => {
     const response = await api.simulations().simulate({
-      sections: [{ from: simulationTest.from, to: simulationTest.to }],
+      sections: [{ from: Date.now() - 604800000, to: Date.now() }],
       strategyId: activeStrategy.value._id,
     });
 
-    return response;
+    simulationResult.value = response;
   };
 
   const updateConditionRelations = async (source, conditionId) => {
@@ -305,6 +307,7 @@ const createStrategiesInstance = () => {
     activeStrategy,
     actionToUpdate,
     conditionToUpdate,
+    simulationResult,
     setActionToUpdate,
     setConditionToUpdate,
     changeStrategy,
