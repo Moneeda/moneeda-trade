@@ -19,26 +19,26 @@ const navigateToStrategy = (strategy) => {
 const strategyModalOpen = ref(false);
 const selectedStrategy = ref(undefined);
 
-
 const updateStrategy = (value) => {
-  selectedStrategy.value = value
+  selectedStrategy.value = value;
   strategyModalOpen.value = true;
 };
 
 const onCloseModal = () => {
-  selectedStrategy.value = undefined
-  strategyModalOpen.value = false
+  selectedStrategy.value = undefined;
+  strategyModalOpen.value = false;
 };
-
 </script>
 
 <template>
   <div class="py-4 px-8 max-w-[70%]">
-    <h1 class="items-center">
-      <el-icon :size="32"><Odometer /></el-icon>
+    <h1 class="flex items-center text-2xl my-6">
+      <el-icon :size="32" class="mr-4">
+        <Odometer />
+      </el-icon>
       {{ $t("strategiesView.strategies") }}
     </h1>
-    <p class="text-content">
+    <p class="text-content mb-4">
       {{ $t("strategiesView.description") }}
     </p>
     <el-alert type="warning" :closable="false">
