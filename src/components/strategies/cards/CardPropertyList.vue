@@ -9,7 +9,8 @@
   display: grid;
   grid-auto-flow: column;
   margin-bottom: 0.25rem;
-  font-weight: bold;
   color: #7d7b8b;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  padding-left: 6px;
 }
 </style>

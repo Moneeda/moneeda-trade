@@ -12,9 +12,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <div>
-    <span class="playground-card__value">{{ props.value }}</span>
+  <div class="pl-1">
     <span class="playground-card__label">{{ props.label }}</span>
+    <span class="playground-card__value">{{ props.value }}</span>
   </div>
 </template>
 
@@ -22,11 +22,8 @@ const props = defineProps({
 .playground-card__value {
   display: flex;
   flex-direction: column;
-  padding-left: 0.2rem;
+  font-weight: 600;
 }
 .playground-card__label {
-  color: #5ccebc;
-  font-weight: 600;
-  padding-left: 0.2rem;
 }
 </style>
