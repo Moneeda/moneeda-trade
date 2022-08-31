@@ -95,7 +95,7 @@ const availableSimulationTest = computed({
         :icon="TrendCharts"
         class="w-full"
         plain
-        color="#626aef"
+        color="#10b981"
         @click="add(nodeTypes.ACTION)"
       >
         {{ $t("playgroundView.result") }}

@@ -1,5 +1,5 @@
 <script setup>
-import { CardSize, CardColor } from "./types";
+import { CardSize, CardType } from "./types";
 defineProps({
   title: {
     type: String,
@@ -9,9 +9,9 @@ defineProps({
     type: String,
     default: CardSize.small,
   },
-  color: {
+  type: {
     type: String,
-    default: CardColor.blue,
+    default: CardType.INFO,
   },
 });
 </script>
@@ -19,15 +19,15 @@ defineProps({
 <template>
   <div
     class="playground-card"
+    :class="`playground-card--${type}`"
     :style="{
-      border: `solid ${color}`,
       width: cardsize,
     }"
   >
-    <div class="type-method" :style="{ backgroundColor: color }">
+    <div class="type-method" :class="`type-method--${type}`">
       <span class="playground-card__title">{{ title }}</span>
     </div>
-    <div class="playground-card-details">
+    <div class="playground-card__details">
       <slot></slot>
     </div>
   </div>
@@ -36,35 +36,58 @@ defineProps({
 .playground-card {
   width: 15rem;
   height: 11rem;
-  border-radius: 1.2rem;
-  box-shadow: 0 2px 30px 2px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
   background: #ffffff;
-  display: grid;
   align-items: start;
+  overflow: hidden;
 
-  &__title {
-    color: white;
+  &--sell {
+    box-shadow: 0 2px 20px 2px rgba(231, 246, 253, 0.8),
+      0 0 0 1px rgba(231, 246, 253, 0.5);
+    border: 0.5px solid #0ea5e9;
+  }
+
+  &--info {
+    box-shadow: 0 2px 20px 2px rgba(239, 240, 253, 0.8),
+      0 0 0 1px rgba(239, 240, 253, 0.5);
+    border: 0.5px solid #626aef;
+  }
+
+  &--success {
+    box-shadow: 0 2px 20px 2px rgba(231, 248, 242, 0.8),
+      0 0 0 1px rgba(231, 248, 242, 0.5);
+    border: 0.5px solid #10b981;
+  }
+
+  &__details {
+    padding: 12px;
   }
 }
 
 .type-method {
   text-transform: uppercase;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   font-size: 1rem;
-  border-radius: 0.8rem 0.8rem 0 0;
   height: 3rem;
-  width: 14.66rem;
+  width: 100%;
   font-weight: 600;
-  padding-left: 0.8rem;
-}
+  padding: 0 0.8rem;
+  color: theme("colors.content");
 
-.playground-card__details {
-  padding-left: 0.6rem;
-}
+  &--sell {
+    background-color: rgb(231, 246, 253);
+    color: #0ea5e9;
+  }
 
-.card-details > * {
-  margin-top: 0.4rem;
+  &--info {
+    background-color: rgb(239, 240, 253);
+    color: #626aef;
+  }
+
+  &--success {
+    background-color: rgb(231, 248, 242);
+    color: #10b981;
+  }
 }
 </style>

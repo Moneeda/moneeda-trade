@@ -4,10 +4,16 @@ export const CardSize = {
   BIG: "10rem",
 };
 
+export const CardType = {
+  SUCCESS: "success",
+  INFO: "info",
+  SELL: "sell",
+};
+
 export const CardColor = {
-  SUCCESS: "#5ccebc",
-  INFO: "#6992e8",
-  SELL: "#572364"
+  SUCCESS: "#10b981",
+  INFO: "#626aef",
+  SELL: "#0ea5e9",
 };
 
 export const Scale = {

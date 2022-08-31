@@ -8,7 +8,7 @@ import BaseCard from "../cards/BaseCard.vue";
 import CardText from "../cards/CardText.vue";
 import CardPropertyList from "../cards/CardPropertyList.vue";
 import CardProperty from "../cards/CardProperty.vue";
-import { CardColor, CardSize, Scale } from "../cards/types";
+import { CardSize, CardType as _CardType, Scale } from "../cards/types";
 import { NodeType } from "../strategyFlowHelper";
 defineProps({
   condition: {
@@ -23,13 +23,14 @@ const updateCondition = (condition) => {
   setConditionToUpdate(condition);
   switchLayout(NodeType.CONDITION);
 };
+const CardType = _CardType;
 </script>
 
 <template>
   <div>
     <BaseCard
       :title="condition.type"
-      :color="CardColor.INFO"
+      :type="CardType.INFO"
       :size="CardSize.LITTLE"
       :scale="Scale.LITTLE"
     >
