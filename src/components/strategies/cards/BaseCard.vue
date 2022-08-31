@@ -21,7 +21,7 @@ defineProps({
     class="playground-card"
     :class="`playground-card--${type}`"
     :style="{
-      width: cardsize,
+      width: size,
     }"
   >
     <div class="type-method" :class="`type-method--${type}`">

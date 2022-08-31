@@ -36,6 +36,7 @@ export default {
     simulation: "Simulation",
     save: "Save",
     periodic: "Periodic",
+    pickSimulation: "Pick a simulation period",
   },
   strategyEdit: {
     submit: "Guardar",

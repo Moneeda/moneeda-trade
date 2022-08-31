@@ -35,23 +35,20 @@ const minPeriod = computed({
     return getMinPeriodFromConditions();
   },
 });
-const productToTest = computed({
-  get() {
-    return activeStrategy.value ? activeStrategy.value.product : [];
-  },
+const productToTest = computed(() => {
+  return activeStrategy.value ? activeStrategy.value.product : [];
 });
 
-const selectedModel = computed({
-  get() {
-    return activeSimulation.value ? activeSimulation.value.name : undefined;
-  },
-  set() {},
+const selectedModel = computed(() => {
+  return activeSimulation.value ? activeSimulation.value.id : undefined;
 });
 
-const availableSimulationTest = computed({
-  get() {
-    return getValidSimulations(productToTest.value, minPeriod.value);
-  },
+const selectedModelDescription = computed(() => {
+  return activeSimulation.value.description;
+});
+
+const availableSimulationTest = computed(() => {
+  return getValidSimulations(productToTest.value, minPeriod.value);
 });
 </script>
 
@@ -105,7 +102,9 @@ const availableSimulationTest = computed({
     <h3 class="mt-4">{{ $t("playgroundView.simulation") }}</h3>
     <el-select
       placeholder="Pick a simulation"
-      v-model="selectedModel"
+      value-key="id"
+      default-first-option
+      :model-value="selectedModel"
       @change="changeSimulation"
       fit-input-width
     >
@@ -119,11 +118,19 @@ const availableSimulationTest = computed({
           <h4 class="font-medium">{{ simulation.name }}</h4>
           <p>{{ simulation.description }}</p>
           <template #reference>
-            <el-option :label="simulation.name" :value="simulation" />
+            <el-option :label="simulation.name" :value="simulation.id" />
           </template>
         </el-popover>
       </el-option-group>
     </el-select>
+
+    <p class="text-xs text-lightcontent mt-2">
+      {{
+        selectedModel
+          ? selectedModelDescription
+          : this.$t("playgroundView.pickSimulation")
+      }}
+    </p>
 
     <el-button :icon="Select" class="w-full mt-8" plain>{{
       $t("playgroundView.save")

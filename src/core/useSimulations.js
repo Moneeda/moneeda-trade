@@ -9,8 +9,10 @@ const createSimulationsInstance = () => {
   const simulations = ref(simulationTests);
   const activeSimulation = ref(null);
 
-  const changeSimulation = (simulation) => {
-    activeSimulation.value = simulation;
+  const changeSimulation = (simulationId) => {
+    activeSimulation.value = simulations.value.find(
+      (s) => s.id === simulationId
+    );
   };
 
   const getValidSimulations = (product, period) => {
