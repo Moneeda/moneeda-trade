@@ -128,7 +128,7 @@ const availableSimulationTest = computed(() => {
       {{
         selectedModel
           ? selectedModelDescription
-          : this.$t("playgroundView.pickSimulation")
+          : $t("playgroundView.pickSimulation")
       }}
     </p>
 
