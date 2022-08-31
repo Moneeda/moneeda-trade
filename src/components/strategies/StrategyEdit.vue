@@ -180,7 +180,11 @@ const onUpdate = async () => {
 <script>
 // mergeStyles combines all classes from both styles definitions into one
 const myStyles = mergeStyles(defaultStyles, {
-  control: { label: "mylabel", select: "el-select", input: "el" },
+  control: {
+    label: "form-label",
+    select: "form-select el-select",
+    input: "form-input",
+  },
 });
 
 export default {
@@ -193,11 +197,11 @@ export default {
 <template>
   <div>
     <div class="flex justify-between">
-      <h2>Details</h2>
-      <h2>{{ resourceType }}</h2>
+      <h2>Edit {{ resourceType }}</h2>
       <el-button :icon="Close" @click="closeView"> </el-button>
     </div>
     <json-forms
+      class="my-form"
       v-if="jsonResource"
       :data="rawData"
       :renderers="renderers"
@@ -208,9 +212,44 @@ export default {
     <el-button
       @click="isUpdate ? onUpdate() : onSave()"
       type="primary"
-      class="mt-4"
+      class="float-right"
     >
       {{ $t("strategyEdit.submit") }}
     </el-button>
   </div>
 </template>
+
+<style lang="scss">
+fieldset {
+  margin-bottom: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0px 12px 12px 12px;
+
+  legend {
+    font-size: 10px;
+    background-color: #fd70651f;
+    padding: 4px 6px;
+    border-radius: 6px;
+    color: theme("colors.lightcontent");
+    text-transform: uppercase;
+  }
+}
+
+.my-form {
+  margin-bottom: 12px;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.form-select,
+.form-input {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 4px 11px;
+}
+
+.form-label {
+  margin-top: 12px;
+  display: block;
+}
+</style>
