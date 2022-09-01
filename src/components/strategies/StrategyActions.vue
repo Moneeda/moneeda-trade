@@ -134,7 +134,7 @@ const onChange = () => {
       {{
         selectedModel
           ? selectedModelDescription
-          : this.$t("playgroundView.pickSimulation")
+          : $t("playgroundView.pickSimulation")
       }}
     </p>
 
