@@ -37,6 +37,13 @@ export default {
     save: "Guardar",
     periodic: "Periodico",
     pickSimulation: "Pick a simulation period",
+    options: "Opciones",
+    latestResult: "Último resultado",
+  },
+  simulation: {
+    simulationResults: "Resultados de la simulación",
+    yourStartegyWasRun:
+      "La estrategia {strategy} se ha ejecutado con los datos de la simulación {simulation} produciendo los siguientes resultados:",
   },
   strategyEdit: {
     submit: "Guardar",

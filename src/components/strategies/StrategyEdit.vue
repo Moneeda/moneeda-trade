@@ -1,5 +1,5 @@
 <script setup>
-import { useLayout } from "~/core/useLayout";
+import { useLayout, LayoutType } from "~/core/useLayout";
 import { useStrategies } from "~/core/useStrategies";
 import { Close } from "@element-plus/icons-vue";
 import { ref, computed, toRaw, watchEffect } from "vue";
@@ -150,7 +150,7 @@ const onChange = (data) => {
 const closeView = () => {
   setActionToUpdate(undefined);
   setConditionToUpdate(undefined);
-  switchLayout("view");
+  switchLayout(LayoutType.VIEW);
 };
 
 const onSave = async () => {
@@ -168,9 +168,7 @@ const onUpdate = async () => {
     const condition = conditionDataAdapter(toRaw(rawData));
     await updateCondition(condition);
   } else if (resourceType.value === NodeType.ACTION) {
-    console.log("Im here");
     const action = actionDataAdapter(toRaw(rawData));
-    console.log(action);
     await updateAction(action);
   }
   closeView();

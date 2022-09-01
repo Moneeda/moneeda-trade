@@ -1,21 +1,30 @@
 <script setup>
-import { Setting } from "@element-plus/icons-vue";
-import { useLayout } from "~/core/useLayout";
+import { Setting, DataAnalysis } from "@element-plus/icons-vue";
+import { useLayout, LayoutType } from "~/core/useLayout";
 import { useStrategies } from "~/core/useStrategies";
 import { useSimulations } from "~/core/useSimulations";
+import { ref, computed } from "vue";
 
 const { switchLayout } = useLayout();
 const { activeSimulation } = useSimulations();
-const { strategies, activeStrategy, changeStrategy, simulate, updateStrategy } =
-  useStrategies();
+const {
+  strategies,
+  activeStrategy,
+  changeStrategy,
+  simulate,
+  simulationResult,
+} = useStrategies();
 
-const onChange = () => {
-  updateStrategy(activeStrategy.value);
-};
+const loading = ref(false);
 const onSimulate = async () => {
+  loading.value = true;
   await simulate(activeSimulation.value);
-  switchLayout("result");
+  loading.value = false;
+  showResults();
 };
+const showResults = () => switchLayout(LayoutType.RESULT);
+
+const activeStrategyId = computed(() => activeStrategy.value?._id || null);
 </script>
 
 <template>
@@ -23,19 +32,10 @@ const onSimulate = async () => {
     <h1 class="text-xl font-medium">{{ $t("playgroundView.tittle") }}</h1>
 
     <div class="flex items-center">
-      <div class="mr-4">
-        <el-checkbox
-          border
-          v-if="!!activeStrategy"
-          v-model="activeStrategy.isPeriodic"
-          @change="onChange"
-          >{{ $t("playgroundView.periodic") }}</el-checkbox
-        >
-      </div>
       <span class="text-content60">{{ $t("playgroundView.picker") }}</span>
       <el-select
         class="ml-2"
-        v-model="activeStrategy"
+        :model-value="activeStrategyId"
         placeholder="Pick a strategy"
         value-key="_id"
         @change="changeStrategy"
@@ -44,7 +44,7 @@ const onSimulate = async () => {
           v-for="strategy in strategies"
           :key="strategy._id"
           :label="strategy.label"
-          :value="strategy"
+          :value="strategy._id"
         />
       </el-select>
 
@@ -53,8 +53,19 @@ const onSimulate = async () => {
         class="ml-6"
         :icon="Setting"
         @click="onSimulate"
+        :loading="loading"
       >
         {{ $t("playgroundView.runSimulation") }}
+      </el-button>
+      <el-button
+        v-if="simulationResult"
+        class="ml-4"
+        size="small"
+        text
+        :icon="DataAnalysis"
+        @click="showResults"
+      >
+        {{ $t("playgroundView.latestResult") }}
       </el-button>
     </div>
   </div>

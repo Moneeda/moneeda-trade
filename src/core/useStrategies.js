@@ -59,9 +59,9 @@ const createStrategiesInstance = () => {
   const activeStrategy = ref(null);
   const conditionToUpdate = ref(null);
   const actionToUpdate = ref(null);
-  const changeStrategy = (strategy) => {
-    activeStrategy.value = strategy;
-    fetchConditionsAndActions(strategy._id);
+  const changeStrategy = (strategyId) => {
+    activeStrategy.value = strategies.value.find((s) => s._id === strategyId);
+    fetchConditionsAndActions(strategyId);
   };
 
   const fetchConditionsAndActions = async (strategyId) => {
@@ -101,7 +101,7 @@ const createStrategiesInstance = () => {
       numId: generateIconId(strat._id),
     }));
     if (defaultToFirst && strats.length > 0) {
-      changeStrategy(strats[0]);
+      changeStrategy(strats[0]._id);
     }
     fetchResources();
   };

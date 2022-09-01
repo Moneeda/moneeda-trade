@@ -2,11 +2,12 @@
 import StrategyFlow from "@/components/strategies/StrategyFlow.vue";
 import StrategyPicker from "~/components/strategies/StrategyPicker.vue";
 import StrategyActions from "../../components/strategies/StrategyActions.vue";
-import { useLayout } from "~/core/useLayout";
+import { useLayout, LayoutType as _LayoutType } from "~/core/useLayout";
 import StrategyEdit from "~/components/strategies/StrategyEdit.vue";
-import ShowResult from "~/components/strategies/ShowResult.vue";
+import ShowResultModal from "~/components/strategies/ShowResultModal.vue";
 
-const { layoutMode } = useLayout();
+const { layoutMode, isThreeCols } = useLayout();
+const LayoutType = _LayoutType;
 </script>
 
 <template>
@@ -16,8 +17,8 @@ const { layoutMode } = useLayout();
     <div
       class="admin-playground"
       :class="{
-        'admin-playground--two-cols': layoutMode === 'view',
-        'admin-playground--three-cols': layoutMode !== 'view',
+        'admin-playground--two-cols': !isThreeCols,
+        'admin-playground--three-cols': isThreeCols,
       }"
     >
       <StrategyFlow style="grid-area: flow" />
@@ -27,17 +28,15 @@ const { layoutMode } = useLayout();
       <div
         class="bg-white shadow-xl p-4"
         style="grid-area: details"
-        v-show="layoutMode === 'action' || layoutMode === 'condition'"
+        v-show="
+          layoutMode === LayoutType.ACTION ||
+          layoutMode === LayoutType.CONDITION
+        "
       >
         <StrategyEdit />
       </div>
-      <div
-        class="bg-white shadow-xl p-4"
-        style="grid-area: details"
-        v-show="layoutMode === 'result'"
-      >
-        <ShowResult />
-      </div>
+
+      <ShowResultModal v-if="layoutMode === LayoutType.RESULT" />
     </div>
   </div>
 </template>

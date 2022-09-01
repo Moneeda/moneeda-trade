@@ -144,8 +144,6 @@ export const provideAuth0 = () => {
 export const useAuth0 = () => {
   const auth0 = inject(Auth0Symbol);
 
-  console.log("USE", auth0);
-
   if (!auth0) {
     return null;
   }

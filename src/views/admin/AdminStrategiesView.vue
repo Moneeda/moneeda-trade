@@ -10,7 +10,7 @@ import { ref } from "vue";
 const { strategies, changeStrategy, removeStrategy } = useStrategies();
 const router = useRouter();
 const navigateToStrategy = (strategy) => {
-  changeStrategy(strategy);
+  changeStrategy(strategy._id);
   router.push({
     name: "playground",
   });

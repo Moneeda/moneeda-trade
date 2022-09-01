@@ -21,6 +21,7 @@ const {
   setConditionToUpdate,
   getMinPeriodFromConditions,
   activeStrategy,
+  updateStrategy,
 } = useStrategies();
 const nodeTypes = NodeType;
 
@@ -50,6 +51,10 @@ const selectedModelDescription = computed(() => {
 const availableSimulationTest = computed(() => {
   return getValidSimulations(productToTest.value, minPeriod.value);
 });
+
+const onChange = () => {
+  updateStrategy(activeStrategy.value);
+};
 </script>
 
 <template>
@@ -112,11 +117,12 @@ const availableSimulationTest = computed(() => {
         <el-popover
           placement="left"
           trigger="hover"
+          :width="300"
           v-for="simulation in availableSimulationTest"
           :key="simulation.id"
         >
-          <h4 class="font-medium">{{ simulation.name }}</h4>
-          <p>{{ simulation.description }}</p>
+          <h4 class="font-medium mb-2">{{ simulation.name }}</h4>
+          <p class="text-content text-sm">{{ simulation.description }}</p>
           <template #reference>
             <el-option :label="simulation.name" :value="simulation.id" />
           </template>
@@ -131,6 +137,25 @@ const availableSimulationTest = computed(() => {
           : this.$t("playgroundView.pickSimulation")
       }}
     </p>
+
+    <h3 class="mt-4">{{ $t("playgroundView.options") }}</h3>
+    <div class="my-2">
+      <el-checkbox
+        v-if="!!activeStrategy"
+        v-model="activeStrategy.isPeriodic"
+        @change="onChange"
+      >
+        <el-popover placement="left" trigger="hover" :width="300">
+          <h4 class="font-medium mb-2" v-t="'playgroundView.periodic'"></h4>
+          <p class="text-content text-sm">
+            A periodic strategy means that XXXX
+          </p>
+          <template #reference>
+            {{ $t("playgroundView.periodic") }}
+          </template>
+        </el-popover>
+      </el-checkbox>
+    </div>
 
     <el-button :icon="Select" class="w-full mt-8" plain>{{
       $t("playgroundView.save")
