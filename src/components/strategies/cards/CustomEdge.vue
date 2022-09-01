@@ -1,5 +1,6 @@
 <script setup>
 import { getBezierPath, getEdgeCenter, useVueFlow } from "@braks/vue-flow";
+import { Delete } from "@element-plus/icons-vue";
 import { computed } from "vue";
 const emit = defineEmits(["onRemove"]);
 
@@ -46,9 +47,12 @@ const props = defineProps({
   },
 });
 
+console.log(props.style);
+
 const { applyEdgeChanges } = useVueFlow();
 
-const foreignObjectSize = 40;
+const foreignObjectSize = 80;
+const foreignObjectHeight = 25;
 
 const onClick = (evt, id) => {
   applyEdgeChanges([{ type: "remove", id }]);
@@ -92,40 +96,22 @@ export default {
   />
   <foreignObject
     :width="foreignObjectSize"
-    :height="foreignObjectSize"
+    :height="foreignObjectHeight"
     :x="center[0] - foreignObjectSize / 2"
-    :y="center[1] - foreignObjectSize / 2"
+    :y="center[1]"
     class="edgebutton__wrapper"
     requiredExtensions="http://www.w3.org/1999/xhtml"
   >
-    <button ref="btn" class="edgebutton" @click="(event) => onClick(event, id)">
-      ×
-    </button>
+    <el-button
+      ref="btn"
+      type="danger"
+      plain
+      size="small"
+      :icon="Delete"
+      @click="(event) => onClick(event, id)"
+    >
+      clear
+    </el-button>
   </foreignObject>
 </template>
-<style lang="scss">
-.edgebutton {
-  border-radius: 999px;
-  cursor: pointer;
-  background: #f00;
-  border-radius: 2em;
-  color: white;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  height: 24px;
-  line-height: 2px;
-  margin: 8px;
-  text-align: center;
-  width: 24px;
-  &__wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-.edgebutton:hover {
-  transform: scale(1.2);
-  transition: transform 0.2s ease-in-out;
-}
-</style>
+<style lang="scss"></style>

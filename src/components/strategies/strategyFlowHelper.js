@@ -55,7 +55,7 @@ const mapNodes = (nodes, type) => {
           type: "custom",
           style: {
             stroke: CardColor.INFO,
-            strokeWidth: 3,
+            strokeWidth: 2,
           },
         });
       });
@@ -71,7 +71,7 @@ const mapNodes = (nodes, type) => {
           type: "custom",
           style: {
             stroke: CardColor.SUCCESS,
-            strokeWidth: 3,
+            strokeWidth: 2,
           },
         });
       });
