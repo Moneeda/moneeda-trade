@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "../views/LandingView.vue";
+import { useAuth0 } from "../core/useAuth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,19 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+router.beforeEach(async (to) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/', '/auth/signed-in'];
+  const authRequired = !publicPages.includes(to.path);
+  const auth = useAuth0();
+
+  if (authRequired && !auth.user) {
+    console.log("entrada");
+      auth.returnUrl = to.fullPath;
+      return '/';
+  }
 });
 
 export default router;
