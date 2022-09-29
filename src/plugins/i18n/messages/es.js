@@ -14,6 +14,7 @@ export default {
   admin: {
     navbarStrategies: "Estrategias",
     navbarPlayground: "Laboratorio",
+    navbarProfile: "Perfil",
   },
   strategiesView: {
     strategies: "Estrategias",

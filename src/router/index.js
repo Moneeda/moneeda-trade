@@ -29,6 +29,11 @@ const router = createRouter({
           name: "playground",
           component: () => import("../views/admin/AdminPlaygroundView.vue"),
         },
+        {
+          path: "profile",
+          name: "profile",
+          component: () => import("../views/admin/AdminProfileView.vue"),
+        },
       ],
     },
   ],

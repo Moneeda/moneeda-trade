@@ -5,6 +5,7 @@ import { useRoute, useRouter } from "vue-router";
 const RoutesMap = new Map([
   ["1", "strategies"],
   ["2", "playground"],
+  ["3", "profile"],
 ]);
 
 export default defineComponent({
@@ -43,6 +44,7 @@ export default defineComponent({
   >
     <el-menu-item index="1"> {{ $t("admin.navbarStrategies") }} </el-menu-item>
     <el-menu-item index="2"> {{ $t("admin.navbarPlayground") }} </el-menu-item>
+    <el-menu-item index="3"> {{ $t("admin.navbarProfile") }} </el-menu-item>
   </el-menu>
 </template>
 

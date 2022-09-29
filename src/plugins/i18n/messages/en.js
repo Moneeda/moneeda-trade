@@ -14,6 +14,7 @@ export default {
   admin: {
     navbarStrategies: "Strategies",
     navbarPlayground: "Playground",
+    navbarProfile: "Profile",
   },
   strategiesView: {
     strategies: "Strategies",
