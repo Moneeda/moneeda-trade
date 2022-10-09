@@ -17,8 +17,9 @@ class ApiClient {
     this.internalLabClient = axios.create({
       baseURL: `${import.meta.env.VITE_APP_LAB_API_URL}/`,
     });
-    const token = localStorage.getItem("jwt");
+    const token = storage.get("jwt");
     this.setJwt(token);
+    this.setUser();
   }
 
   simulations() {
@@ -53,8 +54,14 @@ class ApiClient {
     storage.set("jwt", jwt);
   }
 
+  setUser() {
+    const user = storage.get("jwt") !== 'null' ? storage.set("user", true) : storage.set("user", false);
+    return user;
+  }
+
   logout() {
     storage.remove("jwt");
+    storage.remove("user");
     this.internalClient.defaults.headers.common = {};
     this.internalLabClient.defaults.headers.common = {};
   }

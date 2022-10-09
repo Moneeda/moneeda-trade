@@ -7,4 +7,11 @@ export default class UsersApi {
     const { data } = await this.client.post("users/validate", user);
     return data;
   }
+
+  async userInformation(user) {
+    const { data } = await this.client.get("users/information", user);
+    return data = {
+      hasTelegramChannel: Boolean,
+    };
+  }
 }
