@@ -18,7 +18,9 @@ const {
 const loading = ref(false);
 const onSimulate = async () => {
   loading.value = true;
-  await simulate(activeSimulation.value);
+  if (activeSimulation.value) {
+    await simulate(activeSimulation.value);
+  }
   loading.value = false;
   showResults();
 };
