@@ -1,70 +1,46 @@
-<script stup></script>
+<script setup>
+import { Connection } from "@element-plus/icons-vue";
+import { useUserInfo } from "../../core/useUserInfo";
+import api from "~/api";
+
+const { userInfo } = useUserInfo();
+
+const connect = async () => {
+  const { channelValidationUrl } = await api
+    .users()
+    .getConnectionCode("telegram");
+
+  window.open(channelValidationUrl, "_blank");
+};
+</script>
 
 <template>
-  <div class="admin-profile flex justify-center">
-    <div class="profile self-center p-12">
-      <h1 class="profile--title relative">Personal Info</h1>
-      <hr class="profile--title-underlined flex self-center relative" />
-      <h2 class="profile--font-medium">Full Name</h2>
-      <hr class="profile--header-underlined flex self-center " />
-      <p class="profile--font-extralight">John Doe</p>
-      <h2 class="profile--font-medium">Telegram Name</h2>
-      <hr class="profile--header-underlined flex self-center" />
-      <p class="profile--font-extralight">September 9</p>
-      <h2 class="profile--font-medium">Email</h2>
-      <hr class="profile--header-underlined flex self-center" />
-      <p class="profile--font-extralight">example@example.com</p>
+  <div class="py-4 px-8 max-w-[70%]">
+    <h1 class="flex items-center text-2xl my-6">
+      <el-icon :size="32" class="mr-4">
+        <Connection />
+      </el-icon>
+      {{ $t("profileView.connection.title") }}
+    </h1>
+    <p class="text-content mb-4">
+      {{ $t("profileView.connection.description") }}
+    </p>
+    <div v-if="!!userInfo && !userInfo.hasTelegramChannel">
+      <el-button type="primary" @click="connect">{{
+        $t("profileView.connection.cta", { provider: "Telegram" })
+      }}</el-button>
+    </div>
+    <div v-else-if="!!userInfo">
+      <h2 class="flex items-center text-2xl my-6">
+        {{
+          $t("profileView.connection.confirmed", {
+            provider: "Telegram",
+            user: userInfo.channelName,
+          })
+        }}
+      </h2>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-.admin-profile {
-  height: 30rem;
-  margin: 0 auto;
-}
-
-.profile {
-  border: 2px;
-  border-style: solid;
-  border-color: rgb(204 219 233);
-  border-radius: 1.2rem;
-  width: 30rem;
-
-  &--title {
-    left: 8rem;
-    color: rgb(95, 165, 227);
-    padding-bottom: 1.6rem;
-    /* font-weight: 500; */
-    font-size: large;
-  }
-
-  &--title-underlined {
-  bottom: 1.3rem;
-  left: 6rem;
-  width: 50%;
-  border: 1px solid rgb(163 218 235);
-  border-radius: 5px;
-}
-
-&--header-underlined {
-  bottom: 1.3rem;
-  left: 6rem;
-  width: 50%;
-  border: 1px solid rgb(235 210 163);
-  border-radius: 5px;
-  margin-bottom: 0.6rem;
-}
-
-  &--font-medium {
-    font-weight: 500;
-    color: rgb(219 129 65);
-  }
-
-  &--font-extralight {
-    font-weight: 200;
-    padding-bottom: 0.6rem;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

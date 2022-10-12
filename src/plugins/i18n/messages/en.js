@@ -16,6 +16,14 @@ export default {
     navbarPlayground: "Playground",
     navbarProfile: "Profile",
   },
+  profileView: {
+    connection: {
+      title: "Alerts provider",
+      description: "Connect your alert provider to receive the strategy alerts",
+      cta: "Connect to {provider}",
+      confirmed: "Already connected to {provider} with user {user}",
+    },
+  },
   strategiesView: {
     strategies: "Strategies",
     description:
