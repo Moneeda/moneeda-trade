@@ -14,6 +14,16 @@ export default {
   admin: {
     navbarStrategies: "Estrategias",
     navbarPlayground: "Laboratorio",
+    navbarProfile: "Perfil",
+  },
+  profileView: {
+    connection: {
+      title: "Conexión de alertas",
+      description:
+        "Conecta tus cuentas para poder recibir las notificaciones de las alertas",
+      cta: "Connect to {provider}",
+      confirmed: "Conectado a {provider} con el usuario {user}",
+    },
   },
   strategiesView: {
     strategies: "Estrategias",
