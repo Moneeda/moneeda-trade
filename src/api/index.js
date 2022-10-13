@@ -5,6 +5,7 @@ import ConditionsApi from "./conditions";
 import ActionsApi from "./actions";
 import UsersApi from "./users";
 import storage from "~/services/storage";
+import LiveStrategiesApi from "./live-strategies";
 
 class ApiClient {
   constructor() {
@@ -17,12 +18,19 @@ class ApiClient {
     this.internalLabClient = axios.create({
       baseURL: `${import.meta.env.VITE_APP_LAB_API_URL}/`,
     });
+    this.internalLiveClient = axios.create({
+      baseURL: `${import.meta.env.VITE_APP_LIVE_API_URL}/`,
+    });
     const token = localStorage.getItem("jwt");
     this.setJwt(token);
   }
 
   simulations() {
     return new SimulationsApi(this.internalClient, this.internalLabClient);
+  }
+
+  liveStrategies() {
+    return new LiveStrategiesApi(this.internalLiveClient);
   }
 
   strategies() {

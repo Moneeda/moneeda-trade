@@ -57,11 +57,13 @@ const createStrategiesInstance = () => {
   const simulationResult = ref(null);
 
   const activeStrategy = ref(null);
+  const activeLiveStrategy = ref(null);
   const conditionToUpdate = ref(null);
   const actionToUpdate = ref(null);
   const changeStrategy = (strategyId) => {
     activeStrategy.value = strategies.value.find((s) => s._id === strategyId);
     fetchConditionsAndActions(strategyId);
+    fetchActiveStrategy(strategyId);
   };
 
   const fetchConditionsAndActions = async (strategyId) => {
@@ -71,6 +73,11 @@ const createStrategiesInstance = () => {
     ]);
     conditions.value = conds;
     actions.value = acts;
+  };
+
+  const fetchActiveStrategy = async (strategyId) => {
+    const liveStrategy = await api.liveStrategies().getByStrategyId(strategyId);
+    activeLiveStrategy.value = liveStrategy;
   };
 
   const fetchResources = async () => {
