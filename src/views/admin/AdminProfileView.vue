@@ -10,7 +10,7 @@ const connect = async () => {
     .users()
     .getConnectionCode("telegram");
 
-  window.open(channelValidationUrl, "_blank");
+  window.open(channelValidationUrl, "about:blank");
 };
 </script>
 
