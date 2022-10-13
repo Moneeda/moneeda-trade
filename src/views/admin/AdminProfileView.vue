@@ -9,8 +9,8 @@ const connect = async () => {
   const { channelValidationUrl } = await api
     .users()
     .getConnectionCode("telegram");
-
-  window.open(channelValidationUrl, "about:blank");
+  console.log("Link to connect: ", channelValidationUrl);
+  window.open(channelValidationUrl);
 };
 </script>
 
