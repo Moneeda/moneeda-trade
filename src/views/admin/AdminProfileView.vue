@@ -1,17 +1,8 @@
 <script setup>
 import { Connection } from "@element-plus/icons-vue";
 import { useUserInfo } from "../../core/useUserInfo";
-import api from "~/api";
 
 const { userInfo } = useUserInfo();
-
-const connect = async () => {
-  const { channelValidationUrl } = await api
-    .users()
-    .getConnectionCode("telegram");
-  console.log("Link to connect: ", channelValidationUrl);
-  window.open(channelValidationUrl);
-};
 </script>
 
 <template>
@@ -26,9 +17,30 @@ const connect = async () => {
       {{ $t("profileView.connection.description") }}
     </p>
     <div v-if="!!userInfo && !userInfo.hasTelegramChannel">
-      <el-button type="primary" @click="connect">{{
+      <el-link type="primary" :href="userInfo.channelValidationUrl">{{
         $t("profileView.connection.cta", { provider: "Telegram" })
-      }}</el-button>
+      }}</el-link>
+
+      <el-divider>
+        {{ $t("profileView.connection.or") }}
+      </el-divider>
+
+      <p>
+        {{
+          $t("profileView.connection.commandExplanation", {
+            provider: "Telegram",
+          })
+        }}
+      </p>
+      <el-alert
+        :title="
+          $t('profileView.connection.command', {
+            token: userInfo.channelValidationId,
+          })
+        "
+        type="info"
+        :closable="false"
+      />
     </div>
     <div v-else-if="!!userInfo">
       <h2 class="flex items-center text-2xl my-6">

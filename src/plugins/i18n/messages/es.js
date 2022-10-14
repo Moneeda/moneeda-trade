@@ -23,6 +23,10 @@ export default {
         "Conecta tus cuentas para poder recibir las notificaciones de las alertas",
       cta: "Connect to {provider}",
       confirmed: "Conectado a {provider} con el usuario {user}",
+      or: "o",
+      commandExplanation:
+        "Conecta tu cuenta de {provider} manualmente ejecutando el siguiente commando en nuestro bot MoneedaTestBot",
+      command: "/start {token}",
     },
   },
   strategiesView: {

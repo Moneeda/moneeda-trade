@@ -22,6 +22,10 @@ export default {
       description: "Connect your alert provider to receive the strategy alerts",
       cta: "Connect to {provider}",
       confirmed: "Already connected to {provider} with user {user}",
+      or: "or",
+      commandExplanation:
+        "Connect your {provider} account using the following command in our bot MoneedaTestBot",
+      command: "/start {token}",
     },
   },
   strategiesView: {
