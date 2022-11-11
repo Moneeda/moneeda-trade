@@ -23,10 +23,10 @@ export default class LiveStrategiesApi {
     return data;
   }
 
-  async statusUpdate(liveStrategy) {
+  async statusUpdate(id, status) {
     const { data } = await this.client.put("status/update", {
-      _id: liveStrategy._id,
-      status: liveStrategy.status,
+      _id: id,
+      status: status,
     });
     return data;
   }

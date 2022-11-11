@@ -28,8 +28,7 @@ const nodeTypes = {
 const elements = ref([]);
 let fitFlowView;
 
-const { onPaneReady, onNodeDragStop, onConnect, addEdges, onNodesChange } =
-  useVueFlow();
+const { onPaneReady, onNodeDragStop, onConnect, addEdges } = useVueFlow();
 
 watchEffect(() => {
   elements.value = buildNodes(conditions.value, actions.value);
@@ -39,10 +38,6 @@ onPaneReady(({ fitView }) => {
   elements.value = buildNodes(conditions.value, actions.value);
   fitFlowView = fitView;
   setTimeout(fitFlowView, 1000);
-});
-
-onNodesChange(() => {
-  if (fitFlowView && elements.value.length > 1) fitFlowView();
 });
 
 onNodeDragStop(({ node }) => {
@@ -94,7 +89,7 @@ const onEdgeRemove = (event, id) => {
     v-model="elements"
     class="vue-flow-basic-example"
     :node-types="nodeTypes"
-    :default-zoom="1.5"
+    :default-zoom="1"
     :min-zoom="0.2"
     :max-zoom="1"
   >

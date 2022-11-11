@@ -58,6 +58,10 @@ class ApiClient {
       ...this.internalLabClient.defaults.headers.common,
       Authorization: `Bearer ${jwt}`,
     };
+    this.internalLiveClient.defaults.headers.common = {
+      ...this.internalLabClient.defaults.headers.common,
+      Authorization: `Bearer ${jwt}`,
+    };
     storage.set("jwt", jwt);
   }
 

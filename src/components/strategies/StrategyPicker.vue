@@ -10,10 +10,19 @@ const { activeSimulation } = useSimulations();
 const {
   strategies,
   activeStrategy,
+  activeLiveStrategy,
+  switchActiveLiveStrategy,
   changeStrategy,
   simulate,
   simulationResult,
 } = useStrategies();
+const switchValue = computed({
+  get: () =>
+    !!activeLiveStrategy.value && activeLiveStrategy.value.status === "active",
+  set: () => {
+    switchActiveLiveStrategy();
+  },
+});
 
 const loading = ref(false);
 const onSimulate = async () => {
@@ -34,6 +43,12 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
     <h1 class="text-xl font-medium">{{ $t("playgroundView.tittle") }}</h1>
 
     <div class="flex items-center">
+      <el-switch
+        v-model="switchValue"
+        class="mr-6"
+        :active-text="$t('playgroundView.status.active')"
+        :inactive-text="$t('playgroundView.status.paused')"
+      />
       <span class="text-content60">{{ $t("playgroundView.picker") }}</span>
       <el-select
         class="ml-2"

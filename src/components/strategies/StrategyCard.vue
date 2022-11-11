@@ -33,7 +33,12 @@ const formattedDate = computed(() => {
       <el-icon :size="24">
         <component :is="icon" />
       </el-icon>
-      <el-tag class="mt-2">{{ strategy.status }}</el-tag>
+      <el-tag v-if="strategy.status === 'active'" type="success" class="mt-2">
+        Live
+      </el-tag>
+      <el-tag v-if="strategy.status === 'paused'" type="warning" class="mt-2">
+        Paused
+      </el-tag>
     </div>
 
     <div class="flex-1">

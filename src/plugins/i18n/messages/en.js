@@ -52,6 +52,10 @@ export default {
     pickSimulation: "Pick a simulation period",
     options: "Options",
     latestResult: "Latest result",
+    status: {
+      active: "Active",
+      paused: "Paused",
+    },
   },
   simulation: {
     simulationResults: "Simulation results",

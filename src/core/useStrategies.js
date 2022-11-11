@@ -63,7 +63,7 @@ const createStrategiesInstance = () => {
   const changeStrategy = (strategyId) => {
     activeStrategy.value = strategies.value.find((s) => s._id === strategyId);
     fetchConditionsAndActions(strategyId);
-    fetchActiveStrategy(strategyId);
+    fetchActiveLiveStrategy(strategyId);
   };
 
   const fetchConditionsAndActions = async (strategyId) => {
@@ -75,8 +75,31 @@ const createStrategiesInstance = () => {
     actions.value = acts;
   };
 
-  const fetchActiveStrategy = async (strategyId) => {
+  const fetchActiveLiveStrategy = async (strategyId) => {
     const liveStrategy = await api.liveStrategies().getByStrategyId(strategyId);
+    activeLiveStrategy.value = liveStrategy;
+  };
+
+  const createLiveStrategy = async (strategyId) => {
+    const liveStrategy = await api.liveStrategies().create(strategyId);
+    activeLiveStrategy.value = liveStrategy;
+  };
+
+  const switchActiveLiveStrategy = async () => {
+    if (!activeLiveStrategy.value) {
+      await createLiveStrategy(activeStrategy.value._id);
+      return;
+    }
+    await updateActiveLiveStrategyStatus(
+      activeLiveStrategy.value.status === "active" ? "paused" : "active"
+    );
+    await retrieveStrategies(false);
+  };
+
+  const updateActiveLiveStrategyStatus = async (status) => {
+    const liveStrategy = await api
+      .liveStrategies()
+      .statusUpdate(activeLiveStrategy.value._id, status);
     activeLiveStrategy.value = liveStrategy;
   };
 
@@ -312,6 +335,7 @@ const createStrategiesInstance = () => {
     strategies,
     resources,
     activeStrategy,
+    activeLiveStrategy,
     actionToUpdate,
     conditionToUpdate,
     simulationResult,
@@ -319,6 +343,7 @@ const createStrategiesInstance = () => {
     setConditionToUpdate,
     changeStrategy,
     createStrategy,
+    createLiveStrategy,
     updateStrategy,
     removeStrategy,
     createAction,
@@ -329,6 +354,7 @@ const createStrategiesInstance = () => {
     getActionById,
     updateActionRelations,
     updateConditionRelations,
+    switchActiveLiveStrategy,
     removeActionRelations,
     removeConditionRelations,
     deleteAction,
@@ -337,6 +363,7 @@ const createStrategiesInstance = () => {
     updateAction,
     simulate,
     getMinPeriodFromConditions,
+    updateActiveLiveStrategyStatus,
   };
 };
 

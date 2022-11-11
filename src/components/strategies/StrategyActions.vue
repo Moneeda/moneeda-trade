@@ -1,7 +1,6 @@
 <script setup>
 import {
   ScaleToOriginal,
-  Select,
   Files,
   SetUp,
   TrendCharts,
@@ -16,7 +15,6 @@ const { layoutMode, switchLayout } = useLayout();
 const { changeSimulation, activeSimulation, getValidSimulations } =
   useSimulations();
 const {
-  autosave,
   setActionToUpdate,
   setConditionToUpdate,
   getMinPeriodFromConditions,
@@ -156,14 +154,5 @@ const onChange = () => {
         </el-popover>
       </el-checkbox>
     </div>
-
-    <el-button :icon="Select" class="w-full mt-8" plain>{{
-      $t("playgroundView.save")
-    }}</el-button>
-    <el-checkbox
-      v-model="autosave"
-      label="Autosave changes"
-      size="small"
-    ></el-checkbox>
   </div>
 </template>
