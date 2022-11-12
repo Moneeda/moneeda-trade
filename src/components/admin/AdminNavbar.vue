@@ -4,6 +4,7 @@ import { ChatDotSquare, SwitchButton } from "@element-plus/icons-vue";
 import { useAuth0 } from "../../core/useAuth";
 import api from "../../api";
 import TranslationButtons from "../buttons/TranslationButtons.vue";
+import { ref } from "@vue/reactivity";
 
 const auth0 = useAuth0();
 
@@ -12,10 +13,11 @@ const logout = () => {
   auth0.logout();
 };
 
+const isChatAvailable = ref(!!window.drift);
+
 const help = () => {
   window.drift?.api.openChat();
 };
-
 </script>
 
 <template>
@@ -29,7 +31,11 @@ const help = () => {
 
     <div class="flex">
       <TranslationButtons />
-      <el-button :icon="ChatDotSquare" @click="help"></el-button>
+      <el-button
+        v-if="isChatAvailable"
+        :icon="ChatDotSquare"
+        @click="help"
+      ></el-button>
       <el-button :icon="SwitchButton" @click="logout"></el-button>
     </div>
   </nav>

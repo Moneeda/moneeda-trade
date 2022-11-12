@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const RoutesMap = new Map([
@@ -12,10 +12,20 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const activeRoute = [...RoutesMap.entries()].find(
-      ([, val]) => val === route.name
+    const activeRoute = ref(
+      [...RoutesMap.entries()].find(([, val]) => val === route.name)
     );
-    const activeEntry = ref(activeRoute?.[0] || "1");
+    const activeEntry = ref(activeRoute.value?.[0] || "1");
+
+    watch(
+      () => route.name,
+      (name) => {
+        activeRoute.value = [...RoutesMap.entries()].find(
+          ([, val]) => val === name
+        );
+        activeEntry.value = activeRoute.value?.[0] || "1";
+      }
+    );
 
     const handleOpen = (id) => {
       if (!RoutesMap.has(id)) {
