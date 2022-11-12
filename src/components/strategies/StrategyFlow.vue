@@ -10,7 +10,6 @@ import CustomEdge from "./cards/CustomEdge.vue";
 const {
   conditions,
   actions,
-  autosave,
   updateNode,
   getConditionById,
   getActionById,
@@ -40,10 +39,9 @@ onPaneReady(({ fitView }) => {
   setTimeout(fitFlowView, 1000);
 });
 
-onNodeDragStop(({ node }) => {
-  if (autosave.value) {
-    updateNode(node);
-  }
+onNodeDragStop(async ({ node }) => {
+  await updateNode(node);
+  elements.value = buildNodes(conditions.value, actions.value);
 });
 onConnect((params) => {
   const style = {

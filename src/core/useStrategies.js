@@ -304,7 +304,7 @@ const createStrategiesInstance = () => {
 
     switch (node.type) {
       case "action": {
-        await api.actions().update({
+        await updateAction({
           ...node.data.action,
           positionX: node.position.x,
           positionY: node.position.y,
@@ -312,7 +312,7 @@ const createStrategiesInstance = () => {
         break;
       }
       case "condition":
-        await api.conditions().update({
+        await updateCondition({
           ...node.data.condition,
           params: node.data.condition.params || {},
           positionX: node.position.x,
