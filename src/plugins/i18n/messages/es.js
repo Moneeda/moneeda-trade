@@ -38,6 +38,24 @@ export default {
     yourStrategies: "Tus Estrategias",
     cardTittle: "Añadir Estrategia",
     cardIcon: "Nueva",
+    card: {
+      live: "En activo",
+      paused: "Pausada",
+    },
+    strategyModal: {
+      createTitle: "Crear nueva estrategia",
+      updateTitle: "Actualizar estrategia",
+      description:
+        "Crea una nueva estrategia para un producto específico con una cantidad base y una cantidad de cotización. Las condiciones y acciones se definirán en el siguiente paso.",
+      name: "Nombre",
+      inputDescription: "Descripción",
+      product: "Producto",
+      productSelect: "Selecciona un producto",
+      baseAmount: "Cantidad base",
+      quoteAmount: "Cantidad de cotización",
+      confirmCTA: "Confirmar",
+      cancelCTA: "Cancelar",
+    },
   },
   playgroundView: {
     tittle: "Laboratorio",
@@ -47,15 +65,17 @@ export default {
     actions: "Acciones",
     condition: "Añadir Condicion",
     result: "Añadir Resultado",
+    selectSimulation: "Selecciona una simulacion",
     simulation: "Simulaciones",
     save: "Guardar",
+    periodicDescription:
+      "Ejecuta la simulación periódicamente. Cuando no haya más condiciones pendientes, la estrategia volverá a evaluar las condiciones iniciales.",
     periodic: "Periodico",
-    pickSimulation: "Pick a simulation period",
     options: "Opciones",
     latestResult: "Último resultado",
     status: {
-      active: "Activo",
-      paused: "Pausado",
+      active: "Activa",
+      paused: "Pausada",
     },
   },
   simulation: {

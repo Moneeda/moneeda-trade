@@ -37,6 +37,24 @@ export default {
     yourStrategies: "Your strategies",
     cardTittle: "Add a new strategy",
     cardIcon: "New",
+    card: {
+      live: "Live",
+      paused: "Paused",
+    },
+    strategyModal: {
+      createTitle: "Add a new strategy",
+      updateTitle: "Update strategy",
+      description:
+        "Create a new strategy for a specific product with a base amount and a quote amount. Conditions and actions will be defined in the next step.",
+      name: "Name",
+      inputDescription: "description",
+      product: "Product",
+      productSelect: "Select a product",
+      baseAmount: "Base amount",
+      quoteAmount: "Quote amount",
+      confirmCTA: "Confirm",
+      cancelCTA: "Cancel",
+    },
   },
   playgroundView: {
     tittle: "Playground",
@@ -47,9 +65,11 @@ export default {
     condition: "Add condition",
     result: "Add result",
     simulation: "Simulation",
+    selectSimulation: "Select a simulation",
     save: "Save",
     periodic: "Periodic",
-    pickSimulation: "Pick a simulation period",
+    periodicDescription:
+      "Run the simulation periodically. Once there's no pending condition, the strategy will start from the beginning.",
     options: "Options",
     latestResult: "Latest result",
     status: {

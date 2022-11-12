@@ -104,7 +104,7 @@ const onChange = () => {
 
     <h3 class="mt-4">{{ $t("playgroundView.simulation") }}</h3>
     <el-select
-      placeholder="Pick a simulation"
+      :placeholder="$t('playgroundView.selectSimulation')"
       value-key="id"
       default-first-option
       :model-value="selectedModel"
@@ -128,12 +128,8 @@ const onChange = () => {
       </el-option-group>
     </el-select>
 
-    <p class="text-xs text-lightcontent mt-2">
-      {{
-        selectedModel
-          ? selectedModelDescription
-          : $t("playgroundView.pickSimulation")
-      }}
+    <p v-show="selectedModel" class="text-xs text-lightcontent mt-2">
+      {{ selectedModelDescription }}
     </p>
 
     <h3 class="mt-4">{{ $t("playgroundView.options") }}</h3>
@@ -145,8 +141,8 @@ const onChange = () => {
       >
         <el-popover placement="left" trigger="hover" :width="300">
           <h4 class="font-medium mb-2" v-t="'playgroundView.periodic'"></h4>
-          <p class="text-content text-sm">
-            A periodic strategy means that XXXX
+          <p class="text-content break-normal text-sm">
+            {{ $t("playgroundView.periodicDescription") }}
           </p>
           <template #reference>
             {{ $t("playgroundView.periodic") }}
