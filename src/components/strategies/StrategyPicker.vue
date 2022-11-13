@@ -60,7 +60,7 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
         <el-option
           v-for="strategy in strategies"
           :key="strategy._id"
-          :label="strategy.label"
+          :label="strategy.name"
           :value="strategy._id"
         />
       </el-select>

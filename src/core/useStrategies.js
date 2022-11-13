@@ -127,7 +127,6 @@ const createStrategiesInstance = () => {
     const strats = await api.strategies().all();
     strategies.value = strats.map((strat) => ({
       ...strat,
-      label: strat.name,
       numId: generateIconId(strat._id),
     }));
     if (defaultToFirst && strats.length > 0) {
@@ -139,7 +138,7 @@ const createStrategiesInstance = () => {
   const createStrategy = async (strategyData) => {
     loading.create = true;
     const strategy = await api.strategies().add(strategyData);
-    strategies.value.push(strategy);
+    strategies.value.push({ ...strategy, numId: generateIconId(strategy._id) });
     loading.create = false;
     return strategy;
   };
