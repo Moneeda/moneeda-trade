@@ -108,7 +108,7 @@ const rules = {
       >
         <el-select
           v-model="form.product"
-          placeholder="$t('strategiesView.strategyModal.productSelect')"
+          :placeholder="$t('strategiesView.strategyModal.productSelect')"
           class="w-full"
         >
           <el-option

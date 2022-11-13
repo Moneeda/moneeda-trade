@@ -11,7 +11,7 @@ import { useStrategies } from "~/core/useStrategies";
 import { NodeType } from "~/components/strategies/strategyFlowHelper";
 import { computed } from "@vue/reactivity";
 
-const { layoutMode, switchLayout } = useLayout();
+const { switchLayout } = useLayout();
 const { changeSimulation, activeSimulation, getValidSimulations } =
   useSimulations();
 const {
@@ -43,7 +43,7 @@ const selectedModel = computed(() => {
 });
 
 const selectedModelDescription = computed(() => {
-  return activeSimulation.value.description;
+  return activeSimulation.value?.description;
 });
 
 const availableSimulationTest = computed(() => {
@@ -57,25 +57,6 @@ const onChange = () => {
 
 <template>
   <div class="bg-white box-shadow p-4 flex flex-col items-start justify-start">
-    <h3>{{ $t("playgroundView.mode") }}</h3>
-
-    <el-radio-group
-      v-model="layoutMode"
-      fill="#ffe2ddb3"
-      text-color="rgba(0,0,0,0.8)"
-    >
-      <el-radio-button label="view">
-        <el-icon>
-          <Files />
-        </el-icon>
-      </el-radio-button>
-      <el-radio-button label="details">
-        <el-icon>
-          <ScaleToOriginal />
-        </el-icon>
-      </el-radio-button>
-    </el-radio-group>
-
     <h3 class="mt-4">{{ $t("playgroundView.actions") }}</h3>
 
     <!-- Wrapped because element adds a margin between two buttons -->
