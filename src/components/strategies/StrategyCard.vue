@@ -9,6 +9,7 @@ import {
   IceCream,
   Delete,
   EditPen,
+  DocumentCopy,
 } from "@element-plus/icons-vue";
 import { computed } from "vue";
 import format from "date-fns/format";
@@ -55,6 +56,14 @@ const formattedDate = computed(() => {
       </div>
     </div>
     <el-button
+      type="info"
+      :icon="DocumentCopy"
+      circle
+      size="small"
+      class="strategy-card__duplicate"
+      @click.stop="$emit('create', strategy)"
+    />
+    <el-button
       type="warning"
       :icon="EditPen"
       circle
@@ -89,6 +98,11 @@ const formattedDate = computed(() => {
     @apply shadow-xl;
     background-color: white;
 
+    .strategy-card__duplicate {
+      visibility: visible;
+      opacity: 1;
+    }
+
     .strategy-card__edit {
       visibility: visible;
       opacity: 1;
@@ -98,6 +112,15 @@ const formattedDate = computed(() => {
       visibility: visible;
       opacity: 1;
     }
+  }
+
+  &__duplicate {
+    visibility: hidden;
+    position: absolute;
+    top: -8px;
+    right: 60px;
+    opacity: 0;
+    transition: all ease-in 0.1s;
   }
 
   &__edit {

@@ -143,6 +143,14 @@ const createStrategiesInstance = () => {
     return strategy;
   };
 
+  const duplicateActions = async (targetId, sourceId, timestamp) => {
+    await api.actions().duplicate(targetId, sourceId, timestamp);
+  };
+
+  const duplicateConditions = async (targetId, sourceId, timestamp) => {
+    await api.conditions().duplicate(targetId, sourceId, timestamp);
+  };
+
   const updateStrategy = async (strategyData) => {
     loading.update = true;
     const strategy = await api.strategies().update(strategyData);
@@ -342,6 +350,8 @@ const createStrategiesInstance = () => {
     setConditionToUpdate,
     changeStrategy,
     createStrategy,
+    duplicateActions,
+    duplicateConditions,
     createLiveStrategy,
     updateStrategy,
     removeStrategy,

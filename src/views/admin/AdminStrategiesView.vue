@@ -24,6 +24,16 @@ const updateStrategy = (value) => {
   strategyModalOpen.value = true;
 };
 
+const createStrategy = (value) => {
+  selectedStrategy.value = {
+    ...value,
+    _id: undefined,
+    name: `Copy - ${value.name}`,
+    sourceId: value._id,
+  };
+  strategyModalOpen.value = true;
+};
+
 const onCloseModal = () => {
   selectedStrategy.value = undefined;
   strategyModalOpen.value = false;
@@ -56,6 +66,7 @@ const onCloseModal = () => {
         @click="navigateToStrategy(strategy)"
         @remove="removeStrategy(strategy)"
         @update="updateStrategy"
+        @create="createStrategy"
       />
       <StrategyCardAdd @click="strategyModalOpen = true" />
     </div>

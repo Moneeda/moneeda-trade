@@ -2,7 +2,13 @@
 import { reactive, ref, computed } from "vue";
 import { productOptions, useStrategies } from "~/core/useStrategies";
 
-const { createStrategy, updateStrategy, loading } = useStrategies();
+const {
+  createStrategy,
+  updateStrategy,
+  duplicateActions,
+  duplicateConditions,
+  loading,
+} = useStrategies();
 const props = defineProps({
   internalStrategy: {
     type: Object,
@@ -15,6 +21,10 @@ const close = () => {
 };
 
 const isUpdate = computed(() => {
+  return !!props.internalStrategy?._id;
+});
+
+const hasStrategy = computed(() => {
   return !!props.internalStrategy;
 });
 
@@ -29,6 +39,19 @@ const submitForm = async (formEl) => {
         emit("update", strategy._id);
       } else {
         const strategy = await createStrategy(form);
+        if (props.internalStrategy?.sourceId) {
+          const timestamp = new Date().getTime();
+          await duplicateActions(
+            strategy._id,
+            props.internalStrategy.sourceId,
+            timestamp
+          );
+          await duplicateConditions(
+            strategy._id,
+            props.internalStrategy.sourceId,
+            timestamp
+          );
+        }
         emit("create", strategy._id);
       }
       close();
@@ -41,7 +64,7 @@ const submitForm = async (formEl) => {
 const options = [...productOptions];
 
 const form = reactive(
-  isUpdate.value
+  hasStrategy.value
     ? {
         name: props.internalStrategy.name,
         description: props.internalStrategy.description,

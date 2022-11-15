@@ -23,6 +23,15 @@ export default class ActionsApi {
     return data;
   }
 
+  async duplicate(targetId, sourceId, timestamp) {
+    const { data } = await this.client.post(`actions/duplicate`, {
+      targetId,
+      sourceId,
+      timestamp,
+    });
+    return data;
+  }
+
   async update(action) {
     const { data } = await this.client.put(`actions`, action);
     return data;

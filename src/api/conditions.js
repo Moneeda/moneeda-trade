@@ -23,6 +23,15 @@ export default class ConditionsApi {
     return data;
   }
 
+  async duplicate(targetId, sourceId, timestamp) {
+    const { data } = await this.client.post(`conditions/duplicate`, {
+      targetId,
+      sourceId,
+      timestamp,
+    });
+    return data;
+  }
+
   async update(condition) {
     const { data } = await this.client.put(`conditions`, condition);
     return data;
