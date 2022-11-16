@@ -24,7 +24,7 @@ export default {
       confirmed: "Already connected to {provider} with user {user}",
       or: "or",
       commandExplanation:
-        "Connect your {provider} account using the following command in our bot MoneedaTestBot",
+        "Connect your {provider} account using the following command in our bot {name}",
       command: "/start {token}",
     },
   },

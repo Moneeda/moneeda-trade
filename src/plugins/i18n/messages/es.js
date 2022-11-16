@@ -25,7 +25,7 @@ export default {
       confirmed: "Conectado a {provider} con el usuario {user}",
       or: "o",
       commandExplanation:
-        "Conecta tu cuenta de {provider} manualmente ejecutando el siguiente commando en nuestro bot MoneedaTestBot",
+        "Conecta tu cuenta de {provider} manualmente ejecutando el siguiente commando en nuestro bot {name}",
       command: "/start {token}",
     },
   },

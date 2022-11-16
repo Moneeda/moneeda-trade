@@ -108,7 +108,10 @@ const createAuth0Instance = () => {
     }
 
     try {
-      auth0Client.value.logout(options);
+      auth0Client.value.logout({
+        ...options,
+        returnTo: import.meta.env.VITE_APP_DOMAIN,
+      });
     } catch (err) {
       error.value = err;
     }

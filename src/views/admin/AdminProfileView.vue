@@ -29,6 +29,7 @@ const { userInfo } = useUserInfo();
         {{
           $t("profileView.connection.commandExplanation", {
             provider: "Telegram",
+            name: userInfo.channelBot,
           })
         }}
       </p>
