@@ -41,14 +41,21 @@ export default defineComponent({
 <template>
   <div class="p-4 pb-0">
     <section class="m-header relative bg-lighthighlight w-full rounded p-4">
-      <div class="flex justify-between items-center">
-        <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[20px]" />
+      <div class="flex justify-between items-center responsive-login">
+        <img src="@/assets/img/logo.svg" alt="moneeda logo" class="h-[2rem]" />
         <div class="flex space-x-4">
-          <el-button v-if="!isAuthenticated" type="primary" @click="login">
+          <el-button
+            class="responsive-button"
+            v-if="!isAuthenticated"
+            type="primary"
+            @click="login"
+          >
             {{ $t("landing.login") }}
           </el-button>
           <router-link v-else :to="{ name: 'admin' }">
-            <el-button type="primary">
+            <el-button 
+            class="responsive-button"
+             type="primary">
               {{ $t("landing.dashboard") }}
             </el-button>
           </router-link>
@@ -57,17 +64,20 @@ export default defineComponent({
 
       <div class="m-header__content flex flex-col justify-around">
         <div class="text-center">
-          <h1 class="text-3xl sm:text-5xl font-title leading-relaxed">
+          <h1
+            class="text-3xl sm:text-5xl font-title leading-relaxed responsive-title"
+          >
             {{ $t("landing.welcome") }}
             <br />{{ $t("landing.welcomePhrase") }}
           </h1>
-          <p class="text-sm mt-8">
+          <p class="text-sm m-4 responsive-subtitle">
             {{ $t("landing.welcomeSubtittle") }}
           </p>
           <el-button
             v-if="!isAuthenticated"
             plain
             icon="el-icon-right"
+            class="responsive-button"
             type="primary"
             @click="login"
           >
@@ -80,7 +90,9 @@ export default defineComponent({
             </el-button>
           </router-link>
         </div>
-        <div class="flex items-center justify-center flex-wrap mt-5">
+        <div
+          class="flex items-center justify-center flex-wrap responsive-paymethods"
+        >
           <img
             src="@/assets/img/landing/stripe-black.svg"
             class="h-[30px] m-3"
@@ -111,7 +123,7 @@ export default defineComponent({
     </section>
 
     <footer
-      class="p-8 flex flex-col sm:flex-row items-center justify-between text-xs rounded-t bg-highlight text-white"
+      class="p-8 flex flex-col sm:flex-row items-center justify-between text-xs rounded-t bg-highlight text-white responsive-footer"
     >
       <div
         class="flex flex-col sm:items-center sm:flex-row text-center sm:text-left"
@@ -161,5 +173,103 @@ export default defineComponent({
     margin-top: 80px;
     height: calc(100% - 1rem - 1rem - 80px);
   }
+}
+
+@media only screen and (min-width: 280px) and (max-width: 320px) {
+  .m-header {
+    height: calc(100vh - 1rem - 1rem);
+
+    &__content {
+      margin-top: 3rem;
+      height: calc(100% - 1rem - 1rem - 16rem);
+    }
+  }
+  .responsive-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 6rem;
+  }
+  .responsive-title {
+    font-size: 1.5rem;
+    padding: 7rem 0 0 0;
+  }
+
+  .responsive-subtitle {
+    font-size: 1.1rem;
+    padding: 0 0 1rem 0;
+  }
+  .responsive-paymethods {
+    height: 6rem;
+    padding: 0 0 8rem 0;
+  }
+
+  .responsive-footer {
+    height: 12rem;
+    padding: 4rem 0 0 0;
+  }
+}
+
+@media only screen and (min-width: 325px) and (max-width: 380px) {
+  .m-header {
+    height: calc(100vh - 1rem - 8rem);
+
+    &__content {
+      height: calc(100% - 1rem - 1rem - 10rem);
+    }
+  }
+  .responsive-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 6rem;
+  }
+
+  .responsive-button {
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .responsive-title {
+    font-size: 1.8rem;
+  }
+
+  .responsive-subtitle {
+    font-size: 1.1rem;
+    padding: 0 0 1rem 0;
+  }
+}
+
+@media only screen and (min-width: 380px) and (max-width: 414px) {
+  .m-header {
+    height: calc(100vh - 1rem - 8rem);
+
+    &__content {
+      height: calc(100% - 1rem - 1rem - 14rem);
+    }
+  }
+  .responsive-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 6rem;
+  }
+
+  .responsive-button {
+    height: 2.5rem;
+    font-size: 1.6rem;
+  }
+
+  .responsive-title {
+    font-size: 2rem;
+    padding: 0 0 2rem 0;
+  }
+
+  .responsive-subtitle {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    padding: 0 0 2rem 0;
+  }
+
 }
 </style>
