@@ -66,7 +66,8 @@ onConnect((params) => {
 });
 
 const onEdgeRemove = (event, id) => {
-  const [source, target] = id.split("-");
+  const [source, target] = id.split("/");
+  console.log(source, target);
   const sourceCondition = getConditionById(source);
   const targetCondition = getConditionById(target);
   const targetAction = getActionById(target);

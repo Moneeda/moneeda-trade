@@ -48,7 +48,7 @@ const mapNodes = (nodes, type) => {
     if (conditions.length > 0) {
       conditions.forEach((resultId) => {
         edges.push({
-          id: `${node._id}-${resultId}`,
+          id: `${node._id}/${resultId}`,
           source: node._id,
           target: resultId,
           animated: true,
@@ -64,7 +64,7 @@ const mapNodes = (nodes, type) => {
     if (actions.length > 0) {
       actions.forEach((resultId) => {
         edges.push({
-          id: `${node._id}-${resultId}`,
+          id: `${node._id}/${resultId}`,
           source: node._id,
           target: resultId,
           animated: true,
