@@ -26,8 +26,13 @@ const switchValue = computed({
   },
 });
 
+const isActiveSimulationSet = computed(() => !!activeSimulation.value);
+
 const loading = ref(false);
 const onSimulate = async () => {
+  if (!isActiveSimulationSet.value) {
+    return;
+  }
   loading.value = true;
   if (activeSimulation.value) {
     await simulate(activeSimulation.value);
@@ -78,6 +83,7 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
 
       <el-button
         type="primary"
+        :disabled="!isActiveSimulationSet"
         class="ml-6"
         :icon="Setting"
         @click="onSimulate"

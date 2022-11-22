@@ -109,6 +109,10 @@ const onChange = () => {
       </el-option-group>
     </el-select>
 
+    <p v-show="!activeSimulation" class="text-xs text-red-500 font-bold mt-2">
+      {{ $t("playgroundView.noSimulationSelected") }}
+    </p>
+
     <p v-show="selectedModel" class="text-xs text-lightcontent mt-2">
       {{ selectedModelDescription }}
     </p>

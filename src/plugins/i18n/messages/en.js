@@ -67,6 +67,7 @@ export default {
     simulation: "Simulation",
     selectSimulation: "Select a simulation",
     save: "Save",
+    noSimulationSelected: "You need to select a simulation",
     periodic: "Periodic",
     periodicDescription:
       "Run the simulation periodically. Once there's no pending condition, the strategy will start from the beginning.",

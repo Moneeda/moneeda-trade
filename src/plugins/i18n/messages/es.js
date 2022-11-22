@@ -68,6 +68,7 @@ export default {
     selectSimulation: "Selecciona una simulacion",
     simulation: "Simulaciones",
     save: "Guardar",
+    noSimulationSelected: "Necesitas seleccionar una simulacion",
     periodicDescription:
       "Ejecuta la simulación periódicamente. Cuando no haya más condiciones pendientes, la estrategia volverá a evaluar las condiciones iniciales.",
     periodic: "Periodico",
