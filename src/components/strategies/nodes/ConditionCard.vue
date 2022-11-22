@@ -1,5 +1,5 @@
 <script setup>
-import { EditPen, DeleteFilled } from "@element-plus/icons-vue";
+import { EditPen, DeleteFilled, DocumentCopy } from "@element-plus/icons-vue";
 import { useStrategies } from "~/core/useStrategies";
 import { useLayout } from "~/core/useLayout";
 import CardActionList from "../cards/CardActionList.vue";
@@ -16,13 +16,25 @@ defineProps({
     required: true,
   },
 });
-const { deleteCondition, setConditionToUpdate } = useStrategies();
+const { deleteCondition, setConditionToUpdate, createCondition } =
+  useStrategies();
 const { switchLayout } = useLayout();
 
 const updateCondition = (condition) => {
   setConditionToUpdate(condition);
   switchLayout(NodeType.CONDITION);
 };
+
+const duplicateCondition = (condition) => {
+  createCondition({
+    ...condition,
+    _id: undefined,
+    positionX: condition.positionX + 30,
+    positionY: condition.positionY + 30,
+    params: condition.params || {},
+  });
+};
+
 const CardType = _CardType;
 </script>
 
@@ -40,6 +52,15 @@ const CardType = _CardType;
         <CardProperty :value="condition.product" label="Product" />
       </CardPropertyList>
       <CardActionList>
+        <CardAction>
+          <el-button
+            size="small"
+            circle
+            type="info"
+            :icon="DocumentCopy"
+            @click="duplicateCondition(condition)"
+          ></el-button>
+        </CardAction>
         <CardAction>
           <el-button
             size="small"

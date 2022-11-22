@@ -1,5 +1,5 @@
 <script setup>
-import { EditPen, DeleteFilled } from "@element-plus/icons-vue";
+import { EditPen, DeleteFilled, DocumentCopy } from "@element-plus/icons-vue";
 import BaseCard from "../cards/BaseCard.vue";
 import { useStrategies } from "~/core/useStrategies";
 import { useLayout } from "~/core/useLayout";
@@ -16,11 +16,20 @@ defineProps({
     required: true,
   },
 });
-const { deleteAction, setActionToUpdate } = useStrategies();
+const { deleteAction, setActionToUpdate, createAction } = useStrategies();
 const { switchLayout } = useLayout();
 const updateAction = (action) => {
   setActionToUpdate(action);
   switchLayout(NodeType.ACTION);
+};
+
+const duplicateAction = (action) => {
+  createAction({
+    ...action,
+    _id: undefined,
+    positionX: action.positionX + 30,
+    positionY: action.positionY + 30,
+  });
 };
 
 const CardType = _CardType;
@@ -40,6 +49,15 @@ const CardType = _CardType;
         <CardProperty :value="action.params[0].fee" label="Fee" />
       </CardPropertyList>
       <CardActionList>
+        <CardAction>
+          <el-button
+            size="small"
+            circle
+            type="info"
+            :icon="DocumentCopy"
+            @click="duplicateAction(action)"
+          ></el-button>
+        </CardAction>
         <CardAction>
           <el-button
             size="small"
