@@ -7,12 +7,17 @@ import StrategyCardAdd from "~/components/strategies/StrategyCardAdd.vue";
 import StrategyModal from "~/components/strategies/StrategyModal.vue";
 import { ref } from "vue";
 
-const { strategies, changeStrategy, removeStrategy } = useStrategies();
+const { retrieveStrategies, strategies, changeStrategy, removeStrategy } =
+  useStrategies();
 const router = useRouter();
+retrieveStrategies();
 const navigateToStrategy = (strategy) => {
   changeStrategy(strategy._id);
   router.push({
     name: "playground",
+    params: {
+      id: strategy._id,
+    },
   });
 };
 

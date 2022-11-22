@@ -25,7 +25,7 @@ const router = createRouter({
           component: () => import("../views/admin/AdminStrategiesView.vue"),
         },
         {
-          path: "playground",
+          path: "playground/:id",
           name: "playground",
           component: () => import("../views/admin/AdminPlaygroundView.vue"),
         },

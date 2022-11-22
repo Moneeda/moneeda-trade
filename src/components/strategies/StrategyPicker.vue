@@ -1,5 +1,6 @@
 <script setup>
 import { Setting, DataAnalysis } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 import { useLayout, LayoutType } from "~/core/useLayout";
 import { useStrategies } from "~/core/useStrategies";
 import { useSimulations } from "~/core/useSimulations";
@@ -16,6 +17,7 @@ const {
   simulate,
   simulationResult,
 } = useStrategies();
+const router = useRouter();
 const switchValue = computed({
   get: () =>
     !!activeLiveStrategy.value && activeLiveStrategy.value.status === "active",
@@ -34,6 +36,15 @@ const onSimulate = async () => {
   showResults();
 };
 const showResults = () => switchLayout(LayoutType.RESULT);
+const goToStrategy = (strategyId) => {
+  changeStrategy(strategyId);
+  router.push({
+    name: "playground",
+    params: {
+      id: strategyId,
+    },
+  });
+};
 
 const activeStrategyId = computed(() => activeStrategy.value?._id || null);
 </script>
@@ -55,7 +66,7 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
         :model-value="activeStrategyId"
         placeholder="Pick a strategy"
         value-key="_id"
-        @change="changeStrategy"
+        @change="goToStrategy"
       >
         <el-option
           v-for="strategy in strategies"

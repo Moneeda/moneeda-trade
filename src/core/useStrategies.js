@@ -123,15 +123,12 @@ const createStrategiesInstance = () => {
     return periodsOrderedBySize[index];
   };
 
-  const retrieveStrategies = async (defaultToFirst = true) => {
+  const retrieveStrategies = async () => {
     const strats = await api.strategies().all();
     strategies.value = strats.map((strat) => ({
       ...strat,
       numId: generateIconId(strat._id),
     }));
-    if (defaultToFirst && strats.length > 0) {
-      changeStrategy(strats[0]._id);
-    }
     fetchResources();
   };
 
@@ -332,8 +329,6 @@ const createStrategiesInstance = () => {
     }
   };
 
-  retrieveStrategies();
-
   return {
     autosave,
     loading,
@@ -346,6 +341,7 @@ const createStrategiesInstance = () => {
     actionToUpdate,
     conditionToUpdate,
     simulationResult,
+    retrieveStrategies,
     setActionToUpdate,
     setConditionToUpdate,
     changeStrategy,

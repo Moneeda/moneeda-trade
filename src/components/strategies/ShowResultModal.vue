@@ -11,16 +11,13 @@ const { switchLayout } = useLayout();
 
 const strategy = computed(() => activeStrategy?.name || "");
 const simulation = computed(() => activeSimulation?.name || "");
-const isSuccess = computed(() => ({
-  amount:
-    simulationResult.value.finalTradingAmount -
-      simulationResult.value.finalHoldingAmount >
-    0,
-  percentage:
-    simulationResult.value.finalTradingPercentage -
-      simulationResult.value.finalHoldingPercentage >
-    0,
-}));
+const isSuccess = computed(() => {
+  const result = simulationResult.value[0];
+  return {
+    amount: result.finalTradingAmount > result.finalHoldingAmount,
+    percentage: result.finalTradingPercentage > result.finalHoldingPercentage,
+  };
+});
 const onClose = () => switchLayout(LayoutType.VIEW);
 </script>
 

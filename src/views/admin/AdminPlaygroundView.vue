@@ -1,13 +1,24 @@
 <script setup>
 import StrategyFlow from "@/components/strategies/StrategyFlow.vue";
+import { useStrategies } from "~/core/useStrategies";
+import { useRoute } from "vue-router";
 import StrategyPicker from "~/components/strategies/StrategyPicker.vue";
 import StrategyActions from "../../components/strategies/StrategyActions.vue";
 import { useLayout, LayoutType as _LayoutType } from "~/core/useLayout";
 import StrategyEdit from "~/components/strategies/StrategyEdit.vue";
 import ShowResultModal from "~/components/strategies/ShowResultModal.vue";
 
+const { retrieveStrategies, changeStrategy } = useStrategies();
+
 const { layoutMode, isThreeCols } = useLayout();
 const LayoutType = _LayoutType;
+const route = useRoute();
+
+const initStrategy = async () => {
+  await retrieveStrategies();
+  changeStrategy(route.params.id);
+};
+initStrategy();
 </script>
 
 <template>
