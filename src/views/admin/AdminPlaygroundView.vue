@@ -58,15 +58,42 @@ initStrategy();
   display: grid;
   grid-gap: 16px;
   height: calc(100% - 60px); // strategy picker;
+  grid-template-columns: 1fr 20rem;
+  grid-template-rows: 1fr 10rem;
 
   &--two-cols {
-    grid-template-columns: 1fr 200px;
-    grid-template-areas: "flow actions";
+    grid-template-columns: 1fr 20rem;
+    grid-template-areas:
+      "flow actions"
+      "flow actions";
   }
-
   &--three-cols {
-    grid-template-columns: 1fr 1fr 200px;
-    grid-template-areas: "flow details actions";
+    grid-template-columns: 1fr 1fr 20rem;
+    grid-template-areas:
+      "flow details actions"
+      "flow details actions";
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .admin-playground {
+    grid-template-columns: 1fr 1fr 10rem;
+    grid-template-rows: 1fr 15rem 20rem;
+
+    &--two-cols {
+      grid-template-columns: 1fr 20rem;
+      grid-template-areas:
+        "flow flow"
+        "flow flow"
+        "actions actions";
+    }
+    &--three-cols {
+      grid-template-columns: 1fr 1fr 20rem;
+      grid-template-areas:
+        "flow flow flow"
+        "flow flow flow"
+        "actions details details";
+    }
+  }
+} ;
 </style>

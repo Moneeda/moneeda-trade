@@ -84,7 +84,7 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
       <el-button
         type="primary"
         :disabled="!isActiveSimulationSet"
-        class="ml-6"
+        class="ml-4 sm:ml-0"
         :icon="Setting"
         @click="onSimulate"
         :loading="loading"
@@ -93,7 +93,7 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
       </el-button>
       <el-button
         v-if="simulationResult"
-        class="ml-4"
+        class="ml-4 sm:ml-0"
         size="small"
         text
         :icon="DataAnalysis"
