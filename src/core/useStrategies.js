@@ -170,6 +170,7 @@ const createStrategiesInstance = () => {
   };
 
   const createCondition = async (conditionData) => {
+    conditionData.instanceParams = conditionData.instanceParams || {};
     loading.create = true;
     const condition = await api.conditions().add(conditionData);
     conditions.value.push(condition);
@@ -190,6 +191,7 @@ const createStrategiesInstance = () => {
   };
 
   const setConditionToUpdate = (condition) => {
+    console.log(condition);
     conditionToUpdate.value = condition;
   };
 
@@ -218,6 +220,7 @@ const createStrategiesInstance = () => {
       await api.conditions().update({
         ...condition,
         params: condition.params || {},
+        instanceParams: condition.instanceParams || {},
       });
 
       const filterConditions = conditions.value.filter(
