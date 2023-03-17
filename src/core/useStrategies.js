@@ -191,7 +191,6 @@ const createStrategiesInstance = () => {
   };
 
   const setConditionToUpdate = (condition) => {
-    console.log(condition);
     conditionToUpdate.value = condition;
   };
 
