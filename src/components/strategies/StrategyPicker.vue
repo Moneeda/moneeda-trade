@@ -7,7 +7,7 @@ import { useSimulations } from "~/core/useSimulations";
 import { ref, computed } from "vue";
 
 const { switchLayout } = useLayout();
-const { activeSimulation } = useSimulations();
+const { activeSimulation, customRange } = useSimulations();
 const {
   strategies,
   activeStrategy,
@@ -27,18 +27,26 @@ const switchValue = computed({
 });
 
 const isActiveSimulationSet = computed(() => !!activeSimulation.value);
+const iscustomRangeSet = computed(
+  () => !!customRange.value.start && !!customRange.value.end
+);
 
 const loading = ref(false);
 const onSimulate = async () => {
-  if (!isActiveSimulationSet.value) {
-    return;
-  }
   loading.value = true;
   if (activeSimulation.value) {
     await simulate(activeSimulation.value);
+  } else if (iscustomRangeSet.value) {
+    const range = customRange.value
+    await simulate({
+      from: (new Date(range.start)).getTime(),
+      to: (new Date(range.end)).getTime()
+    });
   }
   loading.value = false;
-  showResults();
+  if (simulationResult.value) {
+    showResults();
+  }
 };
 const showResults = () => switchLayout(LayoutType.RESULT);
 const goToStrategy = (strategyId) => {
@@ -59,46 +67,19 @@ const activeStrategyId = computed(() => activeStrategy.value?._id || null);
     <h1 class="text-xl font-medium">{{ $t("playgroundView.tittle") }}</h1>
 
     <div class="flex items-center">
-      <el-switch
-        v-model="switchValue"
-        class="mr-6"
-        :active-text="$t('playgroundView.status.active')"
-        :inactive-text="$t('playgroundView.status.paused')"
-      />
+      <el-switch v-model="switchValue" class="mr-6" :active-text="$t('playgroundView.status.active')"
+        :inactive-text="$t('playgroundView.status.paused')" />
       <span class="text-content60">{{ $t("playgroundView.picker") }}</span>
-      <el-select
-        class="ml-2"
-        :model-value="activeStrategyId"
-        placeholder="Pick a strategy"
-        value-key="_id"
-        @change="goToStrategy"
-      >
-        <el-option
-          v-for="strategy in strategies"
-          :key="strategy._id"
-          :label="strategy.name"
-          :value="strategy._id"
-        />
+      <el-select class="ml-2" :model-value="activeStrategyId" placeholder="Pick a strategy" value-key="_id"
+        @change="goToStrategy">
+        <el-option v-for="strategy in strategies" :key="strategy._id" :label="strategy.name" :value="strategy._id" />
       </el-select>
-
-      <el-button
-        type="primary"
-        :disabled="!isActiveSimulationSet"
-        class="ml-4 sm:ml-0"
-        :icon="Setting"
-        @click="onSimulate"
-        :loading="loading"
-      >
+      <h3>{{ customRange.start }} {{ customRange.end }} {{ iscustomRangeSet }}</h3>
+      <el-button type="primary" :disabled="!isActiveSimulationSet && !iscustomRangeSet" class="ml-4 sm:ml-0"
+        :icon="Setting" @click="onSimulate" :loading="loading">
         {{ $t("playgroundView.runSimulation") }}
       </el-button>
-      <el-button
-        v-if="simulationResult"
-        class="ml-4 sm:ml-0"
-        size="small"
-        text
-        :icon="DataAnalysis"
-        @click="showResults"
-      >
+      <el-button v-if="simulationResult" class="ml-4 sm:ml-0" size="small" text :icon="DataAnalysis" @click="showResults">
         {{ $t("playgroundView.latestResult") }}
       </el-button>
     </div>

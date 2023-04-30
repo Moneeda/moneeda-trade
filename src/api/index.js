@@ -52,7 +52,6 @@ class ApiClient {
   setJwt(jwt) {
     this.internalClient.defaults.headers.common = {
       ...this.internalClient.defaults.headers.common,
-      "Access-Control-Allow-Origin": this.internalClient.getUri(),
       Authorization: `Bearer ${jwt}`,
     };
     this.internalLabClient.defaults.headers.common = {

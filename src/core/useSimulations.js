@@ -8,6 +8,10 @@ const key = Symbol.for("Simulations");
 const createSimulationsInstance = () => {
   const simulations = ref(simulationTests);
   const activeSimulation = ref(null);
+  const customRange = ref({
+    start: "",
+    end: "",
+  });
 
   const changeSimulation = (simulationId) => {
     activeSimulation.value = simulations.value.find(
@@ -24,6 +28,7 @@ const createSimulationsInstance = () => {
   };
 
   return {
+    customRange,
     simulations,
     activeSimulation,
     getValidSimulations,
