@@ -65,7 +65,7 @@ const onChange = () => {
         {{ $t("playgroundView.result") }}
       </el-button>
     </div>
-
+    <a class="mt-2 font-medium" href="https://api.monedai.com/doc/index.html">Documentation</a>
     <div>
       <h3 class="mt-4">{{ $t("playgroundView.simulation") }}</h3>
       <el-select :placeholder="$t('playgroundView.selectSimulation')" value-key="id" default-first-option
